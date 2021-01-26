@@ -1,0 +1,20 @@
+<div mat-dialog-title class="d-flex align-items-center justify-content-center text-danger font-16">
+  <mat-icon class="xl mr-1">
+    error_outline
+  </mat-icon>
+  <!-- Error Title -->
+  {{ data?.title || 'Error' | translate }}
+</div>
+<div mat-dialog-content>
+  <!-- Error Code -->
+  <h3 *ngIf="data?.errorCode" class="text-center">
+    <b>Mã lỗi: </b> <span class="text-primary">{{data?.errorCode}}</span>
+  </h3>
+  <!-- Error Detail -->
+  <p class="text-center font-16 m-0" *ngIf="!data?.innerHTML">{{data?.message || 'Message' | translate}}</p>
+  <p class="text-center font-16 m-0" *ngIf="data?.innerHTML" [innerHTML]="data?.innerHTML"></p>
+</div>
+<div mat-dialog-actions align="end" class="px-2">
+  <!-- Error Button -->
+  <button mat-button class="bg-warning text-white" (click)="onClose()">{{ 'Đóng' | translate }}</button>
+</div>

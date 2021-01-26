@@ -1,0 +1,17 @@
+<div mat-dialog-title class="d-flex align-items-center justify-content-center text-warning font-16">
+  <mat-icon class="xl mr-1">
+    error_outline
+  </mat-icon>
+  <!-- Error Title -->
+  {{ data?.title || 'Title' | translate }}
+</div>
+<div mat-dialog-content>
+  <!-- Error Detail -->
+  <p class="font-16 text-center m-0" [innerHTML]="data?.message || 'Are you sure?' | translate"></p>
+</div>
+<div mat-dialog-actions align="end" class="px-2">
+  <!-- Error Button -->
+  <button mat-button class="bg-warning text-white mr-1" (click)="onCancel()">{{ data?.closeBtn || 'Cancel' | translate }}</button>
+  <!-- Accept Button -->
+  <button mat-button class="bg-warning text-white" (click)="onConfirm()">{{ data?.acceptBtn || 'Accept' | translate }}</button>
+</div>

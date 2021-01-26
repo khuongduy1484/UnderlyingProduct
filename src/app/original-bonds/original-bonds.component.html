@@ -34,7 +34,7 @@
       <label  for="datepicker" class="col-sm-2 col-form-label">Ngày phát hành</label>
       <div class="col-sm-2">
         <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-               (ngModelChange)="myDate = $event" class="form-control" id="datepicker" >
+              name="datepicker" (ngModelChange)="myDate = $event" class="form-control" id="datepicker" >
       </div>
       <label for="inputPassword" class="col-sm-2 col-form-label">Hình thức phát hành</label>
       <div class="col-sm-2">
@@ -56,7 +56,7 @@
       <label  for=" date-due" class="col-sm-2 col-form-label">Ngày đáo hạn</label>
       <div class="col-sm-2">
         <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-               (ngModelChange)="myDate = $event" class="form-control" id=" date-due" >
+            name="date-due"   (ngModelChange)="myDate = $event" class="form-control" id=" date-due" >
       </div>
       <label for="release-purpose" class="col-sm-2 col-form-label">Mục đích phát hành</label>
       <div class="col-sm-2">
@@ -129,8 +129,9 @@
     </div>
 
     <div>
-      <p class="font-weight-bold">Tính lãi và thanh toán
-      </p>
+      <label for="total-value-TSĐB" class="col-sm-3 col-form-label font-weight-bold">Tính lãi và thanh toán</label>
+      <button type="button" class="btn btn-primary" (click)="openDialog()">Tính tự động  </button>
+
     </div>
 
     <div>
@@ -154,23 +155,23 @@
           <th scope="row">1</th>
           <td>
             <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-                         (ngModelChange)="myDate = $event" class="form-control" id="determined-date" >
+                        name="determined-date" (ngModelChange)="myDate = $event" class="form-control" id="determined-date" >
           </td>
           <td>
             <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-                     (ngModelChange)="myDate = $event" class="form-control" id="first-day-coupon" >
+                   name="first-day-coupon" (ngModelChange)="myDate = $event" class="form-control" id="first-day-coupon" >
           </td>
           <td>
             <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-                      (ngModelChange)="myDate = $event" class="form-control" id="end-day-coupon" >
+                   name="end-day-coupon"   (ngModelChange)="myDate = $event" class="form-control" id="end-day-coupon" >
           </td>
           <td>
             <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-                      (ngModelChange)="myDate = $event" class="form-control" id="closing-day-coupon" >
+                   name="closing-day-coupon"    (ngModelChange)="myDate = $event" class="form-control" id="closing-day-coupon" >
           </td>
           <td>
             <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-                      (ngModelChange)="myDate = $event" class="form-control" id="LS" >
+                   name="LS"        (ngModelChange)="myDate = $event" class="form-control" id="LS" >
           </td>
           <td>@mdo</td>
           <td>@mdo</td>

@@ -15,6 +15,10 @@ import {HttpClientModule} from '@angular/common/http';
 import { authInterceptorProviders   } from './_helpers/auth.interceptor';
 import {APP_BASE_HREF} from '@angular/common';
 import { OriginalBondsComponent } from './original-bonds/original-bonds.component';
+import { AutomationComponent } from './automation/automation.component';
+import {MatDialogModule} from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {DialogModule} from './dialogs';
 
 
 
@@ -28,14 +32,20 @@ import { OriginalBondsComponent } from './original-bonds/original-bonds.componen
     BoardAdminComponent,
     BoardModeratorComponent,
     BoardUserComponent,
-    OriginalBondsComponent
+    OriginalBondsComponent,
+    AutomationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
+    DialogModule
   ],
+  entryComponents: [AutomationComponent],
+  exports: [MatDialogModule],
   providers: [authInterceptorProviders , {provide: APP_BASE_HREF, useValue: '/'} ],
   bootstrap: [AppComponent]
 })
