@@ -1,0 +1,63 @@
+/*
+Template Name: Material Pro Admin
+Author: Themedesigner
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+// Variables
+
+$bodyfont: 'Roboto', sans-serif;
+$headingfont: 'Roboto', sans-serif;
+
+/*Theme Colors*/
+
+$bodycolor: #eef5f9;
+$headingtext: #455a64;
+$bodytext: #67757c;
+$sidebar-text: #607d8b;
+$sidebar-icons: #99abb4;
+
+$font-16: 16px;
+$themecolor: #1e88e5;
+
+/*bootstrap Color*/
+$danger: #ED1D24;
+$success: #2DD6B7;
+$warning: #F68029;
+$primary: #2F3B83;
+$info: #1e88e5;
+$inverse: #2f3d4a;
+$muted: #99abb4;
+$dark: #263238;
+$light: #f7f7f7;
+$extra-light: #ebf3f5;
+$secondary: #727b84;
+
+
+/*Light colors*/
+$light-danger: #f9e7eb;
+$light-success: #e8fdf8;
+$light-warning: #fff8ec;
+$light-primary: #E8EAF3;
+$light-info: #e3f3fd;
+$light-inverse: #f6f6f6;
+$light-megna: #e0f2f4;
+$chat-message: #C4CAE1;
+
+/*Normal Color*/
+$white: #ffffff;
+$megna: #00897b;
+$gray: #C8C8C8;
+
+/////////////
+$colors:(white: $white, primary: $primary, secondary: $secondary, info: $info, success: $success, transparent: transparent, gray: $gray, warning: $warning);
+
+/*Extra Variable*/
+$lft: left;
+$border: rgba(120, 130, 140, 0.13);
+$radius: 4px;
+
+
+//Height
+$nav-height: 50px;
+$marquee-height: 25px

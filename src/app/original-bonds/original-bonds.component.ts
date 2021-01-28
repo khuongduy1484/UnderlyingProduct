@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {AutomationComponent} from '../automation/automation.component';
-import {DialogService} from '../dialogs';
 
 @Component({
   selector: 'app-original-bonds',
@@ -22,9 +21,8 @@ export class OriginalBondsComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(AutomationComponent, {
       data: {url: '', conversationId: '', idMessage: ''},
-      width: '680px',
-      height: '580px',
-      backdropClass: 'red'
+      width: '90%',
+      height: '600px'
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');

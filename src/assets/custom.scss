@@ -1,0 +1,10 @@
+
+.custom-dialog {
+  &.cdk-overlay-pane {
+    max-width: 100vw !important;
+    width: 92vw !important;
+    .mat-dialog-container {
+      padding: 0;
+    }
+  }
+}

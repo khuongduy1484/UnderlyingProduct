@@ -2,12 +2,12 @@
  <span class="mr-1">
     <i class="far fa-check-circle"></i>
   </span>
-  {{data?.title || 'title' | translate}}
+  {{data?.title || 'title'  }}
 </div>
 <div mat-dialog-content>
-  <p class="text-center font-16 m-0" *ngIf="!data?.innerHTML">{{data?.message || 'Message' | translate}}</p>
+  <p class="text-center font-16 m-0" *ngIf="!data?.innerHTML">{{data?.message || 'Message'  }}</p>
   <p class="text-center font-16 m-0" *ngIf="data?.innerHTML" [innerHTML]="data?.innerHTML"></p>
 </div >
 <div mat-dialog-actions align="end" class="px-2">
-  <button mat-button class="bg-warning text-white" (click)="onClose()">{{ 'Close' | translate }}</button>
+  <button mat-button class="bg-warning text-white" (click)="onClose()">{{ 'Close'   }}</button>
 </div>

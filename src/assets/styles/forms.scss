@@ -1,0 +1,273 @@
+//@mixin flexWidth($grow, $shrink, $basis) {
+//  flex: $grow $shrink $basis;
+//  -ms-flex: $grow $shrink $basis;
+//  max-width: $basis;
+//}
+//
+//@mixin border-radius($radius) {
+//  -webkit-border-radius: $radius;
+//  -moz-border-radius: $radius;
+//  -ms-border-radius: $radius;
+//  border-radius: $radius;
+//}
+//
+//@mixin ie-only {
+//  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+//    @content;
+//  }
+//}
+//
+//.form-remark {
+//  color: $primary;
+//  margin: 0;
+//  font-weight: 400;
+//}
+//
+//.form-group {
+//  display: flex;
+//  flex-direction: row;
+//  flex-wrap: wrap;
+//  margin-bottom: 1.5rem;
+//  padding-left: 0rem;
+//  padding-right: 0rem;
+//  position: relative;
+//
+//  > .d-flex {
+//    @include flexWidth(1, 0, 100%);
+//  }
+//
+//  .form-group {
+//    margin-top: 0;
+//    margin-bottom: 0;
+//  }
+//
+//  .form-remark {
+//    position: absolute;
+//    bottom: -1.5rem;
+//    left: 0;
+//  }
+//
+//  .form-input-row {
+//    display: flex;
+//    flex-direction: row;
+//    justify-content: space-between;
+//    padding-left: 0;
+//    padding-right: 0;
+//    position: relative;
+//
+//    button.btn {
+//      margin: 0px;
+//    }
+//
+//    input {
+//      flex: 1 0 auto;
+//    }
+//  }
+//
+//  > div {
+//    @include flexWidth(1, 0, 100%);
+//  }
+//
+//  > label {
+//    font-weight: 600;
+//    margin-bottom: 1rem;
+//    display: flex;
+//    align-items: center;
+//    @include flexWidth(1, 0, 100%);
+//
+//    mat-icon.mbb-icon {
+//      font-weight: 400;
+//      font-size: 18px;
+//      width: 18px;
+//      height: 18px;
+//      margin-bottom: 2px;
+//    }
+//  }
+//
+//  > input.form-control {
+//    @include flexWidth(1, 0, 100%);
+//  }
+//
+//  textarea.form-control {
+//    resize: none;
+//    height: 60px !important;
+//  }
+//
+//  input.form-control,
+//  textarea.form-control {
+//    padding: 0.5rem;
+//    font-size: 14px;
+//    line-height: 17px;
+//    font-weight: normal;
+//    font-family: $bodyfont;
+//    height: 40px;
+//    border: solid 1px $gray;
+//    // max-height: 3rem;
+//    width: initial;
+//    border-radius: 3px;
+//    width: 100%;
+//    &:-ms-input-placeholder {
+//      color: $gray;
+//      font-size: pxtorem(12);
+//    }
+//
+//    &::-ms-input-placeholder {
+//      color: $gray;
+//      font-size: pxtorem(12);
+//    }
+//
+//    &:focus,
+//    &:hover {
+//      border-color: $primary;
+//    }
+//    &:focus:not(:empty) {
+//      font-family: $bodyfont !important;
+//      color: black !important;
+//    }
+//
+//    &.mat-input-element {
+//      width: initial;
+//      margin-top: 0px;
+//    }
+//
+//    &[disabled] {
+//      background-color: whitesmoke;
+//      border-color: $gray;
+//    }
+//    &.font-awesome {
+//      font-family: "Font Awesome 5 Pro", $bodyfont;
+//    }
+//  }
+//
+//  select.input-control {
+//    &[disabled] {
+//      background-color: whitesmoke;
+//      border-color: $light;
+//    }
+//  }
+//
+//  &.error {
+//    > label {
+//      mat-icon.mbb-icon {
+//        color: $danger;
+//      }
+//    }
+//
+//    .form-remark {
+//      color: $danger;
+//    }
+//
+//    input {
+//      border-color: $danger;
+//    }
+//
+//    select {
+//      border-color: $danger;
+//    }
+//
+//    mat-select {
+//      border-color: $danger;
+//    }
+//  }
+//
+//  &.success {
+//    mat-icon.mbb-icon {
+//      color: $success;
+//    }
+//
+//    .form-remark {
+//      color: $success;
+//    }
+//
+//    input {
+//      border-color: $success;
+//    }
+//
+//    select {
+//      border-color: $success;
+//    }
+//
+//    mat-select {
+//      border-color: $success;
+//    }
+//  }
+//
+//  .mat-radio-button {
+//    margin-bottom: 1rem;
+//
+//    &.mat-accent {
+//      &.mat-radio-checked {
+//        .mat-radio-outer-circle {
+//          background-color: transparent;
+//          border-color: $primary;
+//        }
+//      }
+//
+//      .mat-radio-inner-circle {
+//        background-color: $primary;
+//      }
+//
+//      .mat-radio-ripple .mat-ripple-element {
+//        background-color: opacity-color($primary, 0.3);
+//      }
+//    }
+//  }
+//
+//  .mat-select[aria-disabled="true"] {
+//    background-color: whitesmoke;
+//  }
+//
+//  .mat-checkbox {
+//    &.mat-accent {
+//      .mat-checkbox-ripple {
+//        .mat-ripple,
+//        .mat-ripple-element {
+//          background-color: opacity-color($primary, 0.3) !important;
+//        }
+//      }
+//    }
+//  }
+//
+//  .mat-checkbox-checked {
+//    &.mat-accent {
+//      .mat-checkbox-background {
+//        background-color: $primary;
+//      }
+//    }
+//  }
+//
+//  .mat-select {
+//    padding: 0.5rem;
+//    border: solid 1px silver;
+//    border-radius: 3px;
+//    max-height: calc(3rem - 4px);
+//    padding-top: calc(0.5rem - 2px);
+//    font-display: $bodyfont;
+//    font-size: 14px;
+//    font-weight: normal;
+//    &[disabled],
+//    [aria-disabled="true"] {
+//      background-color: whitesmoke;
+//      border-color: $gray;
+//    }
+//  }
+//
+//  .input-icon {
+//    position: absolute;
+//    width: 30px;
+//    height: 100%;
+//    display: flex;
+//    align-items: center;
+//    justify-content: center;
+//
+//    + input.form-control {
+//      padding-left: 30px;
+//    }
+//  }
+//}
+//
+//.mat-select-panel {
+//  @include ie-only {
+//    max-width: none !important;
+//  }
+//}

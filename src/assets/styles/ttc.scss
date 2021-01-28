@@ -1,0 +1,27 @@
+.tag {
+  border: 1px solid #c8c8c8;
+  background: #f7f7f7;
+  border-radius: 30px;
+  padding: 2px 5px;
+  white-space: nowrap;
+  font-size: 10px;
+
+  &.active {
+    border: none;
+    padding-left: calc(0.5rem + 1px) !important;
+    padding-right: calc(0.5rem + 1px) !important;
+  }
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-truncate-bold {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: bold;
+}

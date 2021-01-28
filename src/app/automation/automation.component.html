@@ -1,0 +1,160 @@
+
+
+<div class="form-group row">
+   <label  class="col-sm-11 col-form-label font-weight-bold">Kỳ tính lãi</label>
+
+  <div >
+    <div class=" col-sm-1 modal-header">
+      <div class="d-flex header-title justify-content-between">
+      <span (click)="onClose()" class="mat-button">
+                <mat-icon>close</mat-icon>
+            </span>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <form>
+    <div class="form-group row">
+      <label for="frequency" class="col-sm-2 col-form-label">Tần suất </label>
+      <div class="col-sm-2">
+        <input type="text" readonly class="form-control" id="frequency" >
+      </div>
+      <label for="fixed-interest-rate" class="col-sm-2 col-form-label">Lãi suất cố định</label>
+      <div class="col-sm-2">
+        <select class="form-control" id="fixed-interest-rate">
+          <option>SOB1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+      <label for="fixed-period-number" class="col-sm-2 col-form-label">Số kỳ cố định</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="fixed-period-number" >
+      </div>
+    </div>
+
+
+
+    <div class="form-group row">
+      <label for="amplitude" class="col-sm-2 col-form-label">Biên độ</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" id="amplitude" >
+      </div>
+      <label  for="end-date-of-the-first-period" class="col-sm-2 col-form-label">Ngày kết thúc kỳ đầu</label>
+      <div class="col-sm-2">
+        <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
+               name="datepicker" (ngModelChange)="myDate = $event" class="form-control" id="end-date-of-the-first-period" >
+      </div>
+      <label  for="start-date-of-the-first-period" class="col-sm-2 col-form-label">Ngày bắt đầu kỳ cuối</label>
+      <div class="col-sm-2">
+        <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
+               name="datepicker" (ngModelChange)="myDate = $event" class="form-control" id="start-date-of-the-first-period" >
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="interest-rate-determination-date" class="col-sm-2 col-form-label">Ngày xác định lãi suất</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" id="interest-rate-determination-date" >
+      </div>
+
+      <div class="col-sm-1">
+        <select class="form-control" id="working-day">
+          <option>Ngày làm việc</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+      <div class="col-sm-2">
+        <p>so với ngày đầu kỳ</p>
+      </div>
+      <div class="col-sm-2"></div>
+      <label for="adjust-workdays" class="col-sm-2 col-form-label">Điều chỉnh ngày làm việc</label>
+      <div class="col-sm-2">
+        <select class="form-control" id="adjust-workdays">
+          <option>Lần trước</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+    </div>
+
+
+
+    <div class="form-group row">
+      <label  class="col-sm-3 col-form-label font-weight-bold">Kỳ Thanh toán</label>
+    </div>
+
+    <div class="form-group row">
+      <label for="buy-back-before-maturity" class="col-sm-2 col-form-label">Tần suất</label>
+      <div class="col-sm-2">
+        <select class="form-control" id="buy-back-before-maturity">
+          <option>1 tháng</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+
+      <label  for="end-date-of-the-first-period-1" class="col-sm-2 col-form-label">Ngày kết thúc kỳ đầu</label>
+      <div class="col-sm-2">
+        <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
+               name="datepicker" (ngModelChange)="myDate = $event" class="form-control" id="end-date-of-the-first-period-1" >
+      </div>
+      <label  for="start-date-of-the-first-period-1" class="col-sm-2 col-form-label">Ngày bắt đầu kỳ cuối</label>
+      <div class="col-sm-2">
+        <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
+               name="datepicker" (ngModelChange)="myDate = $event" class="form-control" id="start-date-of-the-first-period-1" >
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="interest-rate-determination-date-1" class="col-sm-2 col-form-label">Ngày lập danh sách</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" id="interest-rate-determination-date-1" >
+      </div>
+      <div class="col-sm-1">
+        <select class="form-control" id="working-day-1">
+          <option>Ngày làm việc</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+      <div class="col-sm-2">
+        <p>so với ngày đầu kỳ</p>
+      </div>
+      <div class="col-sm-2"></div>
+      <label for="adjust-workdays-1" class="col-sm-2 col-form-label">Điều chỉnh ngày làm việc</label>
+      <div class="col-sm-2">
+        <select class="form-control" id="adjust-workdays-1">
+          <option>Lần trước</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-5"></div>
+      <div class="col-sm-5">
+        <button style="position: relative;left: -8px;" type="button" class="btn btn-primary">TÍNH TỰ ĐỘNG</button>
+        <button  type="button" class="btn btn-danger">HỦY</button>
+      </div>
+    </div>
+
+
+  </form>
+</div>
+

@@ -1,0 +1,148 @@
+/*
+Template Name: Material Pro Admin
+Author: Wrappixel
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+
+/*==============================================================
+ For all pages
+ ============================================================== */
+
+/*******************
+ Main container
+*******************/
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.mat-drawer-container {
+  background: $bodycolor;
+}
+
+html {
+  .page-wrapper {
+    height: calc(100vh - #{$nav-height});
+    overflow: hidden;
+    .page-content {
+      padding: 15px;
+    }
+  }
+
+  .page-wrapper-marquee {
+    height: calc(100vh - (#{$nav-height} + #{$marquee-height}));
+    overflow: hidden;
+    .page-content {
+      padding: 15px;
+    }
+  }
+}
+
+.error-card {
+  h1 {
+    font-size: 210px;
+    font-weight: 900;
+    line-height: 210px;
+    margin: 0px;
+    text-shadow: 4px 5px 1px #b3bbbf;
+  }
+}
+
+.chat-right-panel {
+  .top-avatar {
+    img {
+      width: 40px;
+      vertical-align: middle;
+    }
+  }
+}
+.chat-middle-box {
+  border-left: 1px solid $border;
+  background: $white;
+  margin-bottom: 0px !important;
+}
+.chat-footer {
+  padding: 10px 15px !important;
+  background: $white;
+  // border-top: 1px solid $border;
+  // border-left: 1px solid $border;
+}
+.chat-list {
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 2px;
+  padding-right: 2rem;
+  display: flex;
+  align-items: flex-end;
+  .message-content {
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-family: $bodyfont;
+    font-size: 14px;
+    font-weight: normal;
+    max-width: 60%;
+    word-break: break-word;
+    &.last-message {
+      position: relative;
+      z-index: 1;
+    }
+    &.deleted {
+      color: #9EA7CD !important;
+      font-style: italic;
+      background: #fff !important;
+      &::after {
+        border-color: transparent transparent #fff !important;
+      }
+    }
+  }
+  &.odd .last-message::before, &.even .last-message::after {
+    position: absolute;
+    content: "";
+    border-color: transparent transparent #fff;
+    border-style: solid;
+    border-width: 0px 16px 15px 16px;
+    height: 0px;
+    width: 0px;
+    bottom: -3px;
+    left: -16px;
+    z-index: -1;
+  }
+  &.even + .delete-desc {
+    text-align: right;
+  }
+  &.even {
+    flex-direction: row-reverse;
+    .message-content {
+      background: #43529C;
+      &.last-message {
+        &::after {
+          border-color: transparent transparent #43529C transparent;
+          left: unset;
+          right: -16px;
+        }
+      }
+    }
+  }
+  .message-ava {
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+  }
+  img {
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+}
+.chat-date {
+  font-size: 12px;
+  color: $muted;
+}

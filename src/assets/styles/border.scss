@@ -1,0 +1,45 @@
+$border-colors: (
+  primary: $primary,
+  transparent: transparent,
+  gray: $gray,
+  white: $white
+);
+
+$borders: (
+  bt: (
+    border-top
+  ),
+  br: (
+    border-right
+  ),
+  bb: (
+    border-bottom
+  ),
+  bl: (
+    border-left
+  )
+);
+
+@for $i from 1 through 3 {
+  @each $names, $border in $borders {
+    @each $color-name, $color in $border-colors {
+      .#{$names}-#{$color-name}-#{$i} {
+        #{$border}: #{$i}px solid #{$color} !important;
+      }
+    }
+  }
+}
+
+@for $i from 1 through 15 {
+    .border-radius-#{$i} {
+        border-radius: #{$i}px !important
+    }
+}
+
+.border-none {
+  border: none;
+}
+
+.radius-none {
+  border-radius: 0px !important
+}

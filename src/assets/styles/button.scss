@@ -1,0 +1,17 @@
+button[disabled] {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.btn {
+    padding: 0.5rem !important;
+    line-height: initial !important;
+    min-height: 1.5rem;
+    cursor: pointer;
+    &.btn-transparent {
+        background: transparent
+    }
+    &.border-none {
+        border: none
+    }
+}

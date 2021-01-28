@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from './_services/token-storage.service';
+import {AutomationComponent} from './automation/automation.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +15,8 @@ export class AppComponent implements OnInit {
   showModeratorBoard = false;
   username: string;
 
-  constructor(private tokenStorageService: TokenStorageService) { }
+  constructor(private tokenStorageService: TokenStorageService,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
@@ -32,5 +35,17 @@ export class AppComponent implements OnInit {
   logout() {
     this.tokenStorageService.signOut();
     window.location.reload();
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(AutomationComponent, {
+      data: {url: '', conversationId: '', idMessage: ''},
+      width: '680px',
+      height: '580px',
+      backdropClass: 'red'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }

@@ -8,6 +8,7 @@ import {BoardUserComponent} from './board-user/board-user.component';
 import {BoardModeratorComponent} from './board-moderator/board-moderator.component';
 import {BoardAdminComponent} from './board-admin/board-admin.component';
 import {OriginalBondsComponent} from './original-bonds/original-bonds.component';
+import {AppComponent} from './app.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -19,7 +20,21 @@ const routes: Routes = [
   { path: 'admin', component: BoardAdminComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'original', component: OriginalBondsComponent },
-
+  {
+    path: '',
+    component: AppComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        loadChildren: './app.module#AppModule'
+      }
+    ]
+  }
 ];
 
 @NgModule({

@@ -16,7 +16,14 @@ import { authInterceptorProviders   } from './_helpers/auth.interceptor';
 import {APP_BASE_HREF} from '@angular/common';
 import { OriginalBondsComponent } from './original-bonds/original-bonds.component';
 import { AutomationComponent } from './automation/automation.component';
-import {MatDialogModule} from '@angular/material';
+import {
+  MAT_DIALOG_DEFAULT_OPTIONS,
+  MatDialogModule,
+  MatIconModule,
+  MatListModule,
+  MatSidenavModule, MatTabsModule,
+  MatToolbarModule
+} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DialogModule} from './dialogs';
 
@@ -42,11 +49,17 @@ import {DialogModule} from './dialogs';
     HttpClientModule,
     MatDialogModule,
     BrowserAnimationsModule,
-    DialogModule
+    DialogModule,
+    MatIconModule,
+    MatListModule,
+    MatToolbarModule,
+    MatTabsModule,
+    MatSidenavModule
+
   ],
   entryComponents: [AutomationComponent],
-  exports: [MatDialogModule],
-  providers: [authInterceptorProviders , {provide: APP_BASE_HREF, useValue: '/'} ],
+  exports: [MatDialogModule, MatIconModule, MatTabsModule, MatSidenavModule],
+  providers: [authInterceptorProviders , {provide: APP_BASE_HREF, useValue: '/'},  {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}} ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
