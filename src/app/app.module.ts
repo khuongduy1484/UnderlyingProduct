@@ -18,9 +18,9 @@ import { OriginalBondsComponent } from './original-bonds/original-bonds.componen
 import { AutomationComponent } from './automation/automation.component';
 import {
   MAT_DIALOG_DEFAULT_OPTIONS,
-  MatDialogModule,
+  MatDialogModule, MatFormFieldModule,
   MatIconModule,
-  MatListModule,
+  MatListModule, MatPaginator, MatPaginatorModule,
   MatSidenavModule, MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
@@ -30,6 +30,7 @@ import { LayoutComponent } from './layout/layout.component';
 import {HeaderComponent} from './navigation/header/header.component';
 import {SidenavListComponent} from './navigation/sidenav-list/sidenav-list.component';
 import {MaterialModule} from './material/material.module';
+import { ContractParametersComponent } from './contract-parameters/contract-parameters.component';
 
 
 
@@ -47,7 +48,8 @@ import {MaterialModule} from './material/material.module';
     AutomationComponent,
     LayoutComponent,
     HeaderComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    ContractParametersComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +66,10 @@ import {MaterialModule} from './material/material.module';
     MatSidenavModule,
     BrowserModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    MatFormFieldModule,
+    MatPaginatorModule
+
 
   ],
   entryComponents: [AutomationComponent],
