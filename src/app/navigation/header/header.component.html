@@ -1,0 +1,20 @@
+<mat-toolbar color="primary">
+    <div >
+        <button mat-icon-button (click)="onToggleSidenav()">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+    <div>
+        <a routerLink="/home">Owner-Account</a>
+    </div>
+  <div>
+    <ul class="navbar-nav ml-auto" >
+    <li class="nav-item">
+      <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
+    </li>
+    <li class="nav-item">
+      <a href="/login" class="nav-link" routerLink="login">Login</a>
+    </li>
+    </ul>
+  </div>
+  </mat-toolbar>

@@ -1,97 +1,13 @@
-<!--<div id="app">-->
-<!--  <nav class="navbar navbar-expand navbar-dark bg-dark">-->
-<!--    <ul class="navbar-nav mr-auto" routerLinkActive="active">-->
-<!--      <li class="nav-item">-->
-<!--        <a href="/home" class="nav-link" routerLink="home">Home </a>-->
-<!--      </li>-->
-<!--      <li class="nav-item">-->
-<!--        <a href="/admin" class="nav-link" routerLink="admin">Admin Board</a>-->
-<!--      </li>-->
-<!--      <li class="nav-item">-->
-<!--        <a href="/mod" class="nav-link" routerLink="mod">Moderator Board</a>-->
-<!--      </li>-->
-<!--      <li class="nav-item">-->
-<!--        <a href="/user" class="nav-link" routerLink="user">User</a>-->
-<!--      </li>-->
-<!--      <li class="nav-item">-->
-<!--        <a href="/original" class="nav-link" routerLink="original">Original</a>-->
-<!--      </li>-->
-<!--    </ul>-->
-
-<!--    <ul class="navbar-nav ml-auto">-->
-<!--      <li class="nav-item">-->
-<!--        <a href="/register" class="nav-link" routerLink="register">Sign Up</a>-->
-<!--      </li>-->
-<!--      <li class="nav-item">-->
-<!--        <a href="/login" class="nav-link" routerLink="login">Login</a>-->
-<!--      </li>-->
-<!--    </ul>-->
-
-<!--    <ul class="navbar-nav ml-auto">-->
-<!--      <li class="nav-item">-->
-<!--        <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>-->
-<!--      </li>-->
-<!--      <li class="nav-item">-->
-<!--        <a href class="nav-link" (click)="logout()">LogOut</a>-->
-<!--      </li>-->
-<!--    </ul>-->
-<!--  </nav>-->
-
-<!--  <div class="settings-container h-100 bg-white scrollbar scroll-y">-->
-<!--    <mat-nav-list fxLayout>-->
-<!--      <div fxFlex.gt-md="33.33" fxFlex.md="50" fxFlex.lt-md="100">-->
-<!--        <mat-list-item class="h-100 w-100" [routerLink]="'original'">-->
-<!--          <div mat-list-avatar class="d-flex justify-content-center">-->
-<!--          <span class="material-icons">home</span>-->
-<!--          </div>-->
-<!--          <div matLine class="title text-primary font-16">quản lý</div>-->
-<!--        </mat-list-item>-->
-<!--      </div>-->
-<!--    </mat-nav-list>-->
-<!--    <mat-nav-list fxLayout>-->
-<!--      <div fxFlex.gt-md="33.33" fxFlex.md="50" fxFlex.lt-md="100">-->
-<!--        <mat-list-item class="h-100 w-100" [routerLink]="'original'">-->
-<!--          <div mat-list-avatar class="d-flex justify-content-center">-->
-<!--            <span class="material-icons">home</span>-->
-<!--          </div>-->
-<!--          <div matLine class="title text-primary font-16">quản lý </div>-->
-<!--        </mat-list-item>-->
-<!--      </div>-->
-<!--    </mat-nav-list>-->
-<!--    <mat-nav-list fxLayout>-->
-<!--      <div fxFlex.gt-md="33.33" fxFlex.md="50" fxFlex.lt-md="100">-->
-<!--        <mat-list-item class="h-100 w-100" [routerLink]="'original'">-->
-<!--          <div mat-list-avatar class="d-flex justify-content-center">-->
-<!--            <span class="material-icons">home</span>-->
-<!--          </div>-->
-<!--          <div matLine class="title text-primary font-16">quản lý </div>-->
-<!--        </mat-list-item>-->
-<!--      </div>-->
-<!--    </mat-nav-list>-->
-<!--    <mat-nav-list fxLayout>-->
-<!--      <div fxFlex.gt-md="33.33" fxFlex.md="50" fxFlex.lt-md="100">-->
-<!--        <mat-list-item class="h-100 w-100" [routerLink]="'original'">-->
-<!--          <div mat-list-avatar class="d-flex justify-content-center">-->
-<!--            <span class="material-icons">home</span>-->
-<!--          </div>-->
-<!--          <div matLine class="title text-primary font-16">quản lý </div>-->
-<!--        </mat-list-item>-->
-<!--      </div>-->
-<!--    </mat-nav-list>-->
-<!--  </div>-->
-
-
-<!--  <div class="container">-->
-<!--    <router-outlet></router-outlet>-->
-<!--  </div>-->
-<!--</div>-->
-
-
-
-
-
-
-
-
-
-
+<app-layout>
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav role="navigation">
+      <app-sidenav-list (sidenavClose)="sidenav.close()"></app-sidenav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</app-layout>
