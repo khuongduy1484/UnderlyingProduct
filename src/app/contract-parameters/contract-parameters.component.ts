@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContractParametersComponent implements OnInit {
   page: 1;
-  listPages: number[] = [1, 2, 3, 4, 5, 6];
+  listPages: number[] = [1, 2, 3, 4];
   pageCurrent: number;
 
   constructor() { }
@@ -61,6 +61,10 @@ export class ContractParametersComponent implements OnInit {
     //   .catch(error => {
     //     this.dataSource2.data = error;
     //   });
+  }
+
+  getPageSymbol(current: number) {
+    return ['A', 'B', 'C', 'D', 'E', 'F', 'G'][current - 1];
   }
 
 

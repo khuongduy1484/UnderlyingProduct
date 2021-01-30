@@ -31,6 +31,8 @@ import {HeaderComponent} from './navigation/header/header.component';
 import {SidenavListComponent} from './navigation/sidenav-list/sidenav-list.component';
 import {MaterialModule} from './material/material.module';
 import { ContractParametersComponent } from './contract-parameters/contract-parameters.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { UpdateContractComponent } from './contract-parameters/update-contract/update-contract.component';
 
 
 
@@ -49,7 +51,8 @@ import { ContractParametersComponent } from './contract-parameters/contract-para
     LayoutComponent,
     HeaderComponent,
     SidenavListComponent,
-    ContractParametersComponent
+    ContractParametersComponent,
+    UpdateContractComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,8 @@ import { ContractParametersComponent } from './contract-parameters/contract-para
     BrowserAnimationsModule,
     MaterialModule,
     MatFormFieldModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    NgbModule
 
 
   ],

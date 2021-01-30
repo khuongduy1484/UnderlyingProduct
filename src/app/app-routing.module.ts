@@ -10,6 +10,7 @@ import {BoardAdminComponent} from './board-admin/board-admin.component';
 import {OriginalBondsComponent} from './original-bonds/original-bonds.component';
 import {AppComponent} from './app.component';
 import {ContractParametersComponent} from './contract-parameters/contract-parameters.component';
+import {UpdateContractComponent} from './contract-parameters/update-contract/update-contract.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'original', component: OriginalBondsComponent },
   {path: 'contract-parameter', component: ContractParametersComponent},
+  {path: 'update-contract', component: UpdateContractComponent},
   {
     path: '',
     component: AppComponent,
