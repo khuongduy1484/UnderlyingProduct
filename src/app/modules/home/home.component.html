@@ -1,16 +1,20 @@
-<p-breadcrumb [home]="home" [model]="menuItems"></p-breadcrumb>
+<div style="width: 100%; height: auto;">
+  <app-breadcrumb></app-breadcrumb>
+</div>
+<!--<section fxLayout="column" fxFlexAlign="stretch">-->
 
-<section fxLayout="column" fxFlexAlign="stretch">
-
-  <mat-tab-group (selectedTabChange)="executeSelectedChange($event)">
-    <mat-tab label="ADMIN">
-      <app-original-bonds></app-original-bonds>
-    </mat-tab>
-    <mat-tab label="User">
-      <p>We will </p>
-    </mat-tab>
-    <mat-tab label="OWNER">
-      <p>By using material components,.</p>
-    </mat-tab>
-  </mat-tab-group>
-</section>
+<!--  <mat-tab-group (selectedTabChange)="executeSelectedChange($event)">-->
+<!--    <mat-tab label="ADMIN">-->
+<!--      <app-original-bonds></app-original-bonds>-->
+<!--    </mat-tab>-->
+<!--    <mat-tab label="User">-->
+<!--      <p>We will </p>-->
+<!--    </mat-tab>-->
+<!--    <mat-tab label="OWNER">-->
+<!--      <p>By using material components,.</p>-->
+<!--    </mat-tab>-->
+<!--  </mat-tab-group>-->
+<!--</section>-->
+<div style="width: 100%; height: auto;">
+  <router-outlet></router-outlet>
+</div>

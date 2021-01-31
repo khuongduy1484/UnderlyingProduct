@@ -28,13 +28,13 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     data: {
-      breadcrumb: 'home'
+      breadcrumb: 'HOME'
     },
     children: [
       {
         path: 'template-contract',
         data: {
-          breadcrumb: 'template-contract'
+          breadcrumb: 'TEMPLATE CONTRACT'
         },
         component: TemplateContractComponent
       }

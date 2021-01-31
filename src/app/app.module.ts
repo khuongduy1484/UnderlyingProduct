@@ -43,6 +43,7 @@ import {EditorModule} from '@tinymce/tinymce-angular';
 import { AppLoadingComponent } from './shared/app-loading/app-loading.component';
 import { CreateTemplateContractComponent } from './modules/template-contract/create-template-contract/create-template-contract.component';
 import { ListWaitingForApprovaComponent } from './modules/template-contract/list-waiting-for-approva/list-waiting-for-approva.component';
+import { BreadcrumbComponent } from './modules/breadcrumb/breadcrumb.component';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { ListWaitingForApprovaComponent } from './modules/template-contract/list
     UpdateTemplateContractComponent,
     AppLoadingComponent,
     CreateTemplateContractComponent,
-    ListWaitingForApprovaComponent
+    ListWaitingForApprovaComponent,
+    BreadcrumbComponent
 
   ],
   imports: [
