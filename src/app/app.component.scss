@@ -82,6 +82,11 @@ body {
 mat-sidenav-container, mat-sidenav-content, mat-sidenav {
   height: 100%;
   background: #fbfcfe;
+  body {
+    max-width: 200px;
+    margin: 0 auto;
+    border:1px solid black;
+  }
 }
 
 mat-sidenav {

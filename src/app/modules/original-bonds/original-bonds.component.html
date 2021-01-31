@@ -6,11 +6,11 @@
     <div class="form-group row">
       <label for="bonds-name" class="col-sm-2 col-form-label">Tên trái phiếu </label>
       <div class="col-sm-2">
-        <input type="text" readonly class="form-control" id="bonds-name">
+        <input type="text" readonly class="form-control border border-dark" id="bonds-name">
       </div>
       <label for="organization-reissue" class="col-sm-2 col-form-label">Tổ chức phát hành</label>
       <div class="col-sm-2">
-        <select class="form-control" id="organization-reissue">
+        <select class="form-control border border-dark" id="organization-reissue">
           <option>1</option>
           <option>2</option>
           <option>3</option>
@@ -20,7 +20,7 @@
       </div>
       <label for="bonds-code" class="col-sm-2 col-form-label">Loại trái phiếu</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" id="bonds-code">
+        <input type="text" class="form-control border border-dark" id="bonds-code">
       </div>
     </div>
 
@@ -28,16 +28,16 @@
     <div class="form-group row">
       <label for="bonds-type" class="col-sm-2 col-form-label">Mã trái phiếu</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" id="bonds-type">
+        <input type="text" class="form-control border border-dark" id="bonds-type">
       </div>
       <label for="datepicker" class="col-sm-2 col-form-label">Ngày phát hành</label>
       <div class="col-sm-2">
         <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-               name="datepicker" (ngModelChange)="myDate = $event" class="form-control" id="datepicker">
+               name="datepicker" (ngModelChange)="myDate = $event" class="form-control border border-dark" id="datepicker">
       </div>
       <label for="inputPassword" class="col-sm-2 col-form-label">Hình thức phát hành</label>
       <div class="col-sm-2">
-        <select class="form-control" id="inputPassword">
+        <select class="form-control border border-dark" id="inputPassword">
           <option>1</option>
           <option>2</option>
           <option>3</option>
@@ -50,16 +50,16 @@
     <div class="form-group row">
       <label for="listing-code" class="col-sm-2 col-form-label">Mã niêm yết</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" id="listing-code">
+        <input type="text" class="form-control border border-dark" id="listing-code">
       </div>
       <label for=" date-due" class="col-sm-2 col-form-label">Ngày đáo hạn</label>
       <div class="col-sm-2">
         <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-               name="date-due" (ngModelChange)="myDate = $event" class="form-control" id=" date-due">
+               name="date-due" (ngModelChange)="myDate = $event" class="form-control border border-dark" id=" date-due">
       </div>
       <label for="release-purpose" class="col-sm-2 col-form-label">Mục đích phát hành</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" id="release-purpose">
+        <input type="text" class="form-control border border-dark" id="release-purpose">
       </div>
     </div>
 
@@ -67,11 +67,11 @@
     <div class="form-group row">
       <label for="price" class="col-sm-2 col-form-label">Mệnh giá </label>
       <div class="col-sm-2">
-        <input type="text" readonly class="form-control" id="price">
+        <input type="text" readonly class="form-control border border-dark"  id="price">
       </div>
       <label for="buy-back-before-maturity" class="col-sm-2 col-form-label">Mua lại trước hạn</label>
       <div class="col-sm-2">
-        <select class="form-control" id="buy-back-before-maturity">
+        <select class="form-control border border-dark" id="buy-back-before-maturity">
           <option>1</option>
           <option>2</option>
           <option>3</option>
@@ -98,18 +98,18 @@
       </div>
       <label for="information-TSĐB" class="col-sm-2 col-form-label">Thông tin TSĐB</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" id="information-TSĐB">
+        <input type="text" class="form-control border border-dark" id="information-TSĐB">
       </div>
       <label for="guarantee-unit" class="col-sm-2 col-form-label">Đơn vị bảo lãnh</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" id="guarantee-unit">
+        <input type="text" class="form-control border border-dark" id="guarantee-unit">
       </div>
     </div>
 
     <div class="form-group row">
       <label for="guarantee-status" class="col-sm-2 col-form-label">Trạng thái bảo lãnh</label>
       <div class="col-sm-2">
-        <select class="form-control" id="guarantee-status">
+        <select class="form-control border border-dark" id="guarantee-status">
           <option>1</option>
           <option>2</option>
           <option>3</option>
@@ -119,11 +119,11 @@
       </div>
       <label for="total-value-TSĐB" class="col-sm-2 col-form-label">Tổng giá trị TSĐB</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" id="total-value-TSĐB">
+        <input type="text" class="form-control border border-dark" id="total-value-TSĐB">
       </div>
       <label for="guarantee-value" class="col-sm-2 col-form-label">Gía trị bảo lãnh</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" id="guarantee-value">
+        <input type="text" class="form-control border border-dark" id="guarantee-value">
       </div>
     </div>
 
@@ -134,49 +134,49 @@
     </div>
 
     <div>
-      <table class="table" >
+      <table class="table border border-dark" >
         <thead>
         <tr>
-          <th scope="col">Kỳ</th>
-          <th scope="col">Ngày xác định LS</th>
-          <th scope="col">Ngày đầu kỳ coupon</th>
-          <th scope="col">Ngày cuối kỳ coupon</th>
-          <th scope="col">Ngày chốt danh sách</th>
-          <th scope="col">Ngày thành toán</th>
-          <th scope="col">LS kỳ</th>
-          <th scope="col">LSTS</th>
-          <th scope="col">Biện độ</th>
-          <th scope="col">Action</th>
+          <th class="border border-dark" scope="col">Kỳ</th>
+          <th  class="border border-dark"  scope="col">Ngày xác định LS</th>
+          <th   class="border border-dark"  scope="col">Ngày đầu kỳ coupon</th>
+          <th  class="border border-dark"  scope="col">Ngày cuối kỳ coupon</th>
+          <th   class="border border-dark" scope="col">Ngày chốt danh sách</th>
+          <th  class="border border-dark"  scope="col">Ngày thành toán</th>
+          <th  class="border border-dark"  scope="col">LS kỳ</th>
+          <th  class="border border-dark"  scope="col">LSTS</th>
+          <th  class="border border-dark"  scope="col">Biện độ</th>
+          <th  class="border border-dark"  scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>
+        <tr class="border border-dark">
+          <th scope="row" >1</th>
+          <td class="border border-dark">
             <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-                   name="determined-date" (ngModelChange)="myDate = $event" class="form-control" id="determined-date">
+                   name="determined-date" (ngModelChange)="myDate = $event" class="form-control border border-dark" id="determined-date">
           </td>
-          <td>
+          <td class="border border-dark">
             <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-                   name="first-day-coupon" (ngModelChange)="myDate = $event" class="form-control" id="first-day-coupon">
+                   name="first-day-coupon" (ngModelChange)="myDate = $event" class="form-control border border-dark" id="first-day-coupon">
           </td>
-          <td>
+          <td class="border border-dark">
             <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-                   name="end-day-coupon" (ngModelChange)="myDate = $event" class="form-control" id="end-day-coupon">
+                   name="end-day-coupon" (ngModelChange)="myDate = $event" class="form-control border border-dark" id="end-day-coupon">
           </td>
-          <td>
+          <td class="border border-dark">
             <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-                   name="closing-day-coupon" (ngModelChange)="myDate = $event" class="form-control"
+                   name="closing-day-coupon" (ngModelChange)="myDate = $event" class="form-control border border-dark"
                    id="closing-day-coupon">
           </td>
-          <td>
+          <td class="border border-dark">
             <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-                   name="LS" (ngModelChange)="myDate = $event" class="form-control" id="LS">
+                   name="LS" (ngModelChange)="myDate = $event" class="form-control border border-dark" id="LS">
           </td>
-          <td>@mdo</td>
-          <td>@mdo</td>
-          <td>@mdo1</td>
-          <td>
+          <td class="border border-dark">@mdo</td>
+          <td class="border border-dark">@mdo</td>
+          <td class="border border-dark">@mdo1</td>
+          <td class="border border-dark">
             <a class="table-link danger">
 									<span class="fa-stack edit">
 										<i class="fa fa-square fa-stack-2x"></i>

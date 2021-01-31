@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {TokenStorageService} from './_services/token-storage.service';
-import {AutomationComponent} from './automation/automation.component';
+import {TokenStorageService} from './modules/_services/token-storage.service';
+import {AutomationComponent} from './modules/automation/automation.component';
 import {MatDialog} from '@angular/material';
 
 @Component({

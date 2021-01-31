@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {HomeComponent} from './home/home.component';
-import {LoginComponent} from './login/login.component';
-import {RegisterComponent} from './register/register.component';
-import {ProfileComponent} from './profile/profile.component';
-import {BoardUserComponent} from './board-user/board-user.component';
-import {BoardModeratorComponent} from './board-moderator/board-moderator.component';
-import {BoardAdminComponent} from './board-admin/board-admin.component';
-import {OriginalBondsComponent} from './original-bonds/original-bonds.component';
+import {HomeComponent} from './modules/home/home.component';
+import {LoginComponent} from './modules/login/login.component';
+import {RegisterComponent} from './modules/register/register.component';
+import {ProfileComponent} from './modules/profile/profile.component';
+import {BoardUserComponent} from './modules/board-user/board-user.component';
+import {BoardModeratorComponent} from './modules/board-moderator/board-moderator.component';
+import {BoardAdminComponent} from './modules/board-admin/board-admin.component';
+import {OriginalBondsComponent} from './modules/original-bonds/original-bonds.component';
 import {AppComponent} from './app.component';
-import {ContractParametersComponent} from './contract-parameters/contract-parameters.component';
-import {UpdateContractComponent} from './contract-parameters/update-contract/update-contract.component';
+import {ContractParametersComponent} from './modules/contract-parameters/contract-parameters.component';
+import {UpdateContractComponent} from './modules/contract-parameters/update-contract/update-contract.component';
+import {TemplateContractComponent} from './modules/template-contract/template-contract.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -23,19 +24,19 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'original', component: OriginalBondsComponent },
   {path: 'contract-parameter', component: ContractParametersComponent},
-  {path: 'update-contract', component: UpdateContractComponent},
   {
     path: '',
-    component: AppComponent,
+    component: HomeComponent,
+    data: {
+      breadcrumb: 'home'
+    },
     children: [
       {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
-      },
-      {
-        path: 'dashboard',
-        loadChildren: './app.module#AppModule'
+        path: 'template-contract',
+        data: {
+          breadcrumb: 'template-contract'
+        },
+        component: TemplateContractComponent
       }
     ]
   }

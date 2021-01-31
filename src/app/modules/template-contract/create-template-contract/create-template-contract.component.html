@@ -1,0 +1,52 @@
+<div class="container">
+  <h4 class="col-sm-12 font-weight-bold">Thông tin mẫu hợp đồng </h4>
+  <div>
+    <app-app-loading  class="blur" *ngIf="isLoadingSave" ></app-app-loading>
+
+    <form >
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label text-light">Mã hợp đồng </label>
+        <label class="col-sm-4 col-form-label text-light">Tên hợp đồng </label>
+        <label class="col-sm-4 col-form-label text-light">Mô tả </label>
+      </div>
+      <div class="form-group row">
+        <div class=" col-sm-4">
+          <input  [(ngModel)]="templateContract.code" type="text" class="form-control border border-dark col-sm-4" name="code">
+        </div>
+        <div class="col-sm-4">
+          <input  [disabled]="isLoadingSave"  type="text" [(ngModel)]="templateContract.name" class="form-control border border-dark col-sm-4"
+                  name="name">
+        </div>
+        <div class="col-sm-4">
+          <input [disabled]="isLoadingSave"  type="text" [(ngModel)]="templateContract.description" class="form-control border border-dark col-sm-4"
+                 name="description">
+        </div>
+      </div>
+
+      <div class="row">
+        <label class="col-sm-4 col-form-label text-light">Mẫu hợp đồng </label>
+      </div>
+      <editor [(ngModel)]="templateContract.content" name="template"
+              apiKey="hav5qg0mp5r2o7hc34vo0f15zmp4i8wk7wiwoysk8g4y4cz9"
+              plugins="wordcount"></editor>
+
+      <div class="form-group row" style=" margin-top: 12px;">
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-2 text-center">
+          <button type="button" class="btn btn-outline-dark" style="background: white" (click)="clear()">CLEAR</button>
+        </div>
+        <div class="col-sm-2 text-center">
+          <button type="button" class="btn btn-primary text-light" (click)="update()">THÊM HỢP ĐỒNG</button>
+        </div>
+        <div class="col-sm-4">
+        </div>
+      </div>
+
+
+    </form>
+  </div>
+
+</div>
+
+
