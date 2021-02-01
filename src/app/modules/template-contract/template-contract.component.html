@@ -4,14 +4,14 @@
     <span class="material-icons">list</span>
     <label> &#160; &#160;Danh sách template hợp đồng</label>
   </div>
-  <form>
+  <form (ngSubmit)="doSearch()">
     <div class="form-group row">
       <h4 class="col-sm-1 font-weight-bold" >Tìm kiếm</h4>
       <label class="col-sm-1 col-form-label">Mã hợp đồng</label>
       <div class="col-sm-4">
         <div class="form-group has-search">
           <span class="fa fa-search form-control-feedback"></span>
-          <input type="text" class="form-control border border-dark" placeholder="Search">
+          <input [(ngModel)]="contentSearch" type="text" class="form-control border border-dark" placeholder="Search" name="contentSearch">
         </div>
       </div>
       <div class="col-sm-3"></div>
@@ -19,10 +19,10 @@
         <button type="button" class="btn btn-outline-dark"><span class="material-icons">sync</span></button>
       </div>
       <div class="col-sm-1">
-        <button type="button" class="btn btn-outline-dark">CLEAR</button>
+        <button (click)="clear()" type="button" class="btn btn-outline-dark">CLEAR</button>
       </div>
       <div class="col-sm-1">
-        <button type="button" class="btn btn-dark">TÌM KIẾM</button>
+        <button (click)="doSearch()" type="button" class="btn btn-dark">TÌM KIẾM</button>
       </div>
     </div>
 
@@ -44,7 +44,6 @@
           <th class="border border-dark header-table text-light" scope="col">Mô tả </th>
           <th  class="border border-dark header-table text-light" scope="col">Active verson </th>
           <th class="border border-dark header-table text-light" scope="col">Ngày áp dụng</th>
-          <th class="border border-dark header-table text-light" scope="col">Ngày tạo</th>
           <th class="border border-dark header-table text-light" scope="col">Thao tác</th>
         </tr>
         </thead>
@@ -55,7 +54,6 @@
           <td class="border border-dark">{{templateContract.description}}</td>
           <td class="border border-dark">{{templateContract.activeVersion}}</td>
           <td class="border border-dark">{{templateContract.updateDate | date:'dd/MM/yyyy'}}</td>
-          <td class="border border-dark">{{templateContract.createDate  | date:'dd/MM/yyyy'}}</td>
           <td class="border border-dark">
             <a (click)="doUpdate(templateContracts)" class="table-link danger" >
 									<span class="fa-stack edit">
@@ -63,7 +61,7 @@
 										<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
 									</span>
             </a>
-            <a href="">
+            <a (click)="doShowDetail(templateContracts)">
               <span style=" margin-left: 34px;position: relative;top: 5px;"  class="material-icons">visibility</span>
             </a>
           </td>
@@ -76,10 +74,10 @@
 
         </div>
         <div class="col-sm-2">
-          <ngb-pagination [collectionSize]="30" [(page)]="page" aria-label="Custom pagination">
+          <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)" [collectionSize]="30" [(page)]="page" aria-label="Custom pagination">
             <ng-template >Prev</ng-template>
             <ng-template >Next</ng-template>
-            <ng-template  let-p>{{ getPageSymbol(p) }}</ng-template>
+            <ng-template ></ng-template>
           </ngb-pagination>
         </div>
       </div>

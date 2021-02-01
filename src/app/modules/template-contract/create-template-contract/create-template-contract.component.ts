@@ -2,6 +2,7 @@ import {Component, HostListener, Inject, OnInit} from '@angular/core';
 import {ITemplateContract} from '../../../model/models';
 import {TemplateContractService} from '../service/templateContract.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {DialogService} from '../../../dialogs';
 
 @Component({
   selector: 'app-create-template-contract',
@@ -15,6 +16,7 @@ export class CreateTemplateContractComponent implements OnInit {
   constructor(
     private templateContractService: TemplateContractService,
     public dialogRef: MatDialogRef<CreateTemplateContractComponent>,
+    private dialogService: DialogService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.dialogRef.disableClose = true;
@@ -31,10 +33,17 @@ export class CreateTemplateContractComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  update() {
+  doCreate() {
     this.isLoadingSave =  true;
     this.templateContractService.createTemplateContract(this.templateContract).subscribe(data => {
       this.isLoadingSave =  false;
+      this.dialogRef.close();
+      this.dialogService.success({'title': 'Thông báo', 'message': 'Đã gửi phê duyệt thành công'}, () => {
+      });
+    }, error => {
+      console.log(error);
+      this.dialogService.error({'title': 'Thông báo', 'message': 'Có lỗi xảy ra vui lòng thử lại'}, () => {
+      });
     });
   }
 

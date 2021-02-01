@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from '../_services/user.service';
+import {ITemplateContract} from '../../model/models';
 
 @Component({
   selector: 'app-home',

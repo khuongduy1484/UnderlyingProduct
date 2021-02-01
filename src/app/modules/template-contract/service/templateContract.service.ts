@@ -13,8 +13,8 @@ export class TemplateContractService {
   ) {
   }
 
-  getTemplateContract(): Observable<ITemplateContract[]> {
-    return this.templateManagementService.getTemplateContract();
+  getTemplateContract(code: string, status: number, offset: number): Observable<any> {
+    return this.templateManagementService.getTemplateContract(code, status, offset);
   }
 
   updateTemplateContract(body: ITemplateContract): Observable<any> {
@@ -24,6 +24,9 @@ export class TemplateContractService {
 
   createTemplateContract(body: ITemplateContract): Observable<any> {
     return this.templateManagementService.createTemplateContract(body);
+  }
 
+  getTemplateContractInRedis(code: string, offset: number): Observable<any> {
+    return this.templateManagementService.getTemplateContractInRedis(code , offset);
   }
 }

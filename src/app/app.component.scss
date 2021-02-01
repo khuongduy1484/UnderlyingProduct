@@ -82,10 +82,16 @@ body {
 mat-sidenav-container, mat-sidenav-content, mat-sidenav {
   height: 100%;
   background: #fbfcfe;
+  width: 100%;
+  overflow-x: hidden;
+
+
   body {
     max-width: 200px;
     margin: 0 auto;
     border:1px solid black;
+    overflow-y: visible !important;
+
   }
 }
 

@@ -20,8 +20,8 @@ export class TemplateManagementService {
   }
 
 
-  getTemplateContract(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/template-contracts`);
+  getTemplateContract(code: string, status: number, offset: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/template-contracts?code=${code}&status=${status}&offset=${offset}`);
   }
 
   updateTemplateContract(body: any): Observable<any> {
@@ -29,7 +29,11 @@ export class TemplateManagementService {
   }
 
   createTemplateContract(body: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/template-contracts`, body);
+    return this.http.post(`${environment.apiUrl}/template-contracts/redis`, body);
+  }
+
+  getTemplateContractInRedis(code: string, offset: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/template-contracts/redis?code=${code}&offset=${offset}`);
   }
 
 }

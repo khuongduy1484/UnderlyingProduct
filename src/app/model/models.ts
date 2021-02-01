@@ -11,6 +11,6 @@ export interface ITemplateContract {
   status: string;
   id: string;
   content: string;
-
+  checked: boolean;
 }
 

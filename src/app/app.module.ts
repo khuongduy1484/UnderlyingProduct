@@ -44,6 +44,7 @@ import { AppLoadingComponent } from './shared/app-loading/app-loading.component'
 import { CreateTemplateContractComponent } from './modules/template-contract/create-template-contract/create-template-contract.component';
 import { ListWaitingForApprovaComponent } from './modules/template-contract/list-waiting-for-approva/list-waiting-for-approva.component';
 import { BreadcrumbComponent } from './modules/breadcrumb/breadcrumb.component';
+import { TemplateContractDetailComponent } from './modules/template-contract/template-contract-detail/template-contract-detail.component';
 
 
 @NgModule({
@@ -68,7 +69,8 @@ import { BreadcrumbComponent } from './modules/breadcrumb/breadcrumb.component';
     AppLoadingComponent,
     CreateTemplateContractComponent,
     ListWaitingForApprovaComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    TemplateContractDetailComponent
 
   ],
   imports: [
@@ -92,13 +94,9 @@ import { BreadcrumbComponent } from './modules/breadcrumb/breadcrumb.component';
     NgbModule,
     TemplateContractRoutingModule,
     EditorModule
-
-
-
-
   ],
-  entryComponents: [AutomationComponent, UpdateTemplateContractComponent, CreateTemplateContractComponent],
-  exports: [MatDialogModule, MatIconModule, MatTabsModule, MatSidenavModule],
+  entryComponents: [AutomationComponent, UpdateTemplateContractComponent, CreateTemplateContractComponent, TemplateContractDetailComponent],
+  exports: [MatDialogModule, MatIconModule, MatTabsModule, MatSidenavModule, DialogModule],
   providers: [authInterceptorProviders , {provide: APP_BASE_HREF, useValue: '/'},  {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}} ],
   bootstrap: [AppComponent]
 })
