@@ -1,6 +1,6 @@
 <app-layout>
-  <ng-container>
-    <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+  <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+  <div class="content-wrapper">
     <mat-sidenav-container>
       <mat-sidenav
         #sidenav
@@ -17,5 +17,5 @@
         </main>
       </mat-sidenav-content>
     </mat-sidenav-container>
-  </ng-container>
+  </div>
 </app-layout>
