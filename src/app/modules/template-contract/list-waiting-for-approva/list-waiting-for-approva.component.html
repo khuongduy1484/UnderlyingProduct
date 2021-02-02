@@ -72,23 +72,20 @@
                              [checked]="templateContract.checked" (change)="doSelect($event, i)">
                     </label>
                   </td>
-                  <td class="border border-dark">{{templateContract.code}}</td>
-                  <td class="border border-dark">{{templateContract.name}}</td>
-                  <td class="border border-dark">{{templateContract.description}}</td>
-                  <td class="border border-dark">{{templateContract.activeVersion}}</td>
-                  <td class="border border-dark">{{templateContract.updateDate | date:'dd/MM/yyyy'}}</td>
-                  <td class="border border-dark">{{templateContract.status }}</td>
-                  <td class="border border-dark">
-                    <a (click)="doSelected(templateContract)" class="table-link danger" data-toggle="modal"
+                  <td>{{templateContract.code}}</td>
+                  <td>{{templateContract.name}}</td>
+                  <td>{{templateContract.description}}</td>
+                  <td>{{templateContract.activeVersion}}</td>
+                  <td>{{templateContract.updateDate | date:'dd/MM/yyyy'}}</td>
+                  <td>{{templateContract.status }}</td>
+                  <td>
+                    <a (click)="doSelected(templateContract)" class="btn btn-primary btn-xs mr-1" data-toggle="modal"
                        data-target="#modal-update">
-									<span class="fa-stack edit">
-										<i class="fa fa-square fa-stack-2x"></i>
-										<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
-									</span>
+                      <i class="far fa-edit"></i>
                     </a>
-                    <a href="">
-                      <span style=" margin-left: 34px;position: relative;top: 5px;"
-                            class="material-icons">visibility</span>
+                    <a href="" class="btn btn-info btn-xs" data-toggle="modal"
+                       data-target="#modal-detail">
+                      <i class="fas fa-eye"></i>
                     </a>
                   </td>
                 </tr>
@@ -223,6 +220,28 @@
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-secondary float-right" (click)="clear()">Clear</button>
           <button type="button" class="btn btn-primary float-right" (click)="doUpdate()">Thêm hợp đồng</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="modal-detail" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Chi tiết hợp đồng</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+          In trực tiếp mã html ra đây
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </form>
     </div>
