@@ -30,7 +30,7 @@ export class TemplateContractService {
     return this.templateManagementService.getTemplateContractInRedis(code , offset);
   }
 
-  deleteTemplateContract(body: any[]): Observable<any> {
+  deleteTemplateContract(body: ITemplateContract[]): Observable<any> {
     return this.templateManagementService.deleteTemplateContract(body);
   }
 

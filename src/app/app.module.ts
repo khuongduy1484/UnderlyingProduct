@@ -28,7 +28,6 @@ import {
   MatToolbarModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {DialogModule} from './dialogs';
 import {LayoutComponent} from './modules/layout/layout.component';
 import {HeaderComponent} from './navigation/header/header.component';
 import {SidenavListComponent} from './navigation/sidenav-list/sidenav-list.component';
@@ -37,16 +36,14 @@ import {ContractParametersComponent} from './modules/contract-parameters/contrac
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {UpdateContractComponent} from './modules/contract-parameters/update-contract/update-contract.component';
 import {TemplateContractComponent} from './modules/template-contract/template-contract.component';
-import {UpdateTemplateContractComponent} from './modules/template-contract/update-template-contract/update-template-contract.component';
-import {TemplateContractRoutingModule} from './modules/template-contract/products-routing.module';
 import {EditorModule} from '@tinymce/tinymce-angular';
 import { AppLoadingComponent } from './shared/app-loading/app-loading.component';
-import { CreateTemplateContractComponent } from './modules/template-contract/create-template-contract/create-template-contract.component';
 import { ListWaitingForApprovaComponent } from './modules/template-contract/list-waiting-for-approva/list-waiting-for-approva.component';
 import { BreadcrumbComponent } from './modules/breadcrumb/breadcrumb.component';
 import { TemplateContractDetailComponent } from './modules/template-contract/template-contract-detail/template-contract-detail.component';
 import {RequestInterceptor} from './service/authentication/request.interceptor';
 import {LocalStorageService} from './service/utils/local-storage.service';
+import {ToastrModule} from 'ngx-toastr';
 
 
 @NgModule({
@@ -67,9 +64,7 @@ import {LocalStorageService} from './service/utils/local-storage.service';
     ContractParametersComponent,
     UpdateContractComponent,
     TemplateContractComponent,
-    UpdateTemplateContractComponent,
     AppLoadingComponent,
-    CreateTemplateContractComponent,
     ListWaitingForApprovaComponent,
     BreadcrumbComponent,
     TemplateContractDetailComponent
@@ -82,7 +77,6 @@ import {LocalStorageService} from './service/utils/local-storage.service';
     HttpClientModule,
     MatDialogModule,
     BrowserAnimationsModule,
-    DialogModule,
     MatIconModule,
     MatListModule,
     MatToolbarModule,
@@ -94,11 +88,11 @@ import {LocalStorageService} from './service/utils/local-storage.service';
     MatFormFieldModule,
     MatPaginatorModule,
     NgbModule,
-    TemplateContractRoutingModule,
-    EditorModule
+    EditorModule,
+    ToastrModule.forRoot()
   ],
-  entryComponents: [AutomationComponent, UpdateTemplateContractComponent, CreateTemplateContractComponent, TemplateContractDetailComponent],
-  exports: [MatDialogModule, MatIconModule, MatTabsModule, MatSidenavModule, DialogModule],
+  entryComponents: [AutomationComponent , TemplateContractDetailComponent],
+  exports: [MatDialogModule, MatIconModule, MatTabsModule, MatSidenavModule],
   providers: [authInterceptorProviders , {provide: APP_BASE_HREF, useValue: '/'},  {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},  { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true } , LocalStorageService],
   bootstrap: [AppComponent]
 })

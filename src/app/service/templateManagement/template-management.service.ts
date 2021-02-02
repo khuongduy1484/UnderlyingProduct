@@ -36,7 +36,7 @@ export class TemplateManagementService {
     return this.http.get(`${environment.apiUrl}/template-contracts/waiting-for-approval?code=${code}&offset=${offset}`);
   }
 
-  deleteTemplateContract(body: any[]): Observable<any> {
+  deleteTemplateContract(body: any): Observable<any> {
     return this.http.post(`${environment.apiUrl}/template-contracts/waiting-for-approvals`, body);
   }
 

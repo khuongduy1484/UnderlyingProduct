@@ -1,15 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {TemplateManagementService} from '../../service/templateManagement/template-management.service';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ITemplateContract} from '../../model/models';
 import {TemplateContractService} from './service/templateContract.service';
-import {combineLatest, Subject} from 'rxjs';
-import {finalize, takeUntil} from 'rxjs/operators';
-import {AutomationComponent} from '../automation/automation.component';
 import {MatDialog} from '@angular/material';
-import {UpdateTemplateContractComponent} from './update-template-contract/update-template-contract.component';
-import {CreateTemplateContractComponent} from './create-template-contract/create-template-contract.component';
-import {TemplateContractDetailComponent} from './template-contract-detail/template-contract-detail.component';
-import {DialogService} from '../../dialogs';
+import {NotificationService} from '../../shared/notification.service';
 
 @Component({
   selector: 'app-template-contract',
@@ -20,7 +13,8 @@ export class TemplateContractComponent implements OnInit {
   page: number;
   templateContracts: ITemplateContract[] = [];
   contentSearch: any;
-  codeContractOld:  string;
+  codeContractOld: string;
+  @ViewChild('div') detailContent: ElementRef;
 
 
   templateContractNew = {
@@ -40,7 +34,7 @@ export class TemplateContractComponent implements OnInit {
   constructor(
     private templateContractService: TemplateContractService,
     private dialog: MatDialog,
-    private dialogService: DialogService
+    private notificationService: NotificationService
   ) {
   }
 
@@ -59,19 +53,6 @@ export class TemplateContractComponent implements OnInit {
     });
   }
 
-
-  // doUpdate(contract) {
-  //   const dialogRef = this.dialog.open(UpdateTemplateContractComponent, {
-  //     data: {data: contract[0]},
-  //     width: '60%',
-  //     height: '480px'
-  //   });
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log('The dialog was closed');
-  //   });
-  //   this.getPageSymbol(0);
-  // }
-
   doSelected(contractTemplate) {
     this.templateContractUpdate = contractTemplate;
     this.codeContractOld = contractTemplate.code;
@@ -79,37 +60,32 @@ export class TemplateContractComponent implements OnInit {
 
   doUpdate() {
     if (!(this.codeContractOld === this.templateContractUpdate.code)) {
-      this.dialogService.error({'title': 'Thông báo', 'message': 'Mã hợp đồng không được phép sửa'}, () => {
-      });
+      this.notificationService.showError('Mã hợp đồng không được phép sửa', 'Thông báo');
       return;
     }
     this.templateContractService.createTemplateContractWaitingForApproval(this.templateContractUpdate).subscribe(data => {
-      if (data.errorCode === '1') {
-        this.dialogService.success({'title': 'Thông báo', 'message': 'Đã cập nhập xong hợp đồng'}, () => {});
+      if (data.errorCode === '0') {
+        this.notificationService.showSuccess('Đã cập nhập xong hợp đồng', 'Thông báo' );
       } else {
-        this.dialogService.error({'title': 'Thông báo', 'message': data.description}, () => {});
+        this.notificationService.showError('Thông báo', data.description);
       }
     }, error => {
       console.log(error);
-      this.dialogService.error({'title': 'Thông báo', 'message': 'Có lỗi xảy ra vui lòng thử lại'}, () => {
-      });
+      this.notificationService.showError( 'Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
     });
   }
 
   doCreate() {
     this.templateContractService.createTemplateContract(this.templateContractNew).subscribe(data => {
-      if (data.errorCode === '1') {
-        this.dialogService.success({'title': 'Thông báo', 'message': 'Đã gửi phê duyệt thành công'}, () => {
-        });
+      if (data.errorCode === '0') {
+        this.notificationService.showSuccess('Đã gửi phê duyệt thành công', 'Thông báo' );
       } else {
-        this.dialogService.error({'title': 'Thông báo', 'message': data.description}, () => {
-        });
+        this.notificationService.showError( data.description, 'Thông báo');
       }
     }, error => {
 
       console.log(error);
-      this.dialogService.error({'title': 'Thông báo', 'message': 'Có lỗi xảy ra vui lòng thử lại'}, () => {
-      });
+      this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo', );
     });
   }
 
@@ -129,15 +105,8 @@ export class TemplateContractComponent implements OnInit {
     });
   }
 
-  doShowDetail(contract) {
-    const dialogRef = this.dialog.open(TemplateContractDetailComponent, {
-      data: {data: contract[0]},
-      width: '50%',
-      height: '400px'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+  doShowDetail(content) {
+    this.detailContent.nativeElement.innerHTML = content;
   }
 
 

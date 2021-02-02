@@ -51,7 +51,7 @@
                   <button type="button" (click)="doSubmit()" class="btn btn-dark">SUBMIT</button>
                 </div>
               </div>
-              <table class="table table-bordered">
+              <table  class="table table-bordered" >
                 <thead>
                 <tr>
                   <th scope="col"></th>
@@ -64,8 +64,8 @@
                   <th scope="col">Thao tác</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr *ngFor="let templateContract of templateContracts ; let i = index" class="border border-dark">
+                <tbody >
+                <tr  *ngFor="let templateContract of templateContracts ; let i = index" class="border border-dark">
                   <td>
                     <label class="form-radio">
                       <input type="checkbox" name="id_number" id="record-{{i}}" name="record-{{i}}"
@@ -83,9 +83,15 @@
                        data-target="#modal-update">
                       <i class="far fa-edit"></i>
                     </a>
-                    <a href="" class="btn btn-info btn-xs" data-toggle="modal"
+                    <a  (click)="doShowDetail(templateContract.content)"  class="btn btn-info btn-xs" data-toggle="modal"
                        data-target="#modal-detail">
                       <i class="fas fa-eye"></i>
+                    </a>
+                    <a style="position: relative;left: 4px;"  (click)="doApproval(templateContract)" class="btn btn-info btn-xs">
+                      <i class="fa fa-paper-plane"  aria-hidden="true"></i>
+                    </a>
+                    <a style="position: relative;left: 8px;" (click)="doDelete(templateContract)"  class="btn btn-info btn-xs" >
+                      <i class="fa fa-trash" aria-hidden="true"></i>
                     </a>
                   </td>
                 </tr>
@@ -237,8 +243,8 @@
         </button>
       </div>
       <form>
-        <div class="modal-body">
-          In trực tiếp mã html ra đây
+        <div class="modal-body" >
+          <div #divElement></div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
