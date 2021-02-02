@@ -24,16 +24,25 @@ export class TemplateManagementService {
     return this.http.get(`${environment.apiUrl}/template-contracts?code=${code}&status=${status}&offset=${offset}`);
   }
 
-  updateTemplateContract(body: any): Observable<any> {
-    return this.http.put(`${environment.apiUrl}/template-contracts`, body);
+  updateOrCreateTemplateContract(body: any): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/template-contracts/approval`, body);
   }
 
   createTemplateContract(body: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/template-contracts/redis`, body);
+    return this.http.post(`${environment.apiUrl}/template-contracts/waiting-for-approval`, body);
   }
 
   getTemplateContractInRedis(code: string, offset: number): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/template-contracts/redis?code=${code}&offset=${offset}`);
+    return this.http.get(`${environment.apiUrl}/template-contracts/waiting-for-approval?code=${code}&offset=${offset}`);
+  }
+
+  deleteTemplateContract(body: any): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/template-contracts/waiting-for-approvals`, body);
+  }
+
+  createTemplateContractWaitingForApproval(body: any) {
+    return this.http.put(`${environment.apiUrl}/template-contracts/waiting-for-approval`, body);
+
   }
 
 }

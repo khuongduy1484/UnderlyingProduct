@@ -12,6 +12,7 @@ import {DialogService} from '../../../dialogs';
 export class UpdateTemplateContractComponent implements OnInit {
   templateContract: ITemplateContract;
   isLoadingSave = false;
+  codeContractOld:  string;
 
   constructor(
     private templateContractService: TemplateContractService,
@@ -27,6 +28,7 @@ export class UpdateTemplateContractComponent implements OnInit {
 
   ngOnInit() {
     this.templateContract = this.data.data;
+    this.codeContractOld = this.templateContract.code;
   }
 
   @HostListener('window:keyup.esc') onKeyUp() {
@@ -34,13 +36,22 @@ export class UpdateTemplateContractComponent implements OnInit {
   }
 
   doUpdate() {
+    if (!(this.codeContractOld === this.templateContract.code)) {
+      this.dialogService.error({'title': 'Thông báo', 'message': 'Mã hợp đồng không được phép sửa'}, () => {
+      });
+      return;
+    }
     this.isLoadingSave = true;
-    this.templateContractService.createTemplateContract(this.templateContract).subscribe(data => {
+    this.templateContractService.createTemplateContractWaitingForApproval(this.templateContract).subscribe(data => {
       this.isLoadingSave = false;
       this.dialogRef.close();
-      this.dialogService.success({'title': 'Thông báo', 'message': 'Đã cập nhập xong hợp đồng'}, () => {
-      });
+      if (data.errorCode === '1') {
+        this.dialogService.success({'title': 'Thông báo', 'message': 'Đã cập nhập xong hợp đồng'}, () => {});
+      } else {
+        this.dialogService.error({'title': 'Thông báo', 'message': data.description}, () => {});
+      }
     }, error => {
+      this.isLoadingSave = false;
       console.log(error);
       this.dialogService.error({'title': 'Thông báo', 'message': 'Có lỗi xảy ra vui lòng thử lại'}, () => {
       });

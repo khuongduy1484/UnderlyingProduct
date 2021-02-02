@@ -14,10 +14,10 @@ import {DialogService} from '../../../dialogs';
 export class ListWaitingForApprovaComponent implements OnInit {
   page: 0;
   templateContracts: ITemplateContract[] = [];
+  lstTemplate: any[] = [];
   contentSearch = '';
   action: number;
   actionDefaut = 'Chọn tác vụ';
-
 
 
   constructor(
@@ -28,7 +28,6 @@ export class ListWaitingForApprovaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getTemplateManagement();
   }
 
   getPageSymbol(current: number) {
@@ -51,6 +50,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+    this.getPageSymbol(0);
   }
 
   doCreate() {
@@ -62,15 +62,9 @@ export class ListWaitingForApprovaComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+    this.getPageSymbol(0);
   }
 
-  getTemplateManagement() {
-    this.templateContractService.getTemplateContractInRedis('', 0).subscribe(data => {
-      if (data) {
-        this.templateContracts = data.result;
-      }
-    });
-  }
 
   doSearch() {
     this.templateContractService.getTemplateContractInRedis(this.contentSearch.trim(), 1).subscribe(data => {
@@ -90,15 +84,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
 
   doSubmit() {
     const templateContract = this.templateContracts.filter(r => r.checked === true);
-    const arrTemplate = [];
-
-    if (templateContract.length > 0) {
-      templateContract.forEach(r => {
-        arrTemplate.push(r);
-      });
-    }
-    console.log(templateContract);
-    if (templateContract.length <= 0 || templateContract === undefined ) {
+    if (templateContract.length <= 0 || templateContract === undefined) {
       this.dialogService.error({'title': 'Thông báo', 'message': 'Vui lòng chọn ít nhất một bản ghi để thực hiện tác vụ'}, () => {
       });
       return;
@@ -109,13 +95,72 @@ export class ListWaitingForApprovaComponent implements OnInit {
       return;
     }
 
-    // if (this.action === 1) {
-    //
-    // }
-    //
-    // if (this.action === 2){
-    //
-    // }
+    if (this.action === 1) {
+      this.templateContractService.updateOrCreateTemplateContract(templateContract).subscribe(data => {
+        if (data.errorCode === '1') {
+          this.dialogService.success({'title': 'Thông báo', 'message': 'Đã gửi phê duyệt thành công'}, () => {
+          });
+        } else {
+          this.dialogService.error({'title': 'Thông báo', 'message': data.description}, () => {
+          });
+        }
+      }, error => {
+        console.log(error);
+        this.dialogService.error({'title': 'Thông báo', 'message': 'Có lỗi xảy ra vui lòng thử lại'}, () => {
+        });
+      });
+    }
+
+    if (this.action === 2) {
+      this.templateContractService.deleteTemplateContract(templateContract).subscribe(data => {
+        if (data.errorCode === '1') {
+          this.dialogService.success({'title': 'Thông báo', 'message': 'Đã xóa thành công'}, () => {
+          });
+        } else {
+          this.dialogService.error({'title': 'Thông báo', 'message': data.description}, () => {
+          });
+        }
+      }, error => {
+        console.log(error);
+        this.dialogService.error({'title': 'Thông báo', 'message': 'Có lỗi xảy ra vui lòng thử lại'}, () => {
+        });
+      });
+    }
+  }
+
+  doApproval(contract) {
+    const template = [];
+    template.push(contract);
+    this.templateContractService.updateOrCreateTemplateContract(template).subscribe(data => {
+      if (data.errorCode === '1') {
+        this.dialogService.success({'title': 'Thông báo', 'message': 'Đã gửi phê duyệt thành công'}, () => {
+        });
+      } else {
+        this.dialogService.error({'title': 'Thông báo', 'message': data.description}, () => {
+        });
+      }
+    }, error => {
+      console.log(error);
+      this.dialogService.error({'title': 'Thông báo', 'message': 'Có lỗi xảy ra vui lòng thử lại'}, () => {
+      });
+    });
+  }
+
+  doDelete(code) {
+    this.lstTemplate.push(code);
+    this.templateContractService.deleteTemplateContract( this.lstTemplate).subscribe(data => {
+      if (data.errorCode === '1') {
+        this.dialogService.success({'title': 'Thông báo', 'message': 'Đã xóa thành công'}, () => {
+        });
+      } else {
+        this.dialogService.error({'title': 'Thông báo', 'message': data.description}, () => {
+        });
+      }
+    }, error => {
+      console.log(error);
+      this.dialogService.error({'title': 'Thông báo', 'message': 'Có lỗi xảy ra vui lòng thử lại'}, () => {
+      });
+    });
   }
 
 }

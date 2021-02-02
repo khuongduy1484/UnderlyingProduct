@@ -11,7 +11,7 @@ import {BoardAdminComponent} from './modules/board-admin/board-admin.component';
 import {BoardModeratorComponent} from './modules/board-moderator/board-moderator.component';
 import {BoardUserComponent} from './modules/board-user/board-user.component';
 import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {authInterceptorProviders} from './modules/_helpers/auth.interceptor';
 import {APP_BASE_HREF} from '@angular/common';
 import {OriginalBondsComponent} from './modules/original-bonds/original-bonds.component';
@@ -45,6 +45,8 @@ import { CreateTemplateContractComponent } from './modules/template-contract/cre
 import { ListWaitingForApprovaComponent } from './modules/template-contract/list-waiting-for-approva/list-waiting-for-approva.component';
 import { BreadcrumbComponent } from './modules/breadcrumb/breadcrumb.component';
 import { TemplateContractDetailComponent } from './modules/template-contract/template-contract-detail/template-contract-detail.component';
+import {RequestInterceptor} from './service/authentication/request.interceptor';
+import {LocalStorageService} from './service/utils/local-storage.service';
 
 
 @NgModule({
@@ -97,7 +99,7 @@ import { TemplateContractDetailComponent } from './modules/template-contract/tem
   ],
   entryComponents: [AutomationComponent, UpdateTemplateContractComponent, CreateTemplateContractComponent, TemplateContractDetailComponent],
   exports: [MatDialogModule, MatIconModule, MatTabsModule, MatSidenavModule, DialogModule],
-  providers: [authInterceptorProviders , {provide: APP_BASE_HREF, useValue: '/'},  {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}} ],
+  providers: [authInterceptorProviders , {provide: APP_BASE_HREF, useValue: '/'},  {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},  { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true } , LocalStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

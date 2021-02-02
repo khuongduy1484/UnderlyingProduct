@@ -10,7 +10,13 @@ import {DialogService} from '../../../dialogs';
   styleUrls: ['./create-template-contract.component.scss']
 })
 export class CreateTemplateContractComponent implements OnInit {
-  templateContract: ITemplateContract;
+  templateContract =  {
+   content :  '',
+   name :  '',
+  code : '',
+   description :  '',
+  };
+
   isLoadingSave = false;
 
   constructor(
@@ -26,7 +32,6 @@ export class CreateTemplateContractComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.templateContract =  this.data.data;
   }
 
   @HostListener('window:keyup.esc') onKeyUp() {
@@ -35,12 +40,17 @@ export class CreateTemplateContractComponent implements OnInit {
 
   doCreate() {
     this.isLoadingSave =  true;
+    console.log(this.templateContract);
     this.templateContractService.createTemplateContract(this.templateContract).subscribe(data => {
       this.isLoadingSave =  false;
       this.dialogRef.close();
-      this.dialogService.success({'title': 'Thông báo', 'message': 'Đã gửi phê duyệt thành công'}, () => {
-      });
+      if (data.errorCode === '1') {
+        this.dialogService.success({'title': 'Thông báo', 'message': 'Đã gửi phê duyệt thành công'}, () => {});
+      } else {
+        this.dialogService.error({'title': 'Thông báo', 'message': data.description}, () => {});
+      }
     }, error => {
+      this.isLoadingSave =  false;
       console.log(error);
       this.dialogService.error({'title': 'Thông báo', 'message': 'Có lỗi xảy ra vui lòng thử lại'}, () => {
       });

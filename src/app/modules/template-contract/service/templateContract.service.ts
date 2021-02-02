@@ -17,16 +17,25 @@ export class TemplateContractService {
     return this.templateManagementService.getTemplateContract(code, status, offset);
   }
 
-  updateTemplateContract(body: ITemplateContract): Observable<any> {
-    return this.templateManagementService.updateTemplateContract(body);
+  updateOrCreateTemplateContract(body: ITemplateContract[]): Observable<any> {
+    return this.templateManagementService.updateOrCreateTemplateContract(body);
 
   }
 
-  createTemplateContract(body: ITemplateContract): Observable<any> {
+  createTemplateContract(body:any): Observable<any> {
     return this.templateManagementService.createTemplateContract(body);
   }
 
   getTemplateContractInRedis(code: string, offset: number): Observable<any> {
     return this.templateManagementService.getTemplateContractInRedis(code , offset);
+  }
+
+  deleteTemplateContract(body: any): Observable<any> {
+    return this.templateManagementService.deleteTemplateContract(body);
+  }
+
+  createTemplateContractWaitingForApproval(body: any): Observable<any> {
+    return this.templateManagementService.createTemplateContractWaitingForApproval(body);
+
   }
 }

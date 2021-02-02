@@ -27,7 +27,6 @@ export class TemplateContractComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getTemplateManagement();
   }
 
   getPageSymbol(current: number) {
@@ -42,13 +41,6 @@ export class TemplateContractComponent implements OnInit {
     });
   }
 
-  getTemplateManagement() {
-    this.templateContractService.getTemplateContract('', 1, 0).subscribe(data => {
-      if (data) {
-        this.templateContracts = data.result;
-      }
-    });
-  }
 
   doUpdate(contract) {
     const dialogRef = this.dialog.open(UpdateTemplateContractComponent, {
@@ -59,6 +51,7 @@ export class TemplateContractComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+    this.getPageSymbol(0);
   }
 
   doCreate() {
@@ -70,6 +63,7 @@ export class TemplateContractComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+    this.getPageSymbol(0);
   }
 
   doSearch() {
