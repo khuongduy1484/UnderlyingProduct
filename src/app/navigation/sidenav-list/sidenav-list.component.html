@@ -33,12 +33,12 @@
 <!--</mat-nav-list>-->
 
 
-<nav class="navbar navbar-expand-md navbar-light bg-light">
+<!--<nav class="navbar navbar-expand-md navbar-light bg-light">
 
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav nav flex-column">
       <li class="nav-item active">
-           <a  routerLink="/home" (click)="onSidenavClose()">
+           <a routerLink="/home" (click)="onSidenavClose()">
                 <mat-icon>home</mat-icon> <span class="nav-caption">Dashboard</span>
             </a>
       </li>
@@ -60,4 +60,74 @@
       </li>
     </ul>
   </div>
-</nav>
+</nav>-->
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="#" class="brand-link">
+    <span class="brand-text font-weight-light">System name</span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+             with font-awesome or any other icon font library -->
+        <li class="nav-item">
+          <a routerLink="/home" (click)="onSidenavClose()" class="nav-link active">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Dashboard
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/home" (click)="onSidenavClose()" class="nav-link">
+            <i class="nav-icon fas fa-info-circle"></i>
+            <p>
+              Thông tin
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon far fa-money-bill-alt"></i>
+            <p>
+              Sản phẩm
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>
+                  Hợp đồng mẫu
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a routerLink="/template-contract" class="nav-link">
+                    <i class="far fa-dot-circle nav-icon"></i>
+                    <p>Danh sách hợp đồng</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="/template-contract-waiting-approva" class="nav-link">
+                    <i class="far fa-dot-circle nav-icon"></i>
+                    <p>Danh sách chờ phê duyệt</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>

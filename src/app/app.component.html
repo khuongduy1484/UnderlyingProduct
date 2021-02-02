@@ -1,21 +1,9 @@
 <app-layout>
-  <ng-container>
-    <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
-    <mat-sidenav-container>
-      <mat-sidenav
-        #sidenav
-        mode="side"
-        opened
-        [fixedInViewport]="false"
-      >
+    <app-header></app-header>
+    <div class="content-wrapper">
         <app-sidenav-list></app-sidenav-list>
-        <!--      (sidenavClose)="sidenav.close()"-->
-      </mat-sidenav>
-      <mat-sidenav-content>
         <main>
           <router-outlet></router-outlet>
         </main>
-      </mat-sidenav-content>
-    </mat-sidenav-container>
-  </ng-container>
+    </div>
 </app-layout>

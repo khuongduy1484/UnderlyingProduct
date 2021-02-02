@@ -1,43 +1,6 @@
-
-.has-search .form-control {
-  padding-left: 2.375rem;
+.btn-mt-27 button{
+  margin-top: 27px;
 }
-
-.has-search .form-control-feedback {
-  position: absolute;
-  z-index: 2;
-  display: block;
-  width: 2.375rem;
-  height: 2.375rem;
-  line-height: 2.375rem;
-  text-align: center;
-  pointer-events: none;
-  color: #aaa;
+.btn-mt-33 button{
+  margin-top: 33px;
 }
-
-
-
-.content-footer {
-  justify-content: space-between;
-  padding: 15px 0px;
-  .pagination {
-    ul {
-      list-style: none;
-      display: flex;
-    }
-  }
-  .page-item {
-    .mat-icon-button {
-      width: 20px;
-      height: 20px;
-      line-height: 20px;
-    }
-  }
-}
-
-
-.header-table {
-  background: #235D7C
-
-}
-
