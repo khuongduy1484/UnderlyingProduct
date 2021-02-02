@@ -35,15 +35,15 @@ import {MaterialModule} from './modules/material/material.module';
 import {ContractParametersComponent} from './modules/contract-parameters/contract-parameters.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {UpdateContractComponent} from './modules/contract-parameters/update-contract/update-contract.component';
-import {TemplateContractComponent} from './modules/template-contract/template-contract.component';
 import {EditorModule} from '@tinymce/tinymce-angular';
-import { AppLoadingComponent } from './shared/app-loading/app-loading.component';
-import { ListWaitingForApprovaComponent } from './modules/template-contract/list-waiting-for-approva/list-waiting-for-approva.component';
-import { BreadcrumbComponent } from './modules/breadcrumb/breadcrumb.component';
-import { TemplateContractDetailComponent } from './modules/template-contract/template-contract-detail/template-contract-detail.component';
+import {AppLoadingComponent} from './shared/app-loading/app-loading.component';
+import {BreadcrumbComponent} from './modules/breadcrumb/breadcrumb.component';
 import {RequestInterceptor} from './service/authentication/request.interceptor';
 import {LocalStorageService} from './service/utils/local-storage.service';
 import {ToastrModule} from 'ngx-toastr';
+import {TemplateContractComponent} from './modules/product/template-contract/template-contract.component';
+import {ListWaitingForApprovaComponent} from './modules/product/template-contract/list-waiting-for-approva/list-waiting-for-approva.component';
+import {ProductComponent} from './modules/product/product.component';
 
 
 @NgModule({
@@ -63,12 +63,11 @@ import {ToastrModule} from 'ngx-toastr';
     SidenavListComponent,
     ContractParametersComponent,
     UpdateContractComponent,
-    TemplateContractComponent,
     AppLoadingComponent,
-    ListWaitingForApprovaComponent,
     BreadcrumbComponent,
-    TemplateContractDetailComponent
-
+    TemplateContractComponent,
+    ListWaitingForApprovaComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
@@ -91,9 +90,15 @@ import {ToastrModule} from 'ngx-toastr';
     EditorModule,
     ToastrModule.forRoot()
   ],
-  entryComponents: [AutomationComponent , TemplateContractDetailComponent],
+  entryComponents: [AutomationComponent],
   exports: [MatDialogModule, MatIconModule, MatTabsModule, MatSidenavModule],
-  providers: [authInterceptorProviders , {provide: APP_BASE_HREF, useValue: '/'},  {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},  { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true } , LocalStorageService],
+  providers: [authInterceptorProviders, {provide: APP_BASE_HREF, useValue: '/'},
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RequestInterceptor,
+      multi: true
+    }, LocalStorageService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

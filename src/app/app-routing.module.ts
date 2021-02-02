@@ -9,19 +9,20 @@ import {BoardModeratorComponent} from './modules/board-moderator/board-moderator
 import {BoardAdminComponent} from './modules/board-admin/board-admin.component';
 import {OriginalBondsComponent} from './modules/original-bonds/original-bonds.component';
 import {ContractParametersComponent} from './modules/contract-parameters/contract-parameters.component';
-import {TemplateContractComponent} from './modules/template-contract/template-contract.component';
-import {ListWaitingForApprovaComponent} from './modules/template-contract/list-waiting-for-approva/list-waiting-for-approva.component';
+import {TemplateContractComponent} from './modules/product/template-contract/template-contract.component';
+// tslint:disable-next-line:max-line-length
+import {ListWaitingForApprovaComponent} from './modules/product/template-contract/list-waiting-for-approva/list-waiting-for-approva.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'user', component: BoardUserComponent },
-  { path: 'mod', component: BoardModeratorComponent },
-  { path: 'admin', component: BoardAdminComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'original', component: OriginalBondsComponent },
+  {path: 'home', component: HomeComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
+  {path: 'profile', component: ProfileComponent},
+  {path: 'user', component: BoardUserComponent},
+  {path: 'mod', component: BoardModeratorComponent},
+  {path: 'admin', component: BoardAdminComponent},
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: 'original', component: OriginalBondsComponent},
   {path: 'contract-parameter', component: ContractParametersComponent},
   {
     path: '',
@@ -38,9 +39,9 @@ const routes: Routes = [
         component: TemplateContractComponent
       },
       {
-        path: 'template-contract-waiting-approva',
+        path: 'template-contract-waiting-approval',
         data: {
-          breadcrumb: 'TEMPLATE CONTRACT Waiting For Approva'
+          breadcrumb: 'TEMPLATE CONTRACT/ WAITING FOR APPROVAL'
         },
         component: ListWaitingForApprovaComponent
       }
@@ -52,4 +53,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

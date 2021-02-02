@@ -51,7 +51,7 @@
                   <button type="button" (click)="doSubmit()" class="btn btn-dark">SUBMIT</button>
                 </div>
               </div>
-              <table  class="table table-bordered" >
+              <table #table  class="table table-bordered" >
                 <thead>
                 <tr>
                   <th scope="col"></th>
@@ -191,7 +191,7 @@
               <div class="col-md-4 col-12">
                 <div class="form-group">
                   <label for="input5" class="col-form-label">Mã hợp đồng</label>
-                  <input [(ngModel)]="templateContractUpdate.code" type="text" class="form-control border border-dark"
+                  <input [disabled]="true" [(ngModel)]="templateContractUpdate.code" type="text" class="form-control border border-dark"
                          name="code" id="input5" placeholder="Nhập mã hợp đồng">
                 </div>
               </div>

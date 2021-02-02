@@ -1,8 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ITemplateContract} from '../../model/models';
+import {ITemplateContract} from '../../../model/models';
 import {TemplateContractService} from './service/templateContract.service';
 import {MatDialog} from '@angular/material';
-import {NotificationService} from '../../shared/notification.service';
+import {NotificationService} from '../../../shared/notification.service';
 
 @Component({
   selector: 'app-template-contract',

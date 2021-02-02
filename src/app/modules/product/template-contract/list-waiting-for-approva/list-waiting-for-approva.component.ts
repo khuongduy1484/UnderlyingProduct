@@ -1,8 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {TemplateContractService} from '../service/templateContract.service';
-import {ITemplateContract} from '../../../model/models';
-import {ToastrService} from 'ngx-toastr';
-import {NotificationService} from '../../../shared/notification.service';
+import {ITemplateContract} from '../../../../model/models';
+import {NotificationService} from '../../../../shared/notification.service';
 
 @Component({
   selector: 'app-list-waiting-for-approva',

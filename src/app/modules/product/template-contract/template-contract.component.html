@@ -1,0 +1,228 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <div class="card-header">
+        <h3 class="card-title">
+          <i class="fas fa-list"></i>
+          Danh sách template hợp đồng
+        </h3>
+      </div>
+      <form (ngSubmit)="doSearch()">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <h4>Tìm kiếm</h4>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="input1" class="col-form-label">Mã hợp đồng</label>
+                    <input [(ngModel)]="contentSearch" type="text" class="form-control border border-dark" id="input1" placeholder="Nhập mã hợp đồng" name="contentSearch">
+                  </div>
+                </div>
+                <div class="col-6 btn-mt-33">
+                  <!--<button (click)="doCreate()" type="button" class="mr-1 btn btn-info float-right">Thêm mới</button>-->
+                  <button type="button" class="mr-1 btn btn-info float-right" data-toggle="modal"
+                          data-target="#modal-add-new">Thêm mới</button>
+                  <button type="button" class="mr-1 btn btn-secondary float-right" (click)="doSearch()">Tìm kiếm</button>
+                  <button type="button" class="mr-1 btn btn-outline-info float-right" (click)="clear()">Clear</button>
+                  <button type="button" class="mr-1 btn btn-outline-info float-right"><i class="fas fa-sync"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="col-md-12 col-12">
+              <h3 class="font-weight-bold">Danh sách template hợp đồng</h3>
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>Mã HĐ</th>
+                  <th>Tên HĐ</th>
+                  <th>Mô tả</th>
+                  <th>Active verson</th>
+                  <th>Ngày áp dụng</th>
+                  <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let templateContract of templateContracts" class="border border-dark">
+                  <td class="border border-dark">{{templateContract.code}}</td>
+                  <td class="border border-dark">{{templateContract.name}}</td>
+                  <td class="border border-dark">{{templateContract.description}}</td>
+                  <td class="border border-dark">{{templateContract.activeVersion}}</td>
+                  <td class="border border-dark">{{templateContract.updateDate | date:'dd/MM/yyyy'}}</td>
+                  <td class="border border-dark">
+                    <a (click)="doSelected(templateContract)" class="btn btn-primary btn-xs mr-1" data-toggle="modal"
+                       data-target="#modal-update">
+                      <i class="far fa-edit"></i>
+                    </a>
+                    <a (click)="doShowDetail(templateContract.content)" class="btn btn-info btn-xs" data-toggle="modal"
+                       data-target="#modal-detail">
+                      <i class="fas fa-eye"></i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer clearfix">
+          <ul class="pagination pagination-sm m-0 float-right">
+            <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)" [collectionSize]="30" [(page)]="page" aria-label="Custom pagination">
+              <ng-template >Prev</ng-template>
+              <ng-template >Next</ng-template>
+              <ng-template ></ng-template>
+            </ngb-pagination>
+          </ul>
+        </div>
+      </form>
+      <!-- /.card -->
+    </div>
+  </div>
+</section>
+
+<!--tạo mới-->
+<div class="modal fade" id="modal-add-new" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Thông tin mẫu hợp đồng</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+
+          <div>
+            <div class="row">
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="input2" class="col-form-label">Mã hợp đồng</label>
+                  <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
+                         name="code"  placeholder="Nhập mã hợp đồng">
+                </div>
+              </div>
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="input3" class="col-form-label">Tên hợp đồng</label>
+                  <input  [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
+                          name="name" placeholder="Nhập tên hợp đồng">
+                </div>
+              </div>
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="input4" class="col-form-label">Mô tả</label>
+                  <input  [(ngModel)]="templateContractNew.description" type="text" class="form-control border border-dark"
+                          name="description"  placeholder="Nhập mô tả">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group mb-1">
+                  <label for="input4" class="col-form-label">Mẫu hợp đồng</label>
+                </div>
+                <editor [(ngModel)]="templateContractNew.content" name="template"
+                        apiKey="hav5qg0mp5r2o7hc34vo0f15zmp4i8wk7wiwoysk8g4y4cz9"
+                        plugins="wordcount"></editor>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary float-right" (click)="clear()">Clear</button>
+          <button type="button" class="btn btn-primary float-right" (click)="doCreate()">Thêm hợp đồng</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+<!--update-->
+<div class="modal fade" id="modal-update" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Thông tin mẫu hợp đồng</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+
+          <div>
+            <div class="row">
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="input2" class="col-form-label">Mã hợp đồng</label>
+                  <input [disabled]="true" [(ngModel)]="templateContractUpdate.code" type="text" class="form-control border border-dark"
+                         name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                </div>
+              </div>
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="input3" class="col-form-label">Tên hợp đồng</label>
+                  <input  [(ngModel)]="templateContractUpdate.name" type="text" class="form-control border border-dark"
+                          name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                </div>
+              </div>
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="input4" class="col-form-label">Mô tả</label>
+                  <input  [(ngModel)]="templateContractUpdate.description" type="text" class="form-control border border-dark"
+                          name="description" id="input4" placeholder="Nhập mô tả">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group mb-1">
+                  <label for="input4" class="col-form-label">Mẫu hợp đồng</label>
+                </div>
+                <editor [(ngModel)]="templateContractUpdate.content" name="template"
+                        apiKey="hav5qg0mp5r2o7hc34vo0f15zmp4i8wk7wiwoysk8g4y4cz9"
+                        plugins="wordcount"></editor>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary float-right" (click)="clear()">Clear</button>
+          <button type="button" class="btn btn-primary float-right" (click)="doUpdate()">Cập nhật hợp đồng</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="modal-detail" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Chi tiết hợp đồng</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body" >
+          <div #divElement></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
