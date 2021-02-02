@@ -44,6 +44,8 @@ import { TemplateContractDetailComponent } from './modules/template-contract/tem
 import {RequestInterceptor} from './service/authentication/request.interceptor';
 import {LocalStorageService} from './service/utils/local-storage.service';
 import {ToastrModule} from 'ngx-toastr';
+import { GroupContractComponent } from './modules/group-contract/group-contract.component';
+import { GroupContractWaitingApproveComponent } from './modules/group-contract-waiting-approve/group-contract-waiting-approve.component';
 
 
 @NgModule({
@@ -67,7 +69,9 @@ import {ToastrModule} from 'ngx-toastr';
     AppLoadingComponent,
     ListWaitingForApprovaComponent,
     BreadcrumbComponent,
-    TemplateContractDetailComponent
+    TemplateContractDetailComponent,
+    GroupContractComponent,
+    GroupContractWaitingApproveComponent
 
   ],
   imports: [

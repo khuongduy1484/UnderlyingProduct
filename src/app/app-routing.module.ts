@@ -11,6 +11,8 @@ import {OriginalBondsComponent} from './modules/original-bonds/original-bonds.co
 import {ContractParametersComponent} from './modules/contract-parameters/contract-parameters.component';
 import {TemplateContractComponent} from './modules/template-contract/template-contract.component';
 import {ListWaitingForApprovaComponent} from './modules/template-contract/list-waiting-for-approva/list-waiting-for-approva.component';
+import {GroupContractComponent} from './modules/group-contract/group-contract.component';
+import {GroupContractWaitingApproveComponent} from './modules/group-contract-waiting-approve/group-contract-waiting-approve.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -43,6 +45,20 @@ const routes: Routes = [
           breadcrumb: 'TEMPLATE CONTRACT Waiting For Approva'
         },
         component: ListWaitingForApprovaComponent
+      },
+      {
+        path: 'group-contract',
+        data: {
+          breadcrumb: 'Group contract'
+        },
+        component: GroupContractComponent
+      },
+      {
+        path: 'group-contract-waiting-apporve',
+        data: {
+          breadcrumb: 'Group contract'
+        },
+        component: GroupContractWaitingApproveComponent
       }
     ]
   }
