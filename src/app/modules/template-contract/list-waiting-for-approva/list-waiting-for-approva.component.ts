@@ -18,7 +18,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
   contentSearch = '';
   action: number;
   actionDefaut = 'Chọn tác vụ';
-
+  templateContract: ITemplateContract;
 
   constructor(
     private dialogService: DialogService,
