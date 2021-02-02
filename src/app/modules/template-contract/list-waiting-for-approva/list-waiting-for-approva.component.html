@@ -16,15 +16,20 @@
                 <div class="col-6">
                   <div class="form-group">
                     <label for="input1" class="col-form-label">Tìm kiếm mã hợp đồng</label>
-                    <input [(ngModel)]="contentSearch" type="text" class="form-control border border-dark" id="input1" placeholder="Nhập mã hợp đồng" name="contentSearch">
+                    <input [(ngModel)]="contentSearch" type="text" class="form-control border border-dark" id="input1"
+                           placeholder="Nhập mã hợp đồng" name="contentSearch">
                   </div>
                 </div>
                 <div class="col-6 btn-mt-33">
-                  <button (click)="doCreate()" type="button" class="mr-1 btn btn-info float-right">Thêm mới</button>
-                  <button type="button" class="mr-1 btn btn-secondary float-right" (click)="doSearch()">Tìm kiếm</button>
+                  <!--<button (click)="doCreate()" type="button" class="mr-1 btn btn-info float-right">Thêm mới</button>-->
+                  <button type="button" class="mr-1 btn btn-info float-right" data-toggle="modal"
+                          data-target="#modal-add-new">Thêm mới
+                  </button>
+                  <button type="button" class="mr-1 btn btn-secondary float-right" (click)="doSearch()">Tìm kiếm
+                  </button>
                   <button type="button" class="mr-1 btn btn-outline-info float-right" (click)="clear()">Clear</button>
-                  <button type="button" class="mr-1 btn btn-outline-info float-right"><i class="fas fa-sync"></i></button>
-                  <button type="button" class="mr-1 btn btn-outline-info float-right" data-toggle="modal" data-target="#modal-default">Popup mẫu</button>
+                  <button type="button" class="mr-1 btn btn-outline-info float-right"><i class="fas fa-sync"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -36,13 +41,13 @@
                 <div class="col-md-4 col-4">
                   <div class="form-group">
                     <label>Chọn và thực hiện tác vụ</label>
-                    <select class="form-control"  name="action"   [(ngModel)]="actionDefaut">
+                    <select class="form-control" name="action" [(ngModel)]="actionDefaut">
                       <option value="1">Gửi phê duyệt</option>
                       <option value="2">XÓA</option>
                     </select>
                   </div>
                 </div>
-                <div  class="col-md-1 btn-mt-27">
+                <div class="col-md-1 btn-mt-27">
                   <button type="button" (click)="doSubmit()" class="btn btn-dark">SUBMIT</button>
                 </div>
               </div>
@@ -81,7 +86,8 @@
 									</span>
                     </a>
                     <a href="">
-                      <span style=" margin-left: 34px;position: relative;top: 5px;" class="material-icons">visibility</span>
+                      <span style=" margin-left: 34px;position: relative;top: 5px;"
+                            class="material-icons">visibility</span>
                     </a>
                   </td>
                 </tr>
@@ -105,22 +111,61 @@
   </div>
 </section>
 
-<div class="modal fade" id="modal-default" aria-modal="true" role="dialog">
-  <div class="modal-dialog">
+<div class="modal fade" id="modal-add-new" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Default Modal</h4>
+        <h4 class="modal-title">Thông tin mẫu hợp đồng</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <div class="modal-body">
-        <p>One fine body…</p>
-      </div>
-      <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+      <form>
+        <div class="modal-body">
+
+          <div>
+            <app-app-loading class="blur" *ngIf="isLoadingSave"></app-app-loading>
+            <div class="row">
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="input2" class="col-form-label">Mã hợp đồng</label>
+                  <input [(ngModel)]="templateContract.code" type="text" class="form-control border border-dark"
+                         name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                </div>
+              </div>
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="input3" class="col-form-label">Tên hợp đồng</label>
+                  <input [disabled]="isLoadingSave" [(ngModel)]="templateContract.name" type="text" class="form-control border border-dark"
+                         name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                </div>
+              </div>
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="input4" class="col-form-label">Mô tả</label>
+                  <input [disabled]="isLoadingSave" [(ngModel)]="templateContract.description" type="text" class="form-control border border-dark"
+                         name="description" id="input4" placeholder="Nhập mô tả">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group mb-1">
+                  <label for="input4" class="col-form-label">Mẫu hợp đồng</label>
+                </div>
+                <editor [(ngModel)]="templateContract.content" name="template"
+                        apiKey="hav5qg0mp5r2o7hc34vo0f15zmp4i8wk7wiwoysk8g4y4cz9"
+                        plugins="wordcount"></editor>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary float-right" (click)="clear()">Clear</button>
+          <button type="button" class="btn btn-primary float-right" (click)="doCreate()">Thêm hợp đồng</button>
+        </div>
+      </form>
     </div>
     <!-- /.modal-content -->
   </div>
