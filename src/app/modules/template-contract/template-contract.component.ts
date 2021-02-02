@@ -9,6 +9,7 @@ import {MatDialog} from '@angular/material';
 import {UpdateTemplateContractComponent} from './update-template-contract/update-template-contract.component';
 import {CreateTemplateContractComponent} from './create-template-contract/create-template-contract.component';
 import {TemplateContractDetailComponent} from './template-contract-detail/template-contract-detail.component';
+import {DialogService} from '../../dialogs';
 
 @Component({
   selector: 'app-template-contract',
@@ -16,13 +17,30 @@ import {TemplateContractDetailComponent} from './template-contract-detail/templa
   styleUrls: ['./template-contract.component.scss']
 })
 export class TemplateContractComponent implements OnInit {
-  page: number ;
+  page: number;
   templateContracts: ITemplateContract[] = [];
   contentSearch: any;
+  codeContractOld:  string;
+
+
+  templateContractNew = {
+    content: '',
+    name: '',
+    code: '',
+    description: '',
+  };
+
+  templateContractUpdate = {
+    content: '',
+    name: '',
+    code: '',
+    description: '',
+  };
 
   constructor(
     private templateContractService: TemplateContractService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private dialogService: DialogService
   ) {
   }
 
@@ -42,28 +60,65 @@ export class TemplateContractComponent implements OnInit {
   }
 
 
-  doUpdate(contract) {
-    const dialogRef = this.dialog.open(UpdateTemplateContractComponent, {
-      data: {data:  contract[0]},
-      width: '60%',
-      height: '480px'
+  // doUpdate(contract) {
+  //   const dialogRef = this.dialog.open(UpdateTemplateContractComponent, {
+  //     data: {data: contract[0]},
+  //     width: '60%',
+  //     height: '480px'
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //   });
+  //   this.getPageSymbol(0);
+  // }
+
+  doSelected(contractTemplate) {
+    this.templateContractUpdate = contractTemplate;
+    this.codeContractOld = contractTemplate.code;
+  }
+
+  doUpdate() {
+    if (!(this.codeContractOld === this.templateContractUpdate.code)) {
+      this.dialogService.error({'title': 'Thông báo', 'message': 'Mã hợp đồng không được phép sửa'}, () => {
+      });
+      return;
+    }
+    this.templateContractService.createTemplateContractWaitingForApproval(this.templateContractUpdate).subscribe(data => {
+      if (data.errorCode === '1') {
+        this.dialogService.success({'title': 'Thông báo', 'message': 'Đã cập nhập xong hợp đồng'}, () => {});
+      } else {
+        this.dialogService.error({'title': 'Thông báo', 'message': data.description}, () => {});
+      }
+    }, error => {
+      console.log(error);
+      this.dialogService.error({'title': 'Thông báo', 'message': 'Có lỗi xảy ra vui lòng thử lại'}, () => {
+      });
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-    this.getPageSymbol(0);
   }
 
   doCreate() {
-    const dialogRef = this.dialog.open(CreateTemplateContractComponent, {
-      data: {data:  ''},
-      width: '60%',
-      height: '480px'
+    this.templateContractService.createTemplateContract(this.templateContractNew).subscribe(data => {
+      if (data.errorCode === '1') {
+        this.dialogService.success({'title': 'Thông báo', 'message': 'Đã gửi phê duyệt thành công'}, () => {
+        });
+      } else {
+        this.dialogService.error({'title': 'Thông báo', 'message': data.description}, () => {
+        });
+      }
+    }, error => {
+
+      console.log(error);
+      this.dialogService.error({'title': 'Thông báo', 'message': 'Có lỗi xảy ra vui lòng thử lại'}, () => {
+      });
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-    this.getPageSymbol(0);
+  }
+
+  clear() {
+    this.templateContractNew.description = '';
+    this.templateContractNew.code = '';
+    this.templateContractNew.name = '';
+    this.templateContractNew.content = '';
+    this.contentSearch = '';
   }
 
   doSearch() {
@@ -74,13 +129,9 @@ export class TemplateContractComponent implements OnInit {
     });
   }
 
-  clear() {
-    this.contentSearch = '';
-  }
-
   doShowDetail(contract) {
     const dialogRef = this.dialog.open(TemplateContractDetailComponent, {
-      data: {data:  contract[0]},
+      data: {data: contract[0]},
       width: '50%',
       height: '400px'
     });
@@ -88,7 +139,6 @@ export class TemplateContractComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
-
 
 
 }

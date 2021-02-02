@@ -18,7 +18,15 @@ export class ListWaitingForApprovaComponent implements OnInit {
   contentSearch = '';
   action: number;
   actionDefaut = 'Chọn tác vụ';
-  templateContract =  {
+  codeContractOld:  string;
+  templateContractNew =  {
+    content :  '',
+    name :  '',
+    code : '',
+    description :  '',
+  };
+
+  templateContractUpdate =  {
     content :  '',
     name :  '',
     code : '',
@@ -45,29 +53,29 @@ export class ListWaitingForApprovaComponent implements OnInit {
     });
   }
 
-  doUpdate(contract) {
-    const dialogRef = this.dialog.open(UpdateTemplateContractComponent, {
-      data: {data: contract[0]},
-      width: '90%',
-      height: '480px'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-    this.getPageSymbol(0);
-  }
-
-  doCreate() {
-    const dialogRef = this.dialog.open(CreateTemplateContractComponent, {
-      data: {data: ''},
-      width: '90%',
-      height: '480px'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-    this.getPageSymbol(0);
-  }
+  // doUpdate(contract) {
+  //   const dialogRef = this.dialog.open(UpdateTemplateContractComponent, {
+  //     data: {data: contract[0]},
+  //     width: '90%',
+  //     height: '480px'
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //   });
+  //   this.getPageSymbol(0);
+  // }
+  //
+  // doCreate() {
+  //   const dialogRef = this.dialog.open(CreateTemplateContractComponent, {
+  //     data: {data: ''},
+  //     width: '90%',
+  //     height: '480px'
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //   });
+  //   this.getPageSymbol(0);
+  // }
 
 
   doSearch() {
@@ -161,6 +169,47 @@ export class ListWaitingForApprovaComponent implements OnInit {
         });
       }
     }, error => {
+      console.log(error);
+      this.dialogService.error({'title': 'Thông báo', 'message': 'Có lỗi xảy ra vui lòng thử lại'}, () => {
+      });
+    });
+  }
+
+  doSelected(contractTemplate) {
+    this.templateContractUpdate = contractTemplate;
+    this.codeContractOld = contractTemplate.code;
+  }
+
+  doUpdate() {
+    if (!(this.codeContractOld === this.templateContractUpdate.code)) {
+      this.dialogService.error({'title': 'Thông báo', 'message': 'Mã hợp đồng không được phép sửa'}, () => {
+      });
+      return;
+    }
+    this.templateContractService.createTemplateContractWaitingForApproval(this.templateContractUpdate).subscribe(data => {
+      if (data.errorCode === '1') {
+        this.dialogService.success({'title': 'Thông báo', 'message': 'Đã cập nhập xong hợp đồng'}, () => {});
+      } else {
+        this.dialogService.error({'title': 'Thông báo', 'message': data.description}, () => {});
+      }
+    }, error => {
+      console.log(error);
+      this.dialogService.error({'title': 'Thông báo', 'message': 'Có lỗi xảy ra vui lòng thử lại'}, () => {
+      });
+    });
+  }
+
+  doCreate() {
+    this.templateContractService.createTemplateContract(this.templateContractNew).subscribe(data => {
+      if (data.errorCode === '1') {
+        this.dialogService.success({'title': 'Thông báo', 'message': 'Đã gửi phê duyệt thành công'}, () => {
+        });
+      } else {
+        this.dialogService.error({'title': 'Thông báo', 'message': data.description}, () => {
+        });
+      }
+    }, error => {
+
       console.log(error);
       this.dialogService.error({'title': 'Thông báo', 'message': 'Có lỗi xảy ra vui lòng thử lại'}, () => {
       });
