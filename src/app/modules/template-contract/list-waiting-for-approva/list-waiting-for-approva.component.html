@@ -79,7 +79,8 @@
                   <td class="border border-dark">{{templateContract.updateDate | date:'dd/MM/yyyy'}}</td>
                   <td class="border border-dark">{{templateContract.status }}</td>
                   <td class="border border-dark">
-                    <a (click)="doUpdate(templateContracts)" class="table-link danger">
+                    <a (click)="doUpdate(templateContracts)" class="table-link danger" data-toggle="modal"
+                       data-target="#modal-update">
 									<span class="fa-stack edit">
 										<i class="fa fa-square fa-stack-2x"></i>
 										<i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
@@ -163,6 +164,65 @@
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-secondary float-right" (click)="clear()">Clear</button>
           <button type="button" class="btn btn-primary float-right" (click)="doCreate()">Thêm hợp đồng</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="modal-update" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Thông tin mẫu hợp đồng</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+
+          <div>
+            <div class="row">
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="input5" class="col-form-label">Mã hợp đồng</label>
+                  <input [(ngModel)]="templateContract.code" type="text" class="form-control border border-dark"
+                         name="code" id="input5" placeholder="Nhập mã hợp đồng">
+                </div>
+              </div>
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="input6" class="col-form-label">Tên hợp đồng</label>
+                  <input  [(ngModel)]="templateContract.name" type="text" class="form-control border border-dark"
+                          name="name" id="input6" placeholder="Nhập tên hợp đồng">
+                </div>
+              </div>
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="input7" class="col-form-label">Mô tả</label>
+                  <input  [(ngModel)]="templateContract.description" type="text" class="form-control border border-dark"
+                          name="description" id="input7" placeholder="Nhập mô tả">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group mb-1">
+                  <label for="input4" class="col-form-label">Mẫu hợp đồng</label>
+                </div>
+                <editor [(ngModel)]="templateContract.content" name="template"
+                        apiKey="hav5qg0mp5r2o7hc34vo0f15zmp4i8wk7wiwoysk8g4y4cz9"
+                        plugins="wordcount"></editor>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary float-right" (click)="clear()">Clear</button>
+          <button type="button" class="btn btn-primary float-right" (click)="doUpdate()">Thêm hợp đồng</button>
         </div>
       </form>
     </div>
