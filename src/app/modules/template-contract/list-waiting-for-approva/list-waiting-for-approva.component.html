@@ -124,7 +124,6 @@
         <div class="modal-body">
 
           <div>
-            <app-app-loading class="blur" *ngIf="isLoadingSave"></app-app-loading>
             <div class="row">
               <div class="col-md-4 col-12">
                 <div class="form-group">
@@ -136,14 +135,14 @@
               <div class="col-md-4 col-12">
                 <div class="form-group">
                   <label for="input3" class="col-form-label">Tên hợp đồng</label>
-                  <input [disabled]="isLoadingSave" [(ngModel)]="templateContract.name" type="text" class="form-control border border-dark"
+                  <input  [(ngModel)]="templateContract.name" type="text" class="form-control border border-dark"
                          name="name" id="input3" placeholder="Nhập tên hợp đồng">
                 </div>
               </div>
               <div class="col-md-4 col-12">
                 <div class="form-group">
                   <label for="input4" class="col-form-label">Mô tả</label>
-                  <input [disabled]="isLoadingSave" [(ngModel)]="templateContract.description" type="text" class="form-control border border-dark"
+                  <input  [(ngModel)]="templateContract.description" type="text" class="form-control border border-dark"
                          name="description" id="input4" placeholder="Nhập mô tả">
                 </div>
               </div>
