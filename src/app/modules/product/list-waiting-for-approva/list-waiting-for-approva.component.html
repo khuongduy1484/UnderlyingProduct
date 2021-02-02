@@ -1,57 +1,68 @@
 <section class="content">
   <div class="container-fluid">
     <div class="card card-primary card-outline">
-      <div class="card-header">
-        <h3 class="card-title">
-          <i class="fas fa-list"></i>
-          Danh sách template hợp đồng chờ phê duyệt
-        </h3>
-      </div>
-      <form (ngSubmit)="doSearch()">
-        <div class="card-body">
+      <div class="card-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link"
+               href="/template-contract"><i class="fas fa-list"></i> Danh sách template hợp đồng</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active"
+               href="/template-contract-waiting-approval"><i class="fas fa-list"></i> Danh sách template hợp đồng chờ
+              duyệt</a>
+          </li>
+        </ul>
+        <form (ngSubmit)="doSearch()">
           <div class="row">
             <div class="col-12 col-md-12">
-              <h4>Tìm kiếm</h4>
               <div class="row">
                 <div class="col-6">
                   <div class="form-group">
                     <label for="input1" class="col-form-label">Tìm kiếm mã hợp đồng</label>
-                    <input [(ngModel)]="contentSearch" type="text" class="form-control border border-dark" id="input1"
+                    <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
                            placeholder="Nhập mã hợp đồng" name="contentSearch">
                   </div>
                 </div>
                 <div class="col-6 btn-mt-33">
                   <!--<button (click)="doCreate()" type="button" class="mr-1 btn btn-info float-right">Thêm mới</button>-->
-                  <button type="button" class="mr-1 btn btn-info float-right" data-toggle="modal"
+                  <button type="button" class="mr-1 btn btn-sm btn-info float-right" data-toggle="modal"
                           data-target="#modal-add-new">Thêm mới
                   </button>
-                  <button type="button" class="mr-1 btn btn-secondary float-right" (click)="doSearch()">Tìm kiếm
+                  <button type="button" class="mr-1 btn btn-sm btn-secondary float-right" (click)="doSearch()">Tìm kiếm
                   </button>
-                  <button type="button" class="mr-1 btn btn-outline-info float-right" (click)="clear()">Clear</button>
-                  <button type="button" class="mr-1 btn btn-outline-info float-right"><i class="fas fa-sync"></i>
+                  <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right" (click)="clear()">Clear
+                  </button>
+                  <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right"><i class="fas fa-sync"></i>
                   </button>
                 </div>
               </div>
             </div>
           </div>
-          <div class="row mt-4">
-            <div class="col-md-12 col-12">
-              <h3 class="font-weight-bold">Danh sách template hợp đồng chờ phê duyệt</h3>
-              <div class="row">
-                <div class="col-md-4 col-4">
-                  <div class="form-group">
-                    <label>Chọn và thực hiện tác vụ</label>
-                    <select class="form-control" name="action" [(ngModel)]="action">
-                      <option value="1">Gửi phê duyệt</option>
-                      <option value="2">XÓA</option>
-                    </select>
-                  </div>
+          <div class="row">
+            <div class="col-6">
+              <h3 class="card-title mt-2">Danh sách template hợp đồng chờ phê duyệt</h3>
+            </div>
+            <div class="col-6">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Chọn và thực hiện tác vụ</label>
+                <div class="col-sm-6">
+                  <select class="form-control form-control-sm" name="action" [(ngModel)]="action">
+                    <option value="1">Gửi phê duyệt</option>
+                    <option value="2">XÓA</option>
+                  </select>
                 </div>
-                <div class="col-md-1 btn-mt-27">
-                  <button type="button" (click)="doSubmit()" class="btn btn-dark">SUBMIT</button>
+                <div class="col-sm-2">
+                  <button type="button" (click)="doSubmit()" class="btn btn-dark btn-sm">SUBMIT</button>
                 </div>
               </div>
-              <table #table  class="table table-bordered" >
+            </div>
+
+          </div>
+          <div class="row mt-4">
+            <div class="col-md-12 col-12">
+              <table class="table table-bordered">
                 <thead>
                 <tr>
                   <th scope="col"></th>
@@ -64,8 +75,8 @@
                   <th scope="col">Thao tác</th>
                 </tr>
                 </thead>
-                <tbody >
-                <tr  *ngFor="let templateContract of templateContracts ; let i = index" class="border border-dark">
+                <tbody>
+                <tr *ngFor="let templateContract of templateContracts ; let i = index" class="border border-dark">
                   <td>
                     <label class="form-radio">
                       <input type="checkbox" name="id_number" id="record-{{i}}" name="record-{{i}}"
@@ -79,38 +90,40 @@
                   <td>{{templateContract.updateDate | date:'dd/MM/yyyy'}}</td>
                   <td>{{templateContract.status }}</td>
                   <td>
-                    <a (click)="doSelected(templateContract)" class="btn btn-primary btn-xs mr-1" data-toggle="modal"
+                    <a (click)="doSelected(templateContract)" class="btn btn-primary btn-xs mr-1"
+                       data-toggle="modal"
                        data-target="#modal-update">
                       <i class="far fa-edit"></i>
                     </a>
-                    <a  (click)="doShowDetail(templateContract.content)"  class="btn btn-info btn-xs" data-toggle="modal"
+                    <a (click)="doShowDetail(templateContract.content)" class="btn btn-info btn-xs"
+                       data-toggle="modal"
                        data-target="#modal-detail">
                       <i class="fas fa-eye"></i>
                     </a>
-                    <a style="position: relative;left: 4px;"  (click)="doApproval(templateContract)" class="btn btn-info btn-xs">
-                      <i class="fa fa-paper-plane"  aria-hidden="true"></i>
+                    <a style="position: relative;left: 4px;" (click)="doApproval(templateContract)"
+                       class="btn btn-info btn-xs">
+                      <i class="fa fa-paper-plane" aria-hidden="true"></i>
                     </a>
-                    <a style="position: relative;left: 8px;" (click)="doDelete(templateContract)"  class="btn btn-info btn-xs" >
+                    <a style="position: relative;left: 8px;" (click)="doDelete(templateContract)"
+                       class="btn btn-info btn-xs">
                       <i class="fa fa-trash" aria-hidden="true"></i>
                     </a>
                   </td>
                 </tr>
                 </tbody>
               </table>
+              <ul class="pagination pagination-sm m-0 float-right">
+                <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
+                                [collectionSize]="30" [(page)]="page" aria-label="Custom pagination">
+                  <ng-template>Prev</ng-template>
+                  <ng-template>Next</ng-template>
+                  <ng-template></ng-template>
+                </ngb-pagination>
+              </ul>
             </div>
           </div>
-        </div>
-        <div class="card-footer clearfix">
-          <ul class="pagination pagination-sm m-0 float-right">
-            <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
-                            [collectionSize]="30" [(page)]="page" aria-label="Custom pagination">
-              <ng-template>Prev</ng-template>
-              <ng-template>Next</ng-template>
-              <ng-template></ng-template>
-            </ngb-pagination>
-          </ul>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </section>
@@ -139,14 +152,15 @@
               <div class="col-md-4 col-12">
                 <div class="form-group">
                   <label for="input3" class="col-form-label">Tên hợp đồng</label>
-                  <input  [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
+                  <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
                          name="name" id="input3" placeholder="Nhập tên hợp đồng">
                 </div>
               </div>
               <div class="col-md-4 col-12">
                 <div class="form-group">
                   <label for="input4" class="col-form-label">Mô tả</label>
-                  <input  [(ngModel)]="templateContractNew.description" type="text" class="form-control border border-dark"
+                  <input [(ngModel)]="templateContractNew.description" type="text"
+                         class="form-control border border-dark"
                          name="description" id="input4" placeholder="Nhập mô tả">
                 </div>
               </div>
@@ -191,22 +205,24 @@
               <div class="col-md-4 col-12">
                 <div class="form-group">
                   <label for="input5" class="col-form-label">Mã hợp đồng</label>
-                  <input [disabled]="true" [(ngModel)]="templateContractUpdate.code" type="text" class="form-control border border-dark"
+                  <input [disabled]="true" [(ngModel)]="templateContractUpdate.code" type="text"
+                         class="form-control border border-dark"
                          name="code" id="input5" placeholder="Nhập mã hợp đồng">
                 </div>
               </div>
               <div class="col-md-4 col-12">
                 <div class="form-group">
                   <label for="input6" class="col-form-label">Tên hợp đồng</label>
-                  <input  [(ngModel)]="templateContractUpdate.name" type="text" class="form-control border border-dark"
-                          name="name" id="input6" placeholder="Nhập tên hợp đồng">
+                  <input [(ngModel)]="templateContractUpdate.name" type="text" class="form-control border border-dark"
+                         name="name" id="input6" placeholder="Nhập tên hợp đồng">
                 </div>
               </div>
               <div class="col-md-4 col-12">
                 <div class="form-group">
                   <label for="input7" class="col-form-label">Mô tả</label>
-                  <input  [(ngModel)]="templateContractUpdate.description" type="text" class="form-control border border-dark"
-                          name="description" id="input7" placeholder="Nhập mô tả">
+                  <input [(ngModel)]="templateContractUpdate.description" type="text"
+                         class="form-control border border-dark"
+                         name="description" id="input7" placeholder="Nhập mô tả">
                 </div>
               </div>
             </div>
@@ -243,7 +259,7 @@
         </button>
       </div>
       <form>
-        <div class="modal-body" >
+        <div class="modal-body">
           <div #divElement></div>
         </div>
         <div class="modal-footer">

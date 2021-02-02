@@ -23,13 +23,13 @@ import {EditorModule} from 'primeng/editor';
 import {ProductComponent} from './product.component';
 import {TemplateContractRoutingModule} from './template-contract/template-contract-routing.module';
 import { GroupContractComponent } from './group-contract/group-contract.component';
+import {GroupContractWaitingApproveComponent} from './group-contract-waiting-approve/group-contract-waiting-approve.component';
 
 
 @NgModule({
   declarations: [
     BreadcrumbComponent,
-    ProductComponent,
-    GroupContractComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +52,7 @@ import { GroupContractComponent } from './group-contract/group-contract.componen
     TemplateContractRoutingModule
   ],
   entryComponents: [AutomationComponent],
-  exports: [MatDialogModule, MatIconModule, MatTabsModule, MatSidenavModule],
+  exports: [MatDialogModule, MatIconModule, MatTabsModule, MatSidenavModule, GroupContractComponent, GroupContractWaitingApproveComponent],
   providers: [],
 })
 export class ProductModule {

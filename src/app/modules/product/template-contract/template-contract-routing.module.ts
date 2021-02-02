@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ListWaitingForApprovaComponent} from './list-waiting-for-approva/list-waiting-for-approva.component';
 import {TemplateContractComponent} from './template-contract.component';
 import {ProductComponent} from '../product.component';
 

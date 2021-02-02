@@ -42,8 +42,11 @@ import {RequestInterceptor} from './service/authentication/request.interceptor';
 import {LocalStorageService} from './service/utils/local-storage.service';
 import {ToastrModule} from 'ngx-toastr';
 import {TemplateContractComponent} from './modules/product/template-contract/template-contract.component';
-import {ListWaitingForApprovaComponent} from './modules/product/template-contract/list-waiting-for-approva/list-waiting-for-approva.component';
 import {ProductComponent} from './modules/product/product.component';
+import {ListWaitingForApprovaComponent} from './modules/product/list-waiting-for-approva/list-waiting-for-approva.component';
+import {GroupContractComponent} from './modules/product/group-contract/group-contract.component';
+// tslint:disable-next-line:max-line-length
+import {GroupContractWaitingApproveComponent} from './modules/product/group-contract-waiting-approve/group-contract-waiting-approve.component';
 
 
 @NgModule({
@@ -67,7 +70,9 @@ import {ProductComponent} from './modules/product/product.component';
     BreadcrumbComponent,
     TemplateContractComponent,
     ListWaitingForApprovaComponent,
-    ProductComponent
+    ProductComponent,
+    GroupContractComponent,
+    GroupContractWaitingApproveComponent
   ],
   imports: [
     BrowserModule,
@@ -89,6 +94,7 @@ import {ProductComponent} from './modules/product/product.component';
     NgbModule,
     EditorModule,
     ToastrModule.forRoot()
+
   ],
   entryComponents: [AutomationComponent],
   exports: [MatDialogModule, MatIconModule, MatTabsModule, MatSidenavModule],

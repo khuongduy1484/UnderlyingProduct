@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {TemplateManagementService} from '../../../../service/templateManagement/template-management.service';
+import {TemplateManagementService} from '../../../service/templateManagement/template-management.service';
 import {Observable} from 'rxjs';
-import {ITemplateContract} from '../../../../model/models';
+import {ITemplateContract} from '../../../model/models';
 
 
 @Injectable({
