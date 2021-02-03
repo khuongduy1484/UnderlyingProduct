@@ -31,4 +31,21 @@
   transform: rotate(-90deg);
 }
 
-
+.main-sidebar.sidebar-dark-primary{
+  background-color: #364150!important;
+}
+.nav-sidebar>.nav-item{
+  border-bottom: 1px solid #49515b;
+}
+.nav-sidebar .nav-item>.nav-link{
+  margin-bottom: 0;
+}
+.nav-treeview .nav-item{
+  border-bottom: 1px solid #49515b;
+}
+.nav-treeview .nav-item:last-child{
+  border-bottom: none;
+}
+.nav-treeview .nav-item .nav-link{
+  padding-left: 2rem;
+}
