@@ -24,6 +24,7 @@ export class TemplateContractComponent implements OnInit {
     name: '',
     code: '',
     description: '',
+    status: ''
   };
 
   templateContractUpdate = {
@@ -31,6 +32,7 @@ export class TemplateContractComponent implements OnInit {
     name: '',
     code: '',
     description: '',
+    status: ''
   };
 
   constructor(
@@ -61,6 +63,7 @@ export class TemplateContractComponent implements OnInit {
   }
 
   doUpdate() {
+    this.templateContractUpdate.status = '3';
     if (!(this.codeContractOld === this.templateContractUpdate.code)) {
       this.notificationService.showError('Mã hợp đồng không được phép sửa', 'Thông báo');
       return;
@@ -78,6 +81,7 @@ export class TemplateContractComponent implements OnInit {
   }
 
   doCreate() {
+    this.templateContractNew.status = '3';
     this.templateContractService.createTemplateContract(this.templateContractNew).subscribe(data => {
       if (data.errorCode === '0') {
         this.notificationService.showSuccess('Đã gửi phê duyệt thành công', 'Thông báo' );

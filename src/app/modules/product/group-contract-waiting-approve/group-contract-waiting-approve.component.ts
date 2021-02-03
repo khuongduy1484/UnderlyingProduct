@@ -59,6 +59,7 @@ export class GroupContractWaitingApproveComponent implements OnInit {
   }
 
   getPageSymbol(current: number) {
+    console.log(current);
     if (current === null) {
       current = 0;
     }
@@ -117,7 +118,7 @@ export class GroupContractWaitingApproveComponent implements OnInit {
   }
 
   doSearch() {
-    this.groupContractService.getGroupContractApproval(this.contentSearch.trim(), 1, 10).subscribe(data => {
+    this.groupContractService.getGroupContractApproval(this.contentSearch.trim(), 0, 10).subscribe(data => {
       if (data) {
         this.groupContracts = data.result;
       }
