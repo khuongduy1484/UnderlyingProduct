@@ -14,7 +14,9 @@ export class TemplateContractComponent implements OnInit {
   templateContracts: ITemplateContract[] = [];
   contentSearch: any;
   codeContractOld: string;
-  @ViewChild('div') detailContent: ElementRef;
+  @ViewChild('detailContent') detailContent: ElementRef;
+
+
 
 
   templateContractNew = {
@@ -46,7 +48,7 @@ export class TemplateContractComponent implements OnInit {
       current = 0;
     }
     this.page = current;
-    this.templateContractService.getTemplateContract('', 1, current > 0 ? current - 1 : 0).subscribe(data => {
+    this.templateContractService.getTemplateContract('',  current > 0 ? current - 1 : 0, 10).subscribe(data => {
       if (data) {
         this.templateContracts = data.result;
       }
@@ -98,7 +100,7 @@ export class TemplateContractComponent implements OnInit {
   }
 
   doSearch() {
-    this.templateContractService.getTemplateContract(this.contentSearch.trim(), 1, 0).subscribe(data => {
+    this.templateContractService.getTemplateContract(this.contentSearch.trim(), 1, 10).subscribe(data => {
       if (data) {
         this.templateContracts = data.result;
       }

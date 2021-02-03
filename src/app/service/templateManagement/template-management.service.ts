@@ -20,8 +20,8 @@ export class TemplateManagementService {
   }
 
 
-  getTemplateContract(code: string, status: number, offset: number): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/template-contracts?code=${code}&status=${status}&offset=${offset}`);
+  getTemplateContract(code: string, offset: number, pageSize: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/template-contracts/search?code=${code}&offset=${offset}&pageSize=${pageSize}`);
   }
 
   updateOrCreateTemplateContract(body: any): Observable<any> {
@@ -32,8 +32,8 @@ export class TemplateManagementService {
     return this.http.post(`${environment.apiUrl}/template-contracts/waiting-for-approval`, body);
   }
 
-  getTemplateContractInRedis(code: string, offset: number): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/template-contracts/waiting-for-approval?code=${code}&offset=${offset}`);
+  getTemplateContractWaitingForApproval(code: string, offset: number, pageSize: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/template-contracts/waiting-for-approval?code=${code}&offset=${offset}&pageSize=${pageSize}`);
   }
 
   deleteTemplateContract(body: any): Observable<any> {
@@ -42,7 +42,10 @@ export class TemplateManagementService {
 
   createTemplateContractWaitingForApproval(body: any) {
     return this.http.put(`${environment.apiUrl}/template-contracts/waiting-for-approval`, body);
+  }
 
+  getAllTemplateContract(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/template-contracts`);
   }
 
 }

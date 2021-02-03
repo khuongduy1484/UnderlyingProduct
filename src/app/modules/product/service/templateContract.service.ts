@@ -13,8 +13,8 @@ export class TemplateContractService {
   ) {
   }
 
-  getTemplateContract(code: string, status: number, offset: number): Observable<any> {
-    return this.templateManagementService.getTemplateContract(code, status, offset);
+  getTemplateContract(code: string,  offset: number, pageSize: number): Observable<any> {
+    return this.templateManagementService.getTemplateContract(code, offset, pageSize);
   }
 
   updateOrCreateTemplateContract(body: ITemplateContract[]): Observable<any> {
@@ -26,8 +26,8 @@ export class TemplateContractService {
     return this.templateManagementService.createTemplateContract(body);
   }
 
-  getTemplateContractInRedis(code: string, offset: number): Observable<any> {
-    return this.templateManagementService.getTemplateContractInRedis(code , offset);
+  getTemplateContractWaitingForApproval(code: string, offset: number, pageSize: number): Observable<any> {
+    return this.templateManagementService.getTemplateContractWaitingForApproval(code , offset, pageSize);
   }
 
   deleteTemplateContract(body: ITemplateContract[]): Observable<any> {
@@ -36,6 +36,9 @@ export class TemplateContractService {
 
   createTemplateContractWaitingForApproval(body: any): Observable<any> {
     return this.templateManagementService.createTemplateContractWaitingForApproval(body);
+  }
 
+  getAllTemplateContracts(): Observable<any> {
+    return this.templateManagementService.getAllTemplateContract();
   }
 }

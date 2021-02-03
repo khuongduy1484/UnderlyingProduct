@@ -88,26 +88,36 @@
                   <td>{{templateContract.description}}</td>
                   <td>{{templateContract.activeVersion}}</td>
                   <td>{{templateContract.updateDate | date:'dd/MM/yyyy'}}</td>
-                  <td>{{templateContract.status }}</td>
-                  <td>
+                  <td class="border border-dark" *ngIf="templateContract.status == 2">Từ chối</td>
+                  <td class="border border-dark" *ngIf="templateContract.status == 3">Bản nháp</td>
+                  <td class="border border-dark" *ngIf="templateContract.status == 0">Chờ phê duyệt</td>                  <td>
                     <a (click)="doSelected(templateContract)" class="btn btn-primary btn-xs mr-1"
                        data-toggle="modal"
                        data-target="#modal-update">
                       <i class="far fa-edit"></i>
                     </a>
-                    <a (click)="doShowDetail(templateContract.content)" class="btn btn-info btn-xs"
+                    <a (click)="doShowDetail(templateContract.content)" class="btn btn-info mr-1 btn-xs mr-1 "
                        data-toggle="modal"
                        data-target="#modal-detail">
                       <i class="fas fa-eye"></i>
                     </a>
-                    <a style="position: relative;left: 4px;" (click)="doApproval(templateContract)"
-                       class="btn btn-info btn-xs">
+                    <a  (click)="doUpdateTemplateForWaitingForApproval(templateContract, 'submit for approval')"
+                       class="btn btn-info mr-1 btn-xs mr-1">
                       <i class="fa fa-paper-plane" aria-hidden="true"></i>
                     </a>
-                    <a style="position: relative;left: 8px;" (click)="doDelete(templateContract)"
-                       class="btn btn-info btn-xs">
-                      <i class="fa fa-trash" aria-hidden="true"></i>
+                    <a (click)="doApproval(templateContract)" class="btn btn-info btn-xs mr-1" data-toggle="modal">
+                      <i class="fa fa-check-square" aria-hidden="true"></i>
                     </a>
+
+                    <a (click)="doUpdateTemplateForWaitingForApproval(templateContract, 'reject approval')"
+                       class="btn btn-info btn-xs mr-1" data-toggle="modal">
+                      <i class="fa fa-window-close" aria-hidden="true"></i>
+                    </a>
+
+                  <a (click)="doDelete(templateContract)" class="btn btn-info btn-xs  mr-1" data-toggle="modal"
+                     data-target="#modal-delete">
+                    <i class="fas fa-trash-alt"></i>
+                  </a>
                   </td>
                 </tr>
                 </tbody>
@@ -178,7 +188,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button (click)="doLoadData()" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-secondary float-right" (click)="clear()">Clear</button>
           <button type="button" class="btn btn-primary float-right" (click)="doCreate()">Thêm hợp đồng</button>
         </div>
@@ -239,7 +249,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button (click)="doLoadData()" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-secondary float-right" (click)="clear()">Clear</button>
           <button type="button" class="btn btn-primary float-right" (click)="doUpdate()">Thêm hợp đồng</button>
         </div>

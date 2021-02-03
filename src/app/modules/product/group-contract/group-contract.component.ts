@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {IGroupContract, ITemplateContract} from '../../../model/models';
+import {TemplateContractService} from '../service/templateContract.service';
+import {MatDialog} from '@angular/material';
+import {NotificationService} from '../../../shared/notification.service';
+import {GroupContractService} from '../service/groupContract.service';
 
 @Component({
   selector: 'app-group-contract',
@@ -7,9 +12,109 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GroupContractComponent implements OnInit {
 
-  constructor() { }
+  page: number;
+  groupContracts: IGroupContract[] = [];
+  templateContracts: ITemplateContract[] = [];
+  contentSearch: any;
+  codeContractOld: string;
+  @ViewChild('divElement') detailContent: ElementRef;
+  groupContractDetail: IGroupContract;
+
+
+
+  groupContractUpdate = {
+    content: '',
+    name: '',
+    code: '' ,
+    description: '',
+    appliedDate: new Date().getTime(),
+    templateId: '',
+    status: ''
+  };
+
+  constructor(
+    private groupContractService: GroupContractService,
+    private dialog: MatDialog,
+    private notificationService: NotificationService,
+    private templateContractService: TemplateContractService
+
+  ) {
+  }
 
   ngOnInit() {
+    this.getTemplateContract();
+  }
+
+  getTemplateContract() {
+    this.templateContractService.getAllTemplateContracts().subscribe(data => {
+      this.templateContracts = data.result;
+    });
+  }
+
+  getPageSymbol(current: number) {
+    if (current === null) {
+      current = 0;
+    }
+    this.page = current;
+    this.groupContractService.getGroupContractApproval( '', current > 0 ? current - 1 : 0, 10).subscribe(data => {
+      if (data) {
+        this.groupContracts = data.result;
+      }
+    });
+  }
+
+  doSelected(groupContract) {
+    this.groupContractUpdate = groupContract;
+    this.codeContractOld = groupContract.code;
+  }
+
+  doUpdate() {
+    this.groupContractUpdate.status = '0';
+    if (!(this.codeContractOld === this.groupContractUpdate.code)) {
+      this.notificationService.showError('Mã hợp đồng không được phép sửa', 'Thông báo');
+      return;
+    }
+    this.groupContractService.updateGroupContractWaitingForApproval(this.groupContractUpdate).subscribe(data => {
+      if (data.errorCode === '0') {
+        this.notificationService.showSuccess('Đã cập nhập xong hợp đồng', 'Thông báo' );
+      } else {
+        this.notificationService.showError('Thông báo', data.description);
+      }
+    }, error => {
+      console.log(error);
+      this.notificationService.showError( 'Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
+    });
+  }
+
+
+
+  clear() {
+    this.groupContractUpdate.description = '';
+    this.groupContractUpdate.code = '';
+    this.groupContractUpdate.name = '';
+    this.groupContractUpdate.content = '';
+    this.contentSearch = '';
+  }
+
+  doSearch() {
+    this.groupContractService.getGroupContractApproval(this.contentSearch.trim(), 1,10).subscribe(data => {
+      if (data) {
+        this.groupContracts = data.result;
+      }
+    });
+  }
+
+  doShowDetailGroupContract(groupContract) {
+    this.groupContractDetail = groupContract;
+  }
+
+  doShowDetailTemplateContract(contractTemplate) {
+    this.detailContent.nativeElement.innerHTML = contractTemplate;
+
+  }
+
+  doLoadData() {
+    this.getPageSymbol(0);
   }
 
 }

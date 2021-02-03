@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {TemplateContractService} from '../service/templateContract.service';
-import {ITemplateContract} from '../../../model/models';
+import {IGroupContract, ITemplateContract} from '../../../model/models';
 import {NotificationService} from '../../../shared/notification.service';
 
 @Component({
@@ -20,6 +20,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
     name: '',
     code: '',
     description: '',
+    status: ''
   };
 
   templateContractUpdate = {
@@ -27,6 +28,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
     name: '',
     code: '',
     description: '',
+    status: ''
   };
 
   @ViewChild('divElement') detailContent: ElementRef;
@@ -44,7 +46,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
   getPageSymbol(current: number) {
     if (current === null) {
     }
-    this.templateContractService.getTemplateContractInRedis('', 1).subscribe(data => {
+    this.templateContractService.getTemplateContractWaitingForApproval('', 0, 10).subscribe(data => {
       if (data) {
         this.templateContracts = data.result;
       }
@@ -52,7 +54,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
   }
 
   doSearch() {
-    this.templateContractService.getTemplateContractInRedis(this.contentSearch.trim(), 1).subscribe(data => {
+    this.templateContractService.getTemplateContractWaitingForApproval(this.contentSearch.trim(), 1, 10).subscribe(data => {
       if (data) {
         this.templateContracts = data.result;
       }
@@ -65,6 +67,9 @@ export class ListWaitingForApprovaComponent implements OnInit {
 
   doSelect(event, index) {
     this.templateContracts[index].checked = event.target.checked;
+    if (this.templateContracts[index].checked) {
+      this.templateContracts[index].status = '0';
+    }
   }
 
   doSubmit() {
@@ -103,14 +108,16 @@ export class ListWaitingForApprovaComponent implements OnInit {
         this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
       });
     }
+    this.doLoadData();
   }
 
   doApproval(contract) {
     const template = [];
+    contract.status = 1;
     template.push(contract);
     this.templateContractService.updateOrCreateTemplateContract(template).subscribe(data => {
       if (data.errorCode === '0') {
-        this.notificationService.showSuccess('Đã gửi phê duyệt thành công', 'Thông báo');
+        this.notificationService.showSuccess('Phê duyệt thành công', 'Thông báo');
       } else {
         this.notificationService.showError(data.description, 'Thông báo');
       }
@@ -118,9 +125,11 @@ export class ListWaitingForApprovaComponent implements OnInit {
       console.log(error);
       this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
     });
+    this.doLoadData();
   }
 
   doDelete(template) {
+    template.status = '2';
     this.lstTemplate.push(template);
     this.templateContractService.deleteTemplateContract(this.lstTemplate).subscribe(data => {
       if (data.errorCode === '0') {
@@ -136,10 +145,12 @@ export class ListWaitingForApprovaComponent implements OnInit {
 
   doSelected(contractTemplate) {
     this.templateContractUpdate = contractTemplate;
+    this.templateContractUpdate.status  = '0';
     this.codeContractOld = contractTemplate.code;
   }
 
   doUpdate() {
+    this.templateContractUpdate.status = '0';
     if (!(this.codeContractOld === this.templateContractUpdate.code)) {
       this.notificationService.showError('Mã hợp đồng không được phép sửa', 'Thông báo');
       return;
@@ -157,6 +168,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
   }
 
   doCreate() {
+    this.templateContractNew.status = '3';
     this.templateContractService.createTemplateContract(this.templateContractNew).subscribe(data => {
       if (data.errorCode === '0') {
         this.notificationService.showSuccess('Đã gửi phê duyệt thành công', 'Thông báo');
@@ -172,5 +184,42 @@ export class ListWaitingForApprovaComponent implements OnInit {
 
   doShowDetail(content) {
     this.detailContent.nativeElement.innerHTML = content;
+  }
+
+  doUpdateTemplateForWaitingForApproval(templateContract: ITemplateContract, action) {
+    if (action === 'submit for approval') {
+      templateContract.status = '0';
+      this.templateContractService.createTemplateContractWaitingForApproval(templateContract).subscribe(data => {
+        if (data.errorCode === '0') {
+          this.notificationService.showSuccess('Đã gửi phê duyệt thành công', 'Thông báo');
+        } else {
+          this.notificationService.showError('Thông báo', data.description);
+        }
+      }, error => {
+        console.log(error);
+        this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
+      });
+      return;
+    }
+
+    if (action === 'reject approval') {
+      templateContract.status = '2';
+      this.templateContractService.createTemplateContractWaitingForApproval(templateContract).subscribe(data => {
+        if (data.errorCode === '0') {
+          this.notificationService.showSuccess('Thành công', 'Thông báo');
+        } else {
+          this.notificationService.showError('Thông báo', data.description);
+        }
+      }, error => {
+        console.log(error);
+        this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
+      });
+      return;
+    }
+    this.doLoadData();
+  }
+
+  doLoadData() {
+    this.getPageSymbol(0);
   }
 }
