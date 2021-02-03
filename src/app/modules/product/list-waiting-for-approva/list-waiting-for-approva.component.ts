@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {TemplateContractService} from '../service/templateContract.service';
 import {IGroupContract, ITemplateContract} from '../../../model/models';
 import {NotificationService} from '../../../shared/notification.service';
@@ -47,7 +47,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
     status: ''
   };
   isActionSubmit = true;
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['code', 'name', 'description', 'activeVersion', 'createDate', 'status', 'action'];
 
 
   @ViewChild('divElement') detailContent: ElementRef;
@@ -55,7 +55,8 @@ export class ListWaitingForApprovaComponent implements OnInit {
 
   constructor(
     private notificationService: NotificationService,
-    private templateContractService: TemplateContractService
+    private templateContractService: TemplateContractService,
+    private changeDetectorRefs: ChangeDetectorRef
   ) {
   }
 
@@ -181,6 +182,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
       console.log(error);
       this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
     });
+    this.changeDetectorRefs.detectChanges();
   }
 
   doSelected(contractTemplate) {
