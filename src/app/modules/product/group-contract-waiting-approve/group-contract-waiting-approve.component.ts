@@ -143,6 +143,19 @@ export class GroupContractWaitingApproveComponent implements OnInit {
     }
 
     if (this.action === '1') {
+      let isActionApproval = true;
+      let error = '';
+      groupContract.forEach(r => {
+          if (r.status === '0') {
+            error = 'Bản ghi với mã nhóm: ' + r.code + ' đã ở trạng thái phê duyêt vui lòng chọn lại bản ghi khác';
+            isActionApproval = false;
+          }
+        }
+      );
+      if (!isActionApproval) {
+        this.notificationService.showWarning(error, 'Thông báo');
+        return;
+      }
       this.groupContractService.updateGroupContractWaitingForApproval(groupContract).subscribe(data => {
         if (data.errorCode === '0') {
           this.notificationService.showSuccess('Đã gửi phê duyệt thành công', 'Thông báo');
@@ -158,6 +171,10 @@ export class GroupContractWaitingApproveComponent implements OnInit {
     if (this.action === '2') {
       this.groupContractService.deleteGroupContract(groupContract).subscribe(data => {
         if (data.errorCode === '0') {
+          groupContract.forEach(r => {
+              r.status = '4';
+            }
+          );
           this.notificationService.showSuccess('Đã xóa thành công', 'Thông báo');
         } else {
           this.notificationService.showError(data.description, 'Thông báo');
@@ -173,11 +190,12 @@ export class GroupContractWaitingApproveComponent implements OnInit {
 
   doApproval(contract) {
     const template = [];
-    contract.status = '0';
+    contract.status = '1';
     template.push(contract);
     this.groupContractService.createGroupContract(template).subscribe(data => {
       if (data.errorCode === '0') {
-        this.notificationService.showSuccess('Đã gửi phê duyệt thành công', 'Thông báo');
+        this.doLoadData();
+        this.notificationService.showSuccess('Đã  phê duyệt thành công', 'Thông báo');
       } else {
         this.notificationService.showError(data.description, 'Thông báo');
       }
@@ -185,10 +203,10 @@ export class GroupContractWaitingApproveComponent implements OnInit {
       console.log(error);
       this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
     });
-    this.doLoadData();
   }
 
   doDelete(template) {
+    template.status = '4';
     this.lstGroupContract.push(template);
     this.groupContractService.deleteGroupContract(this.lstGroupContract).subscribe(data => {
       if (data.errorCode === '0') {
@@ -205,6 +223,10 @@ export class GroupContractWaitingApproveComponent implements OnInit {
 
   doPerformAction(event, index) {
     this.groupContracts[index].checked = event.target.checked;
+    if ( this.groupContracts[index].status === '4' &&  this.groupContracts[index].checked) {
+      this.notificationService.showError('Bản ghi đã xóa vui lòng chọn bản ghi khác', 'Thông báo');
+      return;
+    }
     if (this.groupContracts[index].checked) {
       this.groupContracts[index].status = '0';
     }

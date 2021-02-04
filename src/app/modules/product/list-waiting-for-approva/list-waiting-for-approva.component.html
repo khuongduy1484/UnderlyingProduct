@@ -4,12 +4,12 @@
       <div class="card-body">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link"
+            <a class="nav-link active"
                href="/template-contract"><i class="fas fa-list"></i> Danh sách template hợp đồng</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link active"
+            <a class="nav-link "
                href="/template-contract-waiting-approval"><i class="fas fa-list"></i> Danh sách template hợp đồng chờ
               duyệt</a>
           </li>
@@ -63,144 +63,69 @@
           <div class="row mt-4">
             <div class="col-md-12 col-12">
 
-              <table mat-table [dataSource]="templateContracts" class="mat-elevation-z8">
-
-                <!--- Note that these columns can be defined in any order.
-                      The actual rendered columns are set as a property on the row definition" -->
-
-                <!-- Position Column -->
-                <ng-container matColumnDef="code">
-                  <th mat-header-cell *matHeaderCellDef> No. </th>
-                  <td mat-cell *matCellDef="let element"> {{element.code}} </td>
-                </ng-container>
-
-                <!-- Name Column -->
-                <ng-container matColumnDef="name">
-                  <th mat-header-cell *matHeaderCellDef> Name </th>
-                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                </ng-container>
-
-                <!-- Weight Column -->
-                <ng-container matColumnDef="description">
-                  <th mat-header-cell *matHeaderCellDef> Weight </th>
-                  <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="status">
-                  <th mat-header-cell *matHeaderCellDef> Symbol </th>
-                  <td mat-cell *matCellDef="let element"> {{element.status}} </td>
-                </ng-container>
-
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="activeVersion">
-                  <th mat-header-cell *matHeaderCellDef> Symbol </th>
-                  <td mat-cell *matCellDef="let element"> {{element.activeVersion}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="createDate">
-                  <th mat-header-cell *matHeaderCellDef> Symbol </th>
-                  <td mat-cell *matCellDef="let element"> {{element.createDate}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="action">
-                  <th mat-header-cell *matHeaderCellDef> Symbol </th>
-                  <td mat-cell *matCellDef="let element">
-                    <a  (click)="doSelected(element)" class="btn btn-primary btn-xs mr-1">
-                                             data-toggle="modal"
-                                             data-target="#modal-update">
-                                            <i class="far fa-edit"></i>
-                                          </a>
-                                          <a   (click)="doDelete(element)" class="btn btn-info btn-xs  mr-1" data-toggle="modal"
-                                             data-target="#modal-delete">
-                                            <i class="fas fa-trash-alt"></i>
-                                          </a>
-                                          <a   (click)="doUpdateTemplateForWaitingForApproval(element, 'reject approval')"
-                                             class="btn btn-info btn-xs mr-1" data-toggle="modal">
-                                            <i class="fa fa-window-close" aria-hidden="true"></i>
-                                          </a>
-                                          <a  (click)="doShowDetail(element.content)" class="btn btn-info mr-1 btn-xs mr-1 "
-                                             data-toggle="modal"
-                                             data-target="#modal-detail">
-                                            <i class="fas fa-eye"></i>
-                                          </a>
-
-                                          <a  *ngIf="!(element.status == '0' )"
-                                             (click)="doUpdateTemplateForWaitingForApproval(element, 'submit for approval')"
-                                             class="btn btn-info mr-1 btn-xs mr-1">
-                                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                                          </a>
-                                          <a   (click)="doApproval(element)" class="btn btn-info btn-xs mr-1" data-toggle="modal">
-                                            <i class="fa fa-check-square" aria-hidden="true"></i>
-                                          </a>
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Mã HĐ</th>
+                  <th scope="col">Tên HĐ</th>
+                  <th scope="col">Mô tả</th>
+                  <th scope="col">Active verson</th>
+                  <th scope="col">Ngày áp dụng</th>
+                  <th scope="col">Trạng thái</th>
+                  <th scope="col">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="templateContracts.length > 0 ||templateContracts != null ">
+                <tr  *ngFor="let templateContract of templateContracts ; let i = index" class="border border-dark">
+                  <td *ngIf="templateContract != null">
+                    <label class="form-radio">
+                      <input type="checkbox" name="id_number" id="record-{{i}}" name="record-{{i}}"
+                             [checked]="templateContract.checked" (change)="doSelect($event, i)">
+                    </label>
                   </td>
-                </ng-container>
+                  <td *ngIf="templateContract != null">{{templateContract.code}}</td>
+                  <td *ngIf="templateContract != null">{{templateContract.name}}</td>
+                  <td *ngIf="templateContract != null">{{templateContract.description}}</td>
+                  <td *ngIf="templateContract != null">{{templateContract.activeVersion}}</td>
+                  <td *ngIf="templateContract != null">{{templateContract.updateDate | date:'dd/MM/yyyy'}}</td>
+                  <td *ngIf="templateContract.status == 2 && templateContract != null">Từ chối</td>
+                  <td *ngIf="templateContract.status == 3 && templateContract != null">Bản nháp</td>
+                  <td *ngIf="templateContract.status == 0 && templateContract != null">Chờ phê duyệt</td>
+                  <td *ngIf="templateContract.status == 4 && templateContract != null">Đã xóa</td>
+                  <td *ngIf="templateContract.status == 1 && templateContract != null">Đã  phê duyệt</td>
+                  <td *ngIf="templateContract != null">
+                    <a  (click)="doSelected(templateContract)" class="btn btn-primary btn-xs mr-1"
+                       data-toggle="modal"
+                       data-target="#modal-update">
+                      <i class="far fa-edit"></i>
+                    </a>
+                    <a   (click)="doDelete(templateContract)" class="btn btn-info btn-xs  mr-1" data-toggle="modal"
+                       data-target="#modal-delete">
+                      <i class="fas fa-trash-alt"></i>
+                    </a>
+                    <a   (click)="doUpdateTemplateForWaitingForApproval(templateContract, 'reject approval')"
+                       class="btn btn-info btn-xs mr-1" data-toggle="modal">
+                      <i class="fa fa-window-close" aria-hidden="true"></i>
+                    </a>
+                    <a  (click)="doShowDetail(templateContract.content)" class="btn btn-info mr-1 btn-xs mr-1 "
+                       data-toggle="modal"
+                       data-target="#modal-detail">
+                      <i class="fas fa-eye"></i>
+                    </a>
 
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <a  *ngIf="!(templateContract.status == '0' ) && !(templateContract.status == '1' )"
+                       (click)="doUpdateTemplateForWaitingForApproval(templateContract, 'submit for approval')"
+                       class="btn btn-info mr-1 btn-xs mr-1">
+                      <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                    </a>
+                    <a   (click)="doApproval(templateContract)" class="btn btn-info btn-xs mr-1" data-toggle="modal">
+                      <i class="fa fa-check-square" aria-hidden="true"></i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
               </table>
-<!--              <table class="table table-bordered">-->
-<!--                <thead>-->
-<!--                <tr>-->
-<!--                  <th scope="col"></th>-->
-<!--                  <th scope="col">Mã HĐ</th>-->
-<!--                  <th scope="col">Tên HĐ</th>-->
-<!--                  <th scope="col">Mô tả</th>-->
-<!--                  <th scope="col">Active verson</th>-->
-<!--                  <th scope="col">Ngày áp dụng</th>-->
-<!--                  <th scope="col">Trạng thái</th>-->
-<!--                  <th scope="col">Thao tác</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody *ngIf="templateContracts.length > 0 ||templateContracts != null ">-->
-<!--                <tr  *ngFor="let templateContract of templateContracts ; let i = index" class="border border-dark">-->
-<!--                  <td *ngIf="templateContract != null">-->
-<!--                    <label class="form-radio">-->
-<!--                      <input type="checkbox" name="id_number" id="record-{{i}}" name="record-{{i}}"-->
-<!--                             [checked]="templateContract.checked" (change)="doSelect($event, i)">-->
-<!--                    </label>-->
-<!--                  </td>-->
-<!--                  <td *ngIf="templateContract != null">{{templateContract.code}}</td>-->
-<!--                  <td *ngIf="templateContract != null">{{templateContract.name}}</td>-->
-<!--                  <td *ngIf="templateContract != null">{{templateContract.description}}</td>-->
-<!--                  <td *ngIf="templateContract != null">{{templateContract.activeVersion}}</td>-->
-<!--                  <td *ngIf="templateContract != null">{{templateContract.updateDate | date:'dd/MM/yyyy'}}</td>-->
-<!--                  <td *ngIf="templateContract.status == 2 && templateContract != null">Từ chối</td>-->
-<!--                  <td *ngIf="templateContract.status == 3 && templateContract != null">Bản nháp</td>-->
-<!--                  <td *ngIf="templateContract.status == 0 && templateContract != null">Chờ phê duyệt</td>-->
-<!--                  <td *ngIf="templateContract.status == 4 && templateContract != null">Đã xóa</td>-->
-<!--                  <td *ngIf="templateContract != null">-->
-<!--                    <a  (click)="doSelected(templateContract)" class="btn btn-primary btn-xs mr-1"-->
-<!--                       data-toggle="modal"-->
-<!--                       data-target="#modal-update">-->
-<!--                      <i class="far fa-edit"></i>-->
-<!--                    </a>-->
-<!--                    <a   (click)="doDelete(templateContract)" class="btn btn-info btn-xs  mr-1" data-toggle="modal"-->
-<!--                       data-target="#modal-delete">-->
-<!--                      <i class="fas fa-trash-alt"></i>-->
-<!--                    </a>-->
-<!--                    <a   (click)="doUpdateTemplateForWaitingForApproval(templateContract, 'reject approval')"-->
-<!--                       class="btn btn-info btn-xs mr-1" data-toggle="modal">-->
-<!--                      <i class="fa fa-window-close" aria-hidden="true"></i>-->
-<!--                    </a>-->
-<!--                    <a  (click)="doShowDetail(templateContract.content)" class="btn btn-info mr-1 btn-xs mr-1 "-->
-<!--                       data-toggle="modal"-->
-<!--                       data-target="#modal-detail">-->
-<!--                      <i class="fas fa-eye"></i>-->
-<!--                    </a>-->
-
-<!--                    <a  *ngIf="!(templateContract.status == '0' )"-->
-<!--                       (click)="doUpdateTemplateForWaitingForApproval(templateContract, 'submit for approval')"-->
-<!--                       class="btn btn-info mr-1 btn-xs mr-1">-->
-<!--                      <i class="fa fa-paper-plane" aria-hidden="true"></i>-->
-<!--                    </a>-->
-<!--                    <a   (click)="doApproval(templateContract)" class="btn btn-info btn-xs mr-1" data-toggle="modal">-->
-<!--                      <i class="fa fa-check-square" aria-hidden="true"></i>-->
-<!--                    </a>-->
-<!--                  </td>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--              </table>-->
               <ul class="pagination pagination-sm m-0 float-right">
                 <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
                                 [collectionSize]="30" [(page)]="page" aria-label="Custom pagination">

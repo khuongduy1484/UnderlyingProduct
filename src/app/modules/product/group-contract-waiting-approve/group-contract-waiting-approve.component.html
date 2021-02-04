@@ -29,7 +29,8 @@
                   <button type="button" class="mr-1 btn btn-sm btn-success float-right" data-toggle="modal"
                           data-target="#modal-add">Thêm mới
                   </button>
-                  <button id="search" name="search" type="button" class="mr-1 btn btn-sm btn-secondary float-right" (click)="doSearch()">Tìm
+                  <button id="search" name="search" type="button" class="mr-1 btn btn-sm btn-secondary float-right"
+                          (click)="doSearch()">Tìm
                     kiếm
                   </button>
                   <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right"><i class="fas fa-sync"></i>
@@ -72,46 +73,51 @@
                   <th>Thao tác</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf="groupContracts.length > 0 ||groupContracts != null ">
                 <tr *ngFor="let groupContract of groupContracts  ; let i = index">
-                  <td>
+                  <td *ngIf="groupContract != null">
                     <label class="form-radio">
                       <input type="checkbox" name="id_number" id="record-{{i}}" name="record-{{i}}"
                              [checked]="groupContract.checked" (change)="doPerformAction($event, i)">
                     </label>
                   </td>
-                  <td class="border border-dark">{{groupContract.name}}</td>
-                  <td class="border border-dark">{{groupContract.code}}</td>
-                  <td class="border border-dark">{{groupContract.description}}</td>
-                  <td class="border border-dark">{{groupContract.description}}</td>
-                  <td class="border border-dark">{{groupContract.appliedDate | date:'dd/MM/yyyy'}}</td>
-                  <td class="border border-dark" *ngIf="groupContract.status == 2">Từ chối</td>
-                  <td class="border border-dark" *ngIf="groupContract.status == 3">Bản nháp</td>
-                  <td class="border border-dark" *ngIf="groupContract.status == 0">Chờ phê duyệt</td>
-                  <td>
-                    <a *ngIf="!(groupContract.status == 0) && groupContracts.length > 0  " (click)="doUpdateGroupForWaitingForApproval(groupContract,'submit for approval')"
-                       class="btn btn-info btn-xs mr-1" data-toggle="modal"
-                       data-target="#modal-send">
-                      <i class="fas fa-paper-plane"></i>
-                    </a>
+                  <td>{{groupContract.name}}</td>
+                  <td>{{groupContract.code}}</td>
+                  <td>{{groupContract.description}}</td>
+                  <td>{{groupContract.description}}</td>
+                  <td>{{groupContract.appliedDate | date:'dd/MM/yyyy'}}</td>
+                  <td *ngIf="groupContract.status == 2 && groupContract != null">Từ chối</td>
+                  <td *ngIf="groupContract.status == 3 && groupContract != null">Bản nháp</td>
+                  <td *ngIf="groupContract.status == 0  && groupContract != null">Chờ phê duyệt</td>
+                  <td *ngIf="groupContract.status == 4 && groupContract != null">Đã xóa</td>
+                  <td *ngIf="groupContract.status == 1 && groupContract != null">Đã phê duyệt</td>
+                  <td *ngIf="groupContract != null">
+
                     <a (click)="doSelectedUpdate(groupContract)" class="btn btn-info btn-xs mr-1" data-toggle="modal"
                        data-target="#modal-update">
                       <i class="far fa-edit"></i>
                     </a>
+                    <a (click)="doUpdateGroupForWaitingForApproval(groupContract, 'reject approval')"
+                       class="btn btn-info btn-xs mr-1" data-toggle="modal">
+                      <i class="fa fa-window-close" aria-hidden="true"></i>
+                    </a>
                     <a (click)="doDelete(groupContract)" class="btn btn-info btn-xs  mr-1" data-toggle="modal"
                        data-target="#modal-delete">
                       <i class="fas fa-trash-alt"></i>
+                    </a>
+                    <a
+                      *ngIf="!(groupContract.status == 0) && !(groupContract.status == '1' ) && groupContracts.length > 0  "
+                      (click)="doUpdateGroupForWaitingForApproval(groupContract,'submit for approval')"
+                      class="btn btn-info btn-xs mr-1" data-toggle="modal"
+                      data-target="#modal-send">
+                      <i class="fas fa-paper-plane"></i>
                     </a>
 
                     <a (click)="doApproval(groupContract)" class="btn btn-info btn-xs mr-1" data-toggle="modal">
                       <i class="fa fa-check-square" aria-hidden="true"></i>
                     </a>
 
-                    <a (click)="doUpdateGroupForWaitingForApproval(groupContract, 'reject approval')"
-                       class="btn btn-info btn-xs mr-1" data-toggle="modal"
-                    >
-                      <i class="fa fa-window-close" aria-hidden="true"></i>
-                    </a>
+
                   </td>
                 </tr>
                 </tbody>

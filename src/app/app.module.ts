@@ -17,15 +17,15 @@ import {APP_BASE_HREF} from '@angular/common';
 import {OriginalBondsComponent} from './modules/original-bonds/original-bonds.component';
 import {AutomationComponent} from './modules/automation/automation.component';
 import {
-    MAT_DIALOG_DEFAULT_OPTIONS,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatListModule,
-    MatPaginatorModule,
-    MatSidenavModule, MatTableModule,
-    MatTabsModule,
-    MatToolbarModule
+  MAT_DIALOG_DEFAULT_OPTIONS,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatListModule,
+  MatPaginatorModule,
+  MatSidenavModule,
+  MatTabsModule,
+  MatToolbarModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {LayoutComponent} from './modules/layout/layout.component';
@@ -74,29 +74,28 @@ import {GroupContractWaitingApproveComponent} from './modules/product/group-cont
     GroupContractComponent,
     GroupContractWaitingApproveComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        HttpClientModule,
-        MatDialogModule,
-        BrowserAnimationsModule,
-        MatIconModule,
-        MatListModule,
-        MatToolbarModule,
-        MatTabsModule,
-        MatSidenavModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        MaterialModule,
-        MatFormFieldModule,
-        MatPaginatorModule,
-        NgbModule,
-        EditorModule,
-        ToastrModule.forRoot(),
-        MatTableModule
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatListModule,
+    MatToolbarModule,
+    MatTabsModule,
+    MatSidenavModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    MatFormFieldModule,
+    MatPaginatorModule,
+    NgbModule,
+    EditorModule,
+    ToastrModule.forRoot()
 
-    ],
+  ],
   entryComponents: [AutomationComponent],
   exports: [MatDialogModule, MatIconModule, MatTabsModule, MatSidenavModule],
   providers: [authInterceptorProviders, {provide: APP_BASE_HREF, useValue: '/'},
