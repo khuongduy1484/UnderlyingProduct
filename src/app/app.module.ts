@@ -10,7 +10,7 @@ import {ProfileComponent} from './modules/profile/profile.component';
 import {BoardAdminComponent} from './modules/board-admin/board-admin.component';
 import {BoardModeratorComponent} from './modules/board-moderator/board-moderator.component';
 import {BoardUserComponent} from './modules/board-user/board-user.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {authInterceptorProviders} from './modules/_helpers/auth.interceptor';
 import {APP_BASE_HREF} from '@angular/common';
@@ -32,9 +32,8 @@ import {LayoutComponent} from './modules/layout/layout.component';
 import {HeaderComponent} from './navigation/header/header.component';
 import {SidenavListComponent} from './navigation/sidenav-list/sidenav-list.component';
 import {MaterialModule} from './modules/material/material.module';
-import {ContractParametersComponent} from './modules/contract-parameters/contract-parameters.component';
+import {ContractParametersComponent} from './modules/product/contract-parameters/contract-parameters.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {UpdateContractComponent} from './modules/contract-parameters/update-contract/update-contract.component';
 import {EditorModule} from '@tinymce/tinymce-angular';
 import {AppLoadingComponent} from './shared/app-loading/app-loading.component';
 import {BreadcrumbComponent} from './modules/breadcrumb/breadcrumb.component';
@@ -65,7 +64,6 @@ import {GroupContractWaitingApproveComponent} from './modules/product/group-cont
     HeaderComponent,
     SidenavListComponent,
     ContractParametersComponent,
-    UpdateContractComponent,
     AppLoadingComponent,
     BreadcrumbComponent,
     TemplateContractComponent,
@@ -93,7 +91,8 @@ import {GroupContractWaitingApproveComponent} from './modules/product/group-cont
     MatPaginatorModule,
     NgbModule,
     EditorModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    ReactiveFormsModule
 
   ],
   entryComponents: [AutomationComponent],

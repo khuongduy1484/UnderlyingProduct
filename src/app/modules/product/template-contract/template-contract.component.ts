@@ -84,7 +84,7 @@ export class TemplateContractComponent implements OnInit {
     this.templateContractNew.status = '3';
     this.templateContractService.createTemplateContract(this.templateContractNew).subscribe(data => {
       if (data.errorCode === '0') {
-        this.notificationService.showSuccess('Đã gửi phê duyệt thành công', 'Thông báo' );
+        this.notificationService.showSuccess('Đã tạo bản ghi thành công', 'Thông báo' );
       } else {
         this.notificationService.showError( data.description, 'Thông báo');
       }

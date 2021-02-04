@@ -8,7 +8,7 @@ import {BoardUserComponent} from './modules/board-user/board-user.component';
 import {BoardModeratorComponent} from './modules/board-moderator/board-moderator.component';
 import {BoardAdminComponent} from './modules/board-admin/board-admin.component';
 import {OriginalBondsComponent} from './modules/original-bonds/original-bonds.component';
-import {ContractParametersComponent} from './modules/contract-parameters/contract-parameters.component';
+import {ContractParametersComponent} from './modules/product/contract-parameters/contract-parameters.component';
 import {TemplateContractComponent} from './modules/product/template-contract/template-contract.component';
 import {ListWaitingForApprovaComponent} from './modules/product/list-waiting-for-approva/list-waiting-for-approva.component';
 import {GroupContractComponent} from './modules/product/group-contract/group-contract.component';
@@ -55,12 +55,27 @@ const routes: Routes = [
         component: GroupContractComponent
       },
       {
+        path: 'group-contract',
+        data: {
+          breadcrumb: 'GROUP CONTRACT '
+        },
+        component: GroupContractComponent
+      },
+      {
         path: 'group-contract-waiting-approval',
         data: {
           breadcrumb: 'GROUP CONTRACT WAITING APPROVAL'
         },
         component: GroupContractWaitingApproveComponent
+      },
+      {
+        path: 'contract-param',
+        data: {
+          breadcrumb: 'CONTRACT PARAM'
+        },
+        component: ContractParametersComponent
       }
+
     ]
   }
 ];

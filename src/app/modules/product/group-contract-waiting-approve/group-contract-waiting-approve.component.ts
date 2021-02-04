@@ -99,7 +99,7 @@ export class GroupContractWaitingApproveComponent implements OnInit {
     this.groupContractNew.status =  '3';
     this.groupContractService.createGroupContractWaitingForApproval(this.groupContractNew).subscribe(data => {
       if (data.errorCode === '0') {
-        this.notificationService.showSuccess('Đã gửi phê duyệt thành công', 'Thông báo');
+        this.notificationService.showSuccess('Đã  tạo bản ghi thành công', 'Thông báo');
       } else {
         this.notificationService.showError(data.description, 'Thông báo');
       }

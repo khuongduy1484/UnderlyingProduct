@@ -55,13 +55,12 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let groupContract of groupContracts" class="border border-dark">
-                  <td class="border border-dark">{{groupContract.name}}</td>
-                  <td class="border border-dark">{{groupContract.code}}</td>
-                  <td class="border border-dark">{{groupContract.description}}</td>
-                  <td class="border border-dark">{{groupContract.contTemplateDocDto.code}}</td>
-                  <td class="border border-dark">{{groupContract.appliedDate | date:'dd/MM/yyyy'}}</td>
-                  <td
-                    class="border border-dark">{{groupContract.status === 1 ? 'Đang hoạt đông' : 'Không hoạt động' }}</td>
+                  <td>{{groupContract.name}}</td>
+                  <td>{{groupContract.code}}</td>
+                  <td >{{groupContract.description}}</td>
+                  <td>{{groupContract.contTemplateDocDto.code}}</td>
+                  <td >{{groupContract.appliedDate | date:'dd/MM/yyyy'}}</td>
+                  <td>{{groupContract.status === 1 ? 'Đang hoạt đông' : 'Không hoạt động' }}</td>
                   <td>
                     <a class="btn btn-primary btn-xs mr-1" data-toggle="modal"
                        (click)="doSelected(groupContract)" data-target="#modal-update">

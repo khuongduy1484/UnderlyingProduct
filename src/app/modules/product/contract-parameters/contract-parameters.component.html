@@ -1,0 +1,153 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <div class="card-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active"
+               href="/group-contract"><i class="fas fa-list"></i> THAM SỐ HỢP ĐỒNG</a>
+          </li>
+        </ul>
+
+        <div class="row">
+          <div class="col-12 col-md-12">
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="input1" class="col-form-label">Tìm kiếm theo tên tham số</label>
+                  <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
+                         placeholder="Nhập từ khóa" name="contentSearch">
+                </div>
+              </div>
+              <div class="col-6 btn-mt-33">
+                <button (click)="doSearch()" type="button" class="mr-1 btn btn-sm btn-secondary float-right">Tìm kiếm
+                </button>
+                <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right"><i class="fas fa-sync"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <h3 class="card-title mb-2">Danh sách tham số hợp đồng và thông báo</h3>
+          </div>
+          <div class="col-6"></div>
+        </div>
+        <form (ngSubmit)="doSearch()">
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>Mã tham số</th>
+                  <th>Mô tả</th>
+                  <th>TYPE</th>
+                  <th>Format</th>
+                  <th>Ngày tạo</th>
+                  <th>Ngày cập nhập</th>
+                  <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let contractParam of contractParams" class="border border-dark">
+                  <td>{{contractParam.code}}</td>
+                  <td>{{contractParam.description}}</td>
+                  <td>{{contractParam.type}}</td>
+                  <td>{{contractParam.format}}</td>
+                  <td>{{contractParam.createDate | date:'dd/MM/yyyy'}}</td>
+                  <td>{{contractParam.updateDate | date:'dd/MM/yyyy'}}</td>
+                  <td>
+                    <a class="btn btn-primary btn-xs mr-1" data-toggle="modal"
+                       (click)="doSelected(contractParam)" data-target="#modal-update">
+                      <i class="far fa-edit"></i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <ul class="pagination pagination-sm m-0 float-right">
+                <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
+                                [collectionSize]="30" [(page)]="page" aria-label="Custom pagination">
+                  <ng-template>Prev</ng-template>
+                  <ng-template>Next</ng-template>
+                  <ng-template></ng-template>
+                </ngb-pagination>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="modal-update" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Cập nhật tham số</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form name="form" [formGroup]="contractParam">
+        <div class="modal-body">
+          <div formGroupName="contractGroup">
+            <div class="row">
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">Mã tham số</label>
+                  <input [disabled]="true" type="text" class="form-control form-control-sm"
+                         formControlName="code" placeholder="Nhập tên nhóm hợp đồng">
+                </div>
+                <div *ngIf="contractParam.get('contractGroup').get('code').errors.required">
+                  Name is required.g
+                </div>
+              </div>
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">Format</label>
+                  <select class="form-control form-control-sm" name="format"
+                          formControlName="format">
+                    <option *ngFor="let format of lstFormat"
+                            [ngValue]="format">{{format}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">Mô tả</label>
+                  <textarea formControlName="description" class="form-control form-control-sm"
+                            name="description" placeholder="Mô tả"></textarea>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">Type</label>
+                  <select class="form-control form-control-sm" name="action"
+                          formControlName="type">
+                    <option *ngFor="let type of lstType"
+                            [ngValue]="type">{{type}}</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button (click)="doLoadData()" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close
+          </button>
+          <button (click)="clear()" type="button" class="btn btn-secondary btn-sm float-right">Clear</button>
+          <button (click)="doUpdate()" type="button" class="btn btn-primary btn-sm float-right">Cập nhật tham số
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

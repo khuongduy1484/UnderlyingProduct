@@ -8,7 +8,7 @@
                href="/template-contract"><i class="fas fa-list"></i> Danh sách template hợp đồng</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link"
+            <a class="nav-link active"
                href="/template-contract-waiting-approval"><i class="fas fa-list"></i> Danh sách template hợp đồng chờ duyệt</a>
           </li>
         </ul>
@@ -55,12 +55,12 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let templateContract of templateContracts" class="border border-dark">
-                  <td class="border border-dark">{{templateContract.code}}</td>
-                  <td class="border border-dark">{{templateContract.name}}</td>
-                  <td class="border border-dark">{{templateContract.description}}</td>
-                  <td class="border border-dark">{{templateContract.activeVersion}}</td>
-                  <td class="border border-dark">{{templateContract.updateDate | date:'dd/MM/yyyy'}}</td>
-                  <td class="border border-dark">
+                  <td >{{templateContract.code}}</td>
+                  <td>{{templateContract.name}}</td>
+                  <td>{{templateContract.description}}</td>
+                  <td >{{templateContract.activeVersion}}</td>
+                  <td >{{templateContract.updateDate | date:'dd/MM/yyyy'}}</td>
+                  <td >
                     <a (click)="doSelected(templateContract)" class="btn btn-primary btn-xs mr-1" data-toggle="modal"
                        data-target="#modal-update">
                       <i class="far fa-edit"></i>

@@ -31,3 +31,14 @@ export interface IGroupContract {
   contTemplateDocDto: ITemplateContract;
 }
 
+
+
+export interface IContractGroup {
+  code: string;
+  description: string;
+  createDate: Date;
+  updateDate: Date;
+  format: string;
+  type: string;
+  id: string;
+}
