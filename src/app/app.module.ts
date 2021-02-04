@@ -47,6 +47,7 @@ import {GroupContractComponent} from './modules/product/group-contract/group-con
 // tslint:disable-next-line:max-line-length
 import {GroupContractWaitingApproveComponent} from './modules/product/group-contract-waiting-approve/group-contract-waiting-approve.component';
 import { GroupSystemComponent } from './modules/system/group-system/group-system.component';
+import {ProductAttributesComponent} from './modules/product/product-attributes/product-attributes.component';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { GroupSystemComponent } from './modules/system/group-system/group-system
     ProductComponent,
     GroupContractComponent,
     GroupContractWaitingApproveComponent,
-    GroupSystemComponent
+    GroupSystemComponent,
+    ProductAttributesComponent
   ],
   imports: [
     BrowserModule,

@@ -15,6 +15,7 @@ import {GroupContractComponent} from './modules/product/group-contract/group-con
 // tslint:disable-next-line:max-line-length
 import {GroupContractWaitingApproveComponent} from './modules/product/group-contract-waiting-approve/group-contract-waiting-approve.component';
 import {GroupSystemComponent} from './modules/system/group-system/group-system.component';
+import {ProductAttributesComponent} from './modules/product/product-attributes/product-attributes.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -82,8 +83,14 @@ const routes: Routes = [
           breadcrumb: 'SYSTEM PARAM'
         },
         component: GroupSystemComponent
-      }
-
+      },
+      {
+        path: 'product-attributes',
+        data: {
+          breadcrumb: 'Product attributes'
+        },
+        component: ProductAttributesComponent
+      },
     ]
   }
 ];
