@@ -5,7 +5,6 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MAT_DIALOG_DEFAULT_OPTIONS,
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
@@ -22,14 +21,18 @@ import {ToastrModule} from 'ngx-toastr';
 import {EditorModule} from 'primeng/editor';
 import {ProductComponent} from './product.component';
 import {TemplateContractRoutingModule} from './template-contract/template-contract-routing.module';
-import { GroupContractComponent } from './group-contract/group-contract.component';
-import {GroupContractWaitingApproveComponent} from './group-contract-waiting-approve/group-contract-waiting-approve.component';
+import {ProductAttributesComponent} from './product-attributes/product-attributes.component';
+import {ApprovedRulesComponent} from './product-attributes/approved-rules/approved-rules.component';
+import {PendingRulesComponent} from './product-attributes/pending-rules/pending-rules.component';
 
 
 @NgModule({
   declarations: [
     BreadcrumbComponent,
-    ProductComponent
+    ProductComponent,
+    ProductAttributesComponent,
+    ApprovedRulesComponent,
+    PendingRulesComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,7 @@ import {GroupContractWaitingApproveComponent} from './group-contract-waiting-app
     TemplateContractRoutingModule
   ],
   entryComponents: [AutomationComponent],
-  exports: [MatDialogModule, MatIconModule, MatTabsModule, MatSidenavModule, GroupContractComponent, GroupContractWaitingApproveComponent],
+  exports: [MatDialogModule, MatIconModule, MatTabsModule, MatSidenavModule],
   providers: [],
 })
 export class ProductModule {
