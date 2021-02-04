@@ -1,0 +1,50 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <div class="card-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active"
+               href="/group-contract"><i class="fas fa-list"></i> THAM SỐ HỢP ĐỒNG</a>
+          </li>
+        </ul>
+
+        <div class="row">
+          <div class="col-6">
+            <h3 class="card-title mb-2">Danh sách tham số hợp đồng và thông báo</h3>
+          </div>
+          <div class="col-6"></div>
+        </div>
+        <form>
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tên nhóm</th>
+                  <th>Giá trị</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let sys of groupSystems ; index as i" class="border border-dark">
+                  <td>{{i + 1}}</td>
+                  <td>{{sys.name}}</td>
+                  <td>{{sys.value}}</td>
+                </tbody>
+              </table>
+              <ul class="pagination pagination-sm m-0 float-right">
+                <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
+                                [collectionSize]="30" [(page)]="page" aria-label="Custom pagination">
+                  <ng-template>Prev</ng-template>
+                  <ng-template>Next</ng-template>
+                  <ng-template></ng-template>
+                </ngb-pagination>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

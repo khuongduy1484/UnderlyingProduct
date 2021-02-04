@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {IGroupContract, ITemplateContract} from '../../../model/models';
-import {GroupContractManagementService} from '../../../service/templateManagement/group-contract-management.service';
+import {GroupContractManagementService} from '../../../service/product/group-contract-management.service';
 
 
 @Injectable({

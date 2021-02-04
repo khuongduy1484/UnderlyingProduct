@@ -14,6 +14,7 @@ import {ListWaitingForApprovaComponent} from './modules/product/list-waiting-for
 import {GroupContractComponent} from './modules/product/group-contract/group-contract.component';
 // tslint:disable-next-line:max-line-length
 import {GroupContractWaitingApproveComponent} from './modules/product/group-contract-waiting-approve/group-contract-waiting-approve.component';
+import {GroupSystemComponent} from './modules/system/group-system/group-system.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -74,6 +75,13 @@ const routes: Routes = [
           breadcrumb: 'CONTRACT PARAM'
         },
         component: ContractParametersComponent
+      },
+      {
+        path: 'system-param',
+        data: {
+          breadcrumb: 'SYSTEM PARAM'
+        },
+        component: GroupSystemComponent
       }
 
     ]

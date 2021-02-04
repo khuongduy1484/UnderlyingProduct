@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {IContractGroup, IGroupContract} from '../../../model/models';
-import {ContractParamService} from '../../../service/contract-param.service';
+import {ContractParamService} from '../../../service/product/contract-param.service';
 
 
 @Injectable({
