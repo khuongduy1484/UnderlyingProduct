@@ -48,9 +48,8 @@ import {GroupContractComponent} from './modules/product/group-contract/group-con
 import {GroupSystemComponent} from './modules/system/group-system/group-system.component';
 import {PropVariableComponent} from './modules/product/prop-variable/prop-variable.component';
 import {NgxPaginationModule} from 'ngx-pagination';
-import { SystemComponent } from './modules/system/system/system.component';
-import {ProductAttributesComponent} from './modules/product/product-attributes/product-attributes.component';
 import {GroupContractWaitingApproveComponent} from './modules/product/group-contract-waiting-approve/group-contract-waiting-approve.component';
+import {SystemComponent} from './modules/system/system/system.component';
 
 
 @NgModule({
@@ -76,7 +75,9 @@ import {GroupContractWaitingApproveComponent} from './modules/product/group-cont
     ProductComponent,
     GroupContractComponent,
     GroupContractWaitingApproveComponent,
-    GroupSystemComponent
+    GroupSystemComponent,
+    PropVariableComponent,
+    SystemComponent
   ],
   imports: [
     BrowserModule,
@@ -100,6 +101,7 @@ import {GroupContractWaitingApproveComponent} from './modules/product/group-cont
     ToastrModule.forRoot(),
     ReactiveFormsModule,
     NgxPaginationModule
+
 
   ],
   entryComponents: [AutomationComponent],
