@@ -1,44 +1,44 @@
+
 <section class="content">
   <div class="container-fluid">
     <div class="card card-primary card-outline">
       <div class="card-body">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link active"
+            <a class="nav-link  "
                href="/group-contract"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link"
+          <li class="nav-item  ">
+            <a class="nav-link active"
                href="/group-contract-waiting-approval"><i class="fas fa-list"></i> Danh sách chờ duyệt</a>
           </li>
         </ul>
-
-        <div class="row">
-          <div class="col-12 col-md-12">
-            <div class="row">
-              <div class="col-6">
-                <div class="form-group">
-                  <label for="input1" class="col-form-label">Tìm kiếm theo nhóm hợp đồng</label>
-                  <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
-                         placeholder="Nhập từ khóa" name="contentSearch">
+        <form (ngSubmit)="doSearch()">
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="input1" class="col-form-label">Tìm kiếm theo nhóm hợp đồng</label>
+                    <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
+                           placeholder="Nhập từ khóa" name="contentSearch">
+                  </div>
                 </div>
-              </div>
-              <div class="col-6 btn-mt-33">
-                <button (click)="doSearch()" type="button" class="mr-1 btn btn-sm btn-secondary float-right">Tìm kiếm
-                </button>
-                <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right"><i class="fas fa-sync"></i>
-                </button>
+                <div class="col-6 btn-mt-33">
+                  <button (click)="doSearch()" type="button" class="mr-1 btn btn-sm btn-secondary float-right">Tìm kiếm
+                  </button>
+                  <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right"><i class="fas fa-sync"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <h3 class="card-title mb-2">Danh sách nhóm hợp đồng đã duyệt</h3>
+          <div class="row">
+            <div class="col-6">
+              <h3 class="card-title mb-2">Danh sách nhóm hợp đồng đã duyệt</h3>
+            </div>
+            <div class="col-6"></div>
           </div>
-          <div class="col-6"></div>
-        </div>
-        <form (ngSubmit)="doSearch()">
           <div class="row">
             <div class="col-12 col-md-12">
               <table class="table table-bordered">
@@ -57,9 +57,9 @@
                 <tr *ngFor="let groupContract of groupContracts" class="border border-dark">
                   <td>{{groupContract.name}}</td>
                   <td>{{groupContract.code}}</td>
-                  <td >{{groupContract.description}}</td>
+                  <td>{{groupContract.description}}</td>
                   <td>{{groupContract.contTemplateDocDto.code}}</td>
-                  <td >{{groupContract.appliedDate | date:'dd/MM/yyyy'}}</td>
+                  <td>{{groupContract.appliedDate | date:'dd/MM/yyyy'}}</td>
                   <td>{{groupContract.status === 1 ? 'Đang hoạt đông' : 'Không hoạt động' }}</td>
                   <td>
                     <a class="btn btn-primary btn-xs mr-1" data-toggle="modal"
@@ -75,9 +75,9 @@
                 </tr>
                 </tbody>
               </table>
-              <ul class="pagination pagination-sm m-0 float-right">
+              <ul *ngIf="groupContracts.length > 0" class="pagination pagination-sm m-0 float-right">
                 <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
-                                [collectionSize]="30" [(page)]="page" aria-label="Custom pagination">
+                                [collectionSize]="groupContracts.length" [(page)]="page" aria-label="Custom pagination">
                   <ng-template>Prev</ng-template>
                   <ng-template>Next</ng-template>
                   <ng-template></ng-template>
@@ -116,7 +116,7 @@
                 <div class="form-group">
                   <label class="col-form-label">Ngày áp dụng</label>
                   <input class="form-control form-control-sm"
-                         type="date"  [ngModel]="groupContractUpdate.appliedDate | date:'yyyy-MM-dd'"
+                         type="date" [ngModel]="groupContractUpdate.appliedDate | date:'yyyy-MM-dd'"
                          name="appliedDate" (ngModelChange)="groupContractUpdate.appliedDate = $event">
                 </div>
               </div>
@@ -162,55 +162,55 @@
 </div>
 
 
-  <div class="modal fade" id="modal-detail" aria-modal="true" role="dialog">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Chi tiết nhóm hợp đồng </h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <table class="table table-bordered">
-            <thead>
-            <tr>
-              <th>Mã hợp đồng</th>
-              <th>Tên hợp đồng</th>
-              <th>Active version</th>
-              <th>Ngày áp dụng</th>
-              <th>Thao tác</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>{{groupContractDetail.code}}</td>
-              <td>{{groupContractDetail.name}}</td>
-              <td>{{groupContractDetail.contTemplateDocDto.activeVersion}}</td>
-              <td>{{groupContractDetail.appliedDate}}</td>
-              <td>
-                <a (click)="doShowDetailTemplateContract(groupContractDetail.contTemplateDocDto.content)"
-                   class="btn btn-info btn-xs" data-toggle="modal"
-                   data-target="#modal-detail-1">
-                  <i class="fas fa-eye"></i>
-                </a>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
-        </div>
+<div class="modal fade" id="modal-detail" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Chi tiết nhóm hợp đồng </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
       </div>
-      <!-- /.modal-content -->
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>Mã hợp đồng</th>
+            <th>Tên hợp đồng</th>
+            <th>Active version</th>
+            <th>Ngày áp dụng</th>
+            <th>Thao tác</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{{groupContractDetail.code}}</td>
+            <td>{{groupContractDetail.name}}</td>
+            <td>{{groupContractDetail.contTemplateDocDto.activeVersion}}</td>
+            <td>{{groupContractDetail.appliedDate}}</td>
+            <td>
+              <a (click)="doShowDetailTemplateContract(groupContractDetail.contTemplateDocDto.content)"
+                 class="btn btn-info btn-xs" data-toggle="modal"
+                 data-target="#modal-detail-1">
+                <i class="fas fa-eye"></i>
+              </a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+      </div>
     </div>
-    <!-- /.modal-dialog -->
+    <!-- /.modal-content -->
   </div>
+  <!-- /.modal-dialog -->
+</div>
 
 
-<div class="modal fade" id="modal-detail-1" aria-modal="true" role="dialog">
+<div class="modal fade" id="modal-detail-1" role="dialog">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">

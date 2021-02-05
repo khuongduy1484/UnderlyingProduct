@@ -54,7 +54,7 @@ export class GroupContractWaitingApproveComponent implements OnInit {
 
   getTemplateContract() {
     this.templateContractService.getAllTemplateContracts().subscribe(data => {
-      this.templateContracts = data.result;
+      this.templateContracts = data.data;
     });
   }
 
@@ -66,7 +66,7 @@ export class GroupContractWaitingApproveComponent implements OnInit {
     this.page = current;
     this.groupContractService.getGroupContractWaitingForApproval('', current > 0 ? current - 1 : 0, 10).subscribe(data => {
       if (data) {
-        this.groupContracts = data.result;
+        this.groupContracts = data.data;
       }
     });
   }
@@ -120,7 +120,7 @@ export class GroupContractWaitingApproveComponent implements OnInit {
   doSearch() {
     this.groupContractService.getGroupContractApproval(this.contentSearch.trim(), 0, 10).subscribe(data => {
       if (data) {
-        this.groupContracts = data.result;
+        this.groupContracts = data.data;
       }
     });
     this.doLoadData();

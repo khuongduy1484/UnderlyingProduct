@@ -15,75 +15,87 @@ import {GroupContractComponent} from './modules/product/group-contract/group-con
 // tslint:disable-next-line:max-line-length
 import {GroupContractWaitingApproveComponent} from './modules/product/group-contract-waiting-approve/group-contract-waiting-approve.component';
 import {GroupSystemComponent} from './modules/system/group-system/group-system.component';
+import {PropVariableComponent} from './modules/product/prop-variable/prop-variable.component';
+import {ProductComponent} from './modules/product/product.component';
+import {SystemComponent} from './modules/system/system/system.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'user', component: BoardUserComponent },
-  { path: 'mod', component: BoardModeratorComponent },
-  { path: 'admin', component: BoardAdminComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'original', component: OriginalBondsComponent },
+  {path: 'home', component: HomeComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
+  {path: 'profile', component: ProfileComponent},
+  {path: 'user', component: BoardUserComponent},
+  {path: 'mod', component: BoardModeratorComponent},
+  {path: 'admin', component: BoardAdminComponent},
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: 'original', component: OriginalBondsComponent},
   {path: 'contract-parameter', component: ContractParametersComponent},
   {
     path: '',
-    component: HomeComponent,
+    component: ProductComponent,
     data: {
-      breadcrumb: 'HOME'
+      breadcrumb: 'Sản phẩm'
     },
     children: [
       {
         path: 'template-contract',
         data: {
-          breadcrumb: 'TEMPLATE CONTRACT'
+          breadcrumb: 'Hợp đồng mẫu'
         },
         component: TemplateContractComponent
       },
       {
         path: 'template-contract-waiting-approval',
         data: {
-          breadcrumb: 'TEMPLATE CONTRACT WAITING FOR APPROVAL'
+          breadcrumb: 'Hợp đồng mẫu'
         },
         component: ListWaitingForApprovaComponent
       },
       {
         path: 'group-contract',
         data: {
-          breadcrumb: 'GROUP CONTRACT'
-        },
-        component: GroupContractComponent
-      },
-      {
-        path: 'group-contract',
-        data: {
-          breadcrumb: 'GROUP CONTRACT '
+          breadcrumb: 'Nhóm hợp đồng'
         },
         component: GroupContractComponent
       },
       {
         path: 'group-contract-waiting-approval',
         data: {
-          breadcrumb: 'GROUP CONTRACT WAITING APPROVAL'
+          breadcrumb: 'Nhóm hợp đồng'
         },
         component: GroupContractWaitingApproveComponent
       },
       {
         path: 'contract-param',
         data: {
-          breadcrumb: 'CONTRACT PARAM'
+          breadcrumb: 'Tham số hợp đồng'
         },
         component: ContractParametersComponent
       },
       {
+        path: 'prop-variable',
+        data: {
+          breadcrumb: 'Thuộc tính'
+        },
+        component: PropVariableComponent
+      }
+
+    ]
+  },
+  {
+    path: '',
+    component: SystemComponent,
+    data: {
+      breadcrumb: 'Hế thống'
+    },
+    children: [
+      {
         path: 'system-param',
         data: {
-          breadcrumb: 'SYSTEM PARAM'
+          breadcrumb: 'Tham số hệ thống'
         },
         component: GroupSystemComponent
       }
-
     ]
   }
 ];
@@ -92,4 +104,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

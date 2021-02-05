@@ -4,12 +4,12 @@
       <div class="card-body">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link active"
+            <a   class="nav-link active"
                href="/template-contract"><i class="fas fa-list"></i> Danh sách template hợp đồng</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link "
+            <a  class="nav-link "
                href="/template-contract-waiting-approval"><i class="fas fa-list"></i> Danh sách template hợp đồng chờ
               duyệt</a>
           </li>
@@ -126,9 +126,9 @@
                 </tr>
                 </tbody>
               </table>
-              <ul class="pagination pagination-sm m-0 float-right">
+              <ul *ngIf="templateContracts.length > 0" class="pagination pagination-sm m-0 float-right">
                 <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
-                                [collectionSize]="30" [(page)]="page" aria-label="Custom pagination">
+                                [collectionSize]="templateContracts.length > 0" [(page)]="page" aria-label="Custom pagination">
                   <ng-template>Prev</ng-template>
                   <ng-template>Next</ng-template>
                   <ng-template></ng-template>
@@ -202,6 +202,7 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
+
 <div class="modal fade" id="modal-update" aria-modal="true" role="dialog">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">

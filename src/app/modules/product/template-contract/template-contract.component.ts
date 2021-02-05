@@ -17,8 +17,6 @@ export class TemplateContractComponent implements OnInit {
   @ViewChild('detailContent') detailContent: ElementRef;
 
 
-
-
   templateContractNew = {
     content: '',
     name: '',
@@ -50,9 +48,9 @@ export class TemplateContractComponent implements OnInit {
       current = 0;
     }
     this.page = current;
-    this.templateContractService.getTemplateContract('',  current > 0 ? current - 1 : 0, 10).subscribe(data => {
+    this.templateContractService.getTemplateContract('', current > 0 ? current - 1 : 0, 10).subscribe(data => {
       if (data) {
-        this.templateContracts = data.result;
+        this.templateContracts = data.data;
       }
     });
   }
@@ -70,13 +68,13 @@ export class TemplateContractComponent implements OnInit {
     }
     this.templateContractService.createTemplateContractWaitingForApproval(this.templateContractUpdate).subscribe(data => {
       if (data.errorCode === '0') {
-        this.notificationService.showSuccess('Đã cập nhập xong hợp đồng', 'Thông báo' );
+        this.notificationService.showSuccess('Đã cập nhập xong hợp đồng', 'Thông báo');
       } else {
         this.notificationService.showError('Thông báo', data.description);
       }
     }, error => {
       console.log(error);
-      this.notificationService.showError( 'Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
+      this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
     });
   }
 
@@ -84,14 +82,14 @@ export class TemplateContractComponent implements OnInit {
     this.templateContractNew.status = '3';
     this.templateContractService.createTemplateContract(this.templateContractNew).subscribe(data => {
       if (data.errorCode === '0') {
-        this.notificationService.showSuccess('Đã tạo bản ghi thành công', 'Thông báo' );
+        this.notificationService.showSuccess('Đã tạo bản ghi thành công', 'Thông báo');
       } else {
-        this.notificationService.showError( data.description, 'Thông báo');
+        this.notificationService.showError(data.description, 'Thông báo');
       }
     }, error => {
 
       console.log(error);
-      this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo', );
+      this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
     });
   }
 
@@ -104,9 +102,9 @@ export class TemplateContractComponent implements OnInit {
   }
 
   doSearch() {
-    this.templateContractService.getTemplateContract(this.contentSearch.trim(), 1, 10).subscribe(data => {
+    this.templateContractService.getTemplateContract(this.contentSearch.trim(), 0, 10).subscribe(data => {
       if (data) {
-        this.templateContracts = data.result;
+        this.templateContracts = data.data;
       }
     });
   }
@@ -114,7 +112,6 @@ export class TemplateContractComponent implements OnInit {
   doShowDetail(content) {
     this.detailContent.nativeElement.innerHTML = content;
   }
-
 
 }
 

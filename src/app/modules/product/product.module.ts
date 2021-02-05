@@ -19,17 +19,13 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {AutomationComponent} from '../automation/automation.component';
 import {ToastrModule} from 'ngx-toastr';
 import {EditorModule} from 'primeng/editor';
-import {ProductComponent} from './product.component';
-import {TemplateContractRoutingModule} from './template-contract/template-contract-routing.module';
 import {ProductAttributesComponent} from './product-attributes/product-attributes.component';
 import {ApprovedRulesComponent} from './product-attributes/approved-rules/approved-rules.component';
 import {PendingRulesComponent} from './product-attributes/pending-rules/pending-rules.component';
 
-
 @NgModule({
   declarations: [
     BreadcrumbComponent,
-    ProductComponent,
     ProductAttributesComponent,
     ApprovedRulesComponent,
     PendingRulesComponent
@@ -52,7 +48,6 @@ import {PendingRulesComponent} from './product-attributes/pending-rules/pending-
     NgbModule,
     EditorModule,
     ToastrModule.forRoot(),
-    TemplateContractRoutingModule
   ],
   entryComponents: [AutomationComponent],
   exports: [MatDialogModule, MatIconModule, MatTabsModule, MatSidenavModule],

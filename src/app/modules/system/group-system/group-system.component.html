@@ -30,7 +30,7 @@
                 <tr *ngFor="let sys of groupSystems ; index as i" class="border border-dark">
                   <td>{{i + 1}}</td>
                   <td>{{sys.name}}</td>
-                  <td>{{sys.value}}</td>
+                  <td>{{sys.sysParamValue.value}}</td>
                 </tbody>
               </table>
               <ul class="pagination pagination-sm m-0 float-right">

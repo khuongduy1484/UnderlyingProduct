@@ -42,3 +42,12 @@ export interface IContractGroup {
   type: string;
   id: string;
 }
+
+export interface IGroupContract {
+  name: string;
+  sysParamValue: {
+    value: '';
+  };
+}
+
+

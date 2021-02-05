@@ -18,14 +18,25 @@ export class GroupContractComponent implements OnInit {
   contentSearch: any;
   codeContractOld: string;
   @ViewChild('divElement') detailContent: ElementRef;
-  groupContractDetail: IGroupContract;
-
+  groupContractDetail = {
+    content: '',
+    name: '',
+    code: '',
+    description: '',
+    appliedDate: new Date().getTime(),
+    templateId: '',
+    status: '',
+    contTemplateDocDto: {
+      activeVersion: '',
+      content: ''
+    }
+  };
 
 
   groupContractUpdate = {
     content: '',
     name: '',
-    code: '' ,
+    code: '',
     description: '',
     appliedDate: new Date().getTime(),
     templateId: '',
@@ -37,7 +48,6 @@ export class GroupContractComponent implements OnInit {
     private dialog: MatDialog,
     private notificationService: NotificationService,
     private templateContractService: TemplateContractService
-
   ) {
   }
 
@@ -47,7 +57,7 @@ export class GroupContractComponent implements OnInit {
 
   getTemplateContract() {
     this.templateContractService.getAllTemplateContracts().subscribe(data => {
-      this.templateContracts = data.result;
+      this.templateContracts = data.data;
     });
   }
 
@@ -56,9 +66,9 @@ export class GroupContractComponent implements OnInit {
       current = 0;
     }
     this.page = current;
-    this.groupContractService.getGroupContractApproval( '', current > 0 ? current - 1 : 0, 10).subscribe(data => {
+    this.groupContractService.getGroupContractApproval('', current > 0 ? current - 1 : 0, 10).subscribe(data => {
       if (data) {
-        this.groupContracts = data.result;
+        this.groupContracts = data.data;
       }
     });
   }
@@ -76,16 +86,15 @@ export class GroupContractComponent implements OnInit {
     }
     this.groupContractService.updateGroupContractWaitingForApproval(this.groupContractUpdate).subscribe(data => {
       if (data.errorCode === '0') {
-        this.notificationService.showSuccess('Đã cập nhập xong hợp đồng', 'Thông báo' );
+        this.notificationService.showSuccess('Đã cập nhập xong hợp đồng', 'Thông báo');
       } else {
         this.notificationService.showError('Thông báo', data.description);
       }
     }, error => {
       console.log(error);
-      this.notificationService.showError( 'Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
+      this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
     });
   }
-
 
 
   clear() {
@@ -97,9 +106,9 @@ export class GroupContractComponent implements OnInit {
   }
 
   doSearch() {
-    this.groupContractService.getGroupContractApproval(this.contentSearch.trim(), 1,10).subscribe(data => {
+    this.groupContractService.getGroupContractApproval(this.contentSearch.trim(), 0, 10).subscribe(data => {
       if (data) {
-        this.groupContracts = data.result;
+        this.groupContracts = data.data;
       }
     });
   }

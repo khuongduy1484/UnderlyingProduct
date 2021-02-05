@@ -4,7 +4,7 @@ import {IGroupContract, ITemplateContract} from '../../../model/models';
 import {NotificationService} from '../../../shared/notification.service';
 import {forEach} from '@angular/router/src/utils/collection';
 
-const ELEMENT_DATA  = [
+const ELEMENT_DATA = [
   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
   {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
   {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
@@ -65,7 +65,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
     }
     this.templateContractService.getTemplateContractWaitingForApproval('', 0, 10).subscribe(data => {
       if (data) {
-        this.templateContracts = data.result;
+        this.templateContracts = data.data;
       }
     });
   }
@@ -73,7 +73,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
   doSearch() {
     this.templateContractService.getTemplateContractWaitingForApproval(this.contentSearch.trim(), 0, 10).subscribe(data => {
       if (data) {
-        this.templateContracts = data.result;
+        this.templateContracts = data.data;
       }
     });
   }
@@ -84,7 +84,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
 
   doSelect(event, index) {
     this.templateContracts[index].checked = event.target.checked;
-    if ( this.templateContracts[index].status === '4' &&  this.templateContracts[index].checked) {
+    if (this.templateContracts[index].status === '4' && this.templateContracts[index].checked) {
       this.notificationService.showError('Bản ghi đã xóa vui lòng chọn bản ghi khác', 'Thông báo');
       return;
     }
@@ -134,7 +134,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
       this.templateContractService.deleteTemplateContract(templateContract).subscribe(data => {
         if (data.errorCode === '0') {
           templateContract.forEach(r => {
-             r.status = '4';
+              r.status = '4';
             }
           );
           this.notificationService.showSuccess('Đã xóa thành công', 'Thông báo');
@@ -262,4 +262,5 @@ export class ListWaitingForApprovaComponent implements OnInit {
   doLoadData() {
     this.getPageSymbol(0);
   }
+
 }

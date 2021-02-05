@@ -52,7 +52,7 @@ export class ContractParametersComponent implements OnInit {
     this.page = current;
     this.contractParamServices.getGroupContract('', current > 0 ? current - 1 : 0, 10).subscribe(data => {
       if (data) {
-        this.contractParams = data.result;
+        this.contractParams = data.data;
       }
     });
   }
@@ -79,7 +79,7 @@ export class ContractParametersComponent implements OnInit {
   doSearch() {
     this.contractParamServices.getGroupContract(this.contentSearch.trim(), 0, 10).subscribe(data => {
       if (data) {
-        this.contractParams = data.result;
+        this.contractParams = data.data;
       }
     });
   }

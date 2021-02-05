@@ -45,8 +45,11 @@ import {ProductComponent} from './modules/product/product.component';
 import {ListWaitingForApprovaComponent} from './modules/product/list-waiting-for-approva/list-waiting-for-approva.component';
 import {GroupContractComponent} from './modules/product/group-contract/group-contract.component';
 // tslint:disable-next-line:max-line-length
+import {GroupSystemComponent} from './modules/system/group-system/group-system.component';
+import {PropVariableComponent} from './modules/product/prop-variable/prop-variable.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 import {GroupContractWaitingApproveComponent} from './modules/product/group-contract-waiting-approve/group-contract-waiting-approve.component';
-import { GroupSystemComponent } from './modules/system/group-system/group-system.component';
+import { SystemComponent } from './modules/system/system/system.component';
 
 
 @NgModule({
@@ -72,7 +75,9 @@ import { GroupSystemComponent } from './modules/system/group-system/group-system
     ProductComponent,
     GroupContractComponent,
     GroupContractWaitingApproveComponent,
-    GroupSystemComponent
+    GroupSystemComponent,
+    PropVariableComponent,
+    SystemComponent
   ],
   imports: [
     BrowserModule,
@@ -94,7 +99,8 @@ import { GroupSystemComponent } from './modules/system/group-system/group-system
     NgbModule,
     EditorModule,
     ToastrModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
 
   ],
   entryComponents: [AutomationComponent],

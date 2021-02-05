@@ -1,0 +1,78 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <div class="card-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link "
+               href="/group-contract"><i class="fas fa-list"></i> Danh sách thuộc tính</a>
+          </li>
+        </ul>
+
+        <div class="row">
+          <div class="col-12 col-md-12">
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="input1" class="col-form-label">Tìm kiếm tên thuộc tính</label>
+                  <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm"
+                         id="input1"
+                         placeholder="Nhập từ khóa" name="contentSearch">
+                </div>
+              </div>
+              <div class="col-6 btn-mt-33">
+                <button (click)="doSearch()" type="button"
+                        class="mr-1 btn btn-sm btn-secondary float-right">Tìm kiếm
+                </button>
+                <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right"><i
+                  class="fas fa-sync"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <h3 class="card-title mb-2">Danh sách thuộc tính</h3>
+          </div>
+          <div class="col-6"></div>
+        </div>
+        <form (ngSubmit)="doSearch()">
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tên thuộc tính</th>
+                  <th>Mô tả</th>
+                  <th>Ngày tạo</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let propVariable of lstPropVariable;  index as i" class="border border-dark">
+                  <td>{{i + 1}}</td>
+                  <td>{{propVariable.name}}</td>
+                  <td>{{propVariable.description}}</td>
+                  <td>{{propVariable.createDate | date:'dd/MM/yyyy'}}</td>
+                </tr>
+                </tbody>
+              </table>
+
+              <ul *ngIf="lstPropVariable.length > 0" class="pagination pagination-sm m-0 float-right">
+                <ngb-pagination [ellipses]="false" [boundaryLinks]="true"
+                                (pageChange)="getPageSymbol($event)"
+                                [collectionSize]="lstPropVariable.length" [(page)]="page"
+                                aria-label="Custom pagination">
+                  <ng-template>Prev</ng-template>
+                  <ng-template>Next</ng-template>
+                  <ng-template></ng-template>
+                </ngb-pagination>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

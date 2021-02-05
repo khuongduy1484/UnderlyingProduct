@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {GroupSystemService} from '../../../service/system/groupSystem.service';
+import {IGroupContract} from '../../../model/models';
 
 @Component({
   selector: 'app-group-system',
@@ -10,7 +11,7 @@ export class GroupSystemComponent implements OnInit {
 
   page: number;
 
-  groupSystems: any [] = [];
+  groupSystems: IGroupContract [] = [];
 
   constructor(
     private groupSystemService: GroupSystemService
@@ -27,7 +28,7 @@ export class GroupSystemComponent implements OnInit {
     this.page = current;
     this.groupSystemService.findGroupSystem(current > 0 ? current - 1 : 0, 10).subscribe(data => {
       if (data) {
-        this.groupSystems = data.result;
+        this.groupSystems = data.data;
       }
     });
   }
