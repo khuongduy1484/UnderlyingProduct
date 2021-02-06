@@ -1,0 +1,288 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <div class="card-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active"
+               href="/template-contract"><i class="fas fa-list"></i>Hợp đồng sản phẩm</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link "
+               href="/template-contract-waiting-approval"><i class="fas fa-list"></i> Danh sách  chờ duyệt</a>
+          </li>
+        </ul>
+        <form (ngSubmit)="doSearch()">
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label for="input1" class="col-form-label">Tìm kiếm theo  mã  TP</label>
+                    <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
+                           placeholder="Nhập mã hợp đồng" name="contentSearch">
+                  </div>
+                </div>
+                <div class="col-6 btn-mt-33">
+                  <!--<button (click)="doCreate()" type="button" class="mr-1 btn btn-info float-right">Thêm mới</button>-->
+                  <button type="button" class="mr-1 btn btn-sm btn-info float-right" data-toggle="modal"
+                          data-target="#modal-add-new">Thêm mới
+                  </button>
+                  <button type="button" class="mr-1 btn btn-sm btn-secondary float-right" (click)="doSearch()">Tìm kiếm
+                  </button>
+                  <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right" (click)="clear()">Clear
+                  </button>
+                  <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right"><i class="fas fa-sync"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <h3 class="card-title mt-2">Danh sách hợp đồng sản phẩm chờ phê duyệt</h3>
+            </div>
+            <div class="col-6">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Chọn và thực hiện tác vụ</label>
+                <div class="col-sm-6">
+                  <select class="form-control form-control-sm" name="action" [(ngModel)]="action">
+                    <option value="1">Gửi phê duyệt</option>
+                    <option value="2">XÓA</option>
+                  </select>
+                </div>
+                <div class="col-sm-2">
+                  <button type="button" (click)="doSubmit()" class="btn btn-dark btn-sm">SUBMIT</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row mt-4">
+            <div class="col-md-12 col-12">
+
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">Tên nhóm hợp đồng</th>
+                  <th scope="col">Aps</th>
+                  <th scope="col">Mô tả</th>
+                  <th scope="col">Active verson</th>
+                  <th scope="col">Ngày áp dụng</th>
+                  <th scope="col">Trạng thái</th>
+                  <th scope="col">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="templateContracts.length > 0 ||templateContracts != null ">
+                <tr *ngFor="let templateContract of templateContracts ; let i = index" class="border border-dark">
+                  <td *ngIf="templateContract != null">
+                    <label class="form-radio">
+                      <input type="checkbox" name="id_number" id="record-{{i}}" name="record-{{i}}"
+                             [checked]="templateContract.checked" (change)="doSelect($event, i)">
+                    </label>
+                  </td>
+                  <td *ngIf="templateContract != null">{{templateContract.code}}</td>
+                  <td *ngIf="templateContract != null">{{templateContract.name}}</td>
+                  <td *ngIf="templateContract != null">{{templateContract.description}}</td>
+                  <td *ngIf="templateContract != null">{{templateContract.activeVersion}}</td>
+                  <td *ngIf="templateContract != null">{{templateContract.updateDate | date:'dd/MM/yyyy'}}</td>
+                  <td *ngIf="templateContract.status == 2 && templateContract != null">Từ chối</td>
+                  <td *ngIf="templateContract.status == 3 && templateContract != null">Bản nháp</td>
+                  <td *ngIf="templateContract.status == 0 && templateContract != null">Chờ phê duyệt</td>
+                  <td *ngIf="templateContract.status == 4 && templateContract != null">Đã xóa</td>
+                  <td *ngIf="templateContract.status == 1 && templateContract != null">Đã phê duyệt</td>
+                  <td *ngIf="templateContract != null">
+                    <a (click)="doSelected(templateContract)" class="btn btn-primary btn-xs mr-1"
+                       data-toggle="modal"
+                       data-target="#modal-update">
+                      <i class="far fa-edit"></i>
+                    </a>
+                    <a (click)="doDelete(templateContract)" class="btn btn-info btn-xs  mr-1" data-toggle="modal"
+                       data-target="#modal-delete">
+                      <i class="fas fa-trash-alt"></i>
+                    </a>
+                    <a (click)="doUpdateTemplateForWaitingForApproval(templateContract, 'reject approval')"
+                       class="btn btn-info btn-xs mr-1" data-toggle="modal">
+                      <i class="fa fa-window-close" aria-hidden="true"></i>
+                    </a>
+                    <a (click)="doShowDetail(templateContract.content)" class="btn btn-info mr-1 btn-xs mr-1 "
+                       data-toggle="modal"
+                       data-target="#modal-detail">
+                      <i class="fas fa-eye"></i>
+                    </a>
+
+                    <a *ngIf="!(templateContract.status == '0' ) && !(templateContract.status == '1' )"
+                       (click)="doUpdateTemplateForWaitingForApproval(templateContract, 'submit for approval')"
+                       class="btn btn-info mr-1 btn-xs mr-1">
+                      <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                    </a>
+                    <a (click)="doApproval(templateContract)" class="btn btn-info btn-xs mr-1" data-toggle="modal">
+                      <i class="fa fa-check-square" aria-hidden="true"></i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <ul *ngIf="templateContracts.length > 0" class="pagination pagination-sm m-0 float-right">
+                <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
+                                [collectionSize]="templateContracts.length > 0" [(page)]="page"
+                                aria-label="Custom pagination">
+                  <ng-template>Prev</ng-template>
+                  <ng-template>Next</ng-template>
+                  <ng-template></ng-template>
+                </ngb-pagination>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="modal-add-new" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Thông tin mẫu hợp đồng</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+
+          <div>
+            <div class="row">
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="input2" class="col-form-label">Mã hợp đồng</label>
+                  <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
+                         name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                </div>
+              </div>
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="input3" class="col-form-label">Tên hợp đồng</label>
+                  <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
+                         name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                </div>
+              </div>
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="input4" class="col-form-label">Mô tả</label>
+                  <input [(ngModel)]="templateContractNew.description" type="text"
+                         class="form-control border border-dark"
+                         name="description" id="input4" placeholder="Nhập mô tả">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group mb-1">
+                  <label for="input4" class="col-form-label">Mẫu hợp đồng</label>
+                </div>
+                <editor [(ngModel)]="templateContractNew.content" name="template"
+                        apiKey="hav5qg0mp5r2o7hc34vo0f15zmp4i8wk7wiwoysk8g4y4cz9"
+                        plugins="wordcount"></editor>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button (click)="doLoadData()" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary float-right" (click)="clear()">Clear</button>
+          <button type="button" class="btn btn-primary float-right" (click)="doCreate()">Thêm hợp đồng</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modal-update" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Thông tin mẫu hợp đồng</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+
+          <div>
+            <div class="row">
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="input5" class="col-form-label">Mã hợp đồng</label>
+                  <input [disabled]="true" [(ngModel)]="templateContractUpdate.code" type="text"
+                         class="form-control border border-dark"
+                         name="code" id="input5" placeholder="Nhập mã hợp đồng">
+                </div>
+              </div>
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="input6" class="col-form-label">Tên hợp đồng</label>
+                  <input [(ngModel)]="templateContractUpdate.name" type="text" class="form-control border border-dark"
+                         name="name" id="input6" placeholder="Nhập tên hợp đồng">
+                </div>
+              </div>
+              <div class="col-md-4 col-12">
+                <div class="form-group">
+                  <label for="input7" class="col-form-label">Mô tả</label>
+                  <input [(ngModel)]="templateContractUpdate.description" type="text"
+                         class="form-control border border-dark"
+                         name="description" id="input7" placeholder="Nhập mô tả">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group mb-1">
+                  <label for="input4" class="col-form-label">Mẫu hợp đồng</label>
+                </div>
+                <editor [(ngModel)]="templateContractUpdate.content" name="template"
+                        apiKey="hav5qg0mp5r2o7hc34vo0f15zmp4i8wk7wiwoysk8g4y4cz9"
+                        plugins="wordcount"></editor>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button (click)="doLoadData()" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary float-right" (click)="clear()">Clear</button>
+          <button type="button" class="btn btn-primary float-right" (click)="doUpdate()">Thêm hợp đồng</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="modal-detail" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Chi tiết hợp đồng</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div #divElement></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>

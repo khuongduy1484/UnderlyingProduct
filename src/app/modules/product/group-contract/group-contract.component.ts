@@ -53,6 +53,7 @@ export class GroupContractComponent implements OnInit {
 
   ngOnInit() {
     this.getTemplateContract();
+    this.getPageSymbol(0);
   }
 
   getTemplateContract() {

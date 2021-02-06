@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {GroupSystemService} from '../../../service/system/groupSystem.service';
-import {IGroupContract} from '../../../model/models';
+import {ISysParam} from '../../../model/models';
+import {SystemParamService} from '../service/systemParam.service';
 
 @Component({
   selector: 'app-group-system',
@@ -11,10 +11,10 @@ export class GroupSystemComponent implements OnInit {
 
   page: number;
 
-  groupSystems: IGroupContract [] = [];
+  groupSystems: ISysParam [] = [];
 
   constructor(
-    private groupSystemService: GroupSystemService
+    private groupSystemService: SystemParamService
   ) {
   }
 

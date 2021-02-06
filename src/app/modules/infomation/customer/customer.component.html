@@ -1,0 +1,390 @@
+<section *ngIf="!isHidden" class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <div class="card-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link  "
+               href="/info_issuer"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
+          </li>
+        </ul>
+        <form (ngSubmit)="doSearch()">
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <div class="row">
+                <div class="col-4">
+                  <label class="col-form-label">Tên khách hàng </label>
+                </div>
+                <div class="col-4">
+                  <label class="col-form-label">CMT</label>
+                </div>
+                <div class="col-4">
+                  <label class="col-form-label">Phone</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 col-md-12">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="form-group">
+                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
+                               placeholder="Nhập từ khóa" name="contentSearch">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
+                               placeholder="Nhập từ khóa" name="contentSearch">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
+                               placeholder="Nhập từ khóa" name="contentSearch">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <div class="row">
+                <div class="col-4">
+                  <label class="col-form-label">Email </label>
+                </div>
+                <div class="col-4">
+                  <label class="col-form-label">Chi nhánh mở tài khoản</label>
+                </div>
+                <div class="col-4">
+                  <button (click)="actionCreate()" type="button" class="mr-1 btn btn-sm btn-info float-right"
+                          data-toggle="modal"
+                          data-target="#modal-add">Thêm mới
+                  </button>
+                  <button (click)="doSearch()" type="button" class="mr-1 btn btn-sm btn-secondary float-right">Tìm
+                    kiếm
+                  </button>
+                  <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right" (click)="clear()">
+                    Clear
+                  </button>
+                  <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right"><i
+                    class="fas fa-sync"></i></button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 col-md-12">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="form-group">
+                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
+                               placeholder="Nhập từ khóa" name="contentSearch">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
+                               placeholder="Nhập từ khóa" name="contentSearch">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <h3 class="card-title mb-2">Danh sách khách hàng</h3>
+            </div>
+            <div class="col-6"></div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>Họ và tên</th>
+                  <th>CMT</th>
+                  <th>Email</th>
+                  <th>SĐT</th>
+                  <th>Số tài khoản</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let approveRule of approveRules ; index as i" class="border border-dark">
+                  <td>{{i + 1}}</td>
+                  <td>{{approveRule.name}}</td>
+                  <td>{{approveRule.code}}</td>
+                  <td>{{approveRule.description}}</td>
+                  <td>{{approveRule.propRuleCondition.dataValue}}</td>
+                  <td *ngIf="approveRule.condition == 1 ">Áp dụng đồng thời các điều kiện</td>
+                  <td *ngIf="approveRule.condition == 2 ">Áp dụng theo thứ tự ưu tiên</td>
+                  <td>
+                    <a data-toggle="modal"
+                       data-target="#modal-update" class="btn  btn-xs mr-1">
+                      <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn  btn-xs mr-1">
+                      <i class="fa fa-unlock" aria-hidden="true"></i>
+                    </a>
+                    <a (click)="doShowDetailProRule(approveRule.propRuleCondition)" class="btn btn-info btn-xs"
+                       data-toggle="modal"
+                       data-target="#modal-detail">
+                      <i class="fas fa-eye"></i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <ul *ngIf="approveRules.length > 0" class="pagination pagination-sm m-0 float-right">
+                <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
+                                [collectionSize]="approveRules.length" [(page)]="page" aria-label="Custom pagination">
+                  <ng-template>Prev</ng-template>
+                  <ng-template>Next</ng-template>
+                  <ng-template></ng-template>
+                </ngb-pagination>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section *ngIf="isHidden" class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <form>
+        <div>
+          <div class="modal-body">
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a class="nav-link  "
+                   href="/info-customer"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
+              </li>
+            </ul>
+            <div>
+              <h3>Thông tin chung</h3>
+              <div class="row">
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input2" class="col-form-label">ID</label>
+                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
+                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input3" class="col-form-label">Tên hợp đồng</label>
+                    <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
+                           name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input4" class="col-form-label">Mô tả</label>
+                    <input [(ngModel)]="templateContractNew.description" type="text"
+                           class="form-control border border-dark"
+                           name="description" id="input4" placeholder="Nhập mô tả">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input2" class="col-form-label">Mã hợp đồng</label>
+                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
+                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input3" class="col-form-label">Tên hợp đồng</label>
+                    <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
+                           name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input4" class="col-form-label">Mô tả</label>
+                    <input [(ngModel)]="templateContractNew.description" type="text"
+                           class="form-control border border-dark"
+                           name="description" id="input4" placeholder="Nhập mô tả">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input2" class="col-form-label">Mã hợp đồng</label>
+                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
+                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input3" class="col-form-label">Tên hợp đồng</label>
+                    <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
+                           name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input4" class="col-form-label">Mô tả</label>
+                    <input [(ngModel)]="templateContractNew.description" type="text"
+                           class="form-control border border-dark"
+                           name="description" id="input4" placeholder="Nhập mô tả">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input2" class="col-form-label">Mã hợp đồng</label>
+                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
+                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input3" class="col-form-label">Tên hợp đồng</label>
+                    <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
+                           name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input4" class="col-form-label">Mô tả</label>
+                    <input [(ngModel)]="templateContractNew.description" type="text"
+                           class="form-control border border-dark"
+                           name="description" id="input4" placeholder="Nhập mô tả">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group mb-1">
+                    <label for="input4" class="col-form-label">Mẫu hợp đồng</label>
+                  </div>
+                  <editor [(ngModel)]="templateContractNew.content" name="template"
+                          apiKey="hav5qg0mp5r2o7hc34vo0f15zmp4i8wk7wiwoysk8g4y4cz9"
+                          plugins="wordcount"></editor>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3>Thông tin chứng khoán</h3>
+              <div class="row">
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input2" class="col-form-label">ID</label>
+                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
+                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input3" class="col-form-label">Tên hợp đồng</label>
+                    <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
+                           name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input4" class="col-form-label">Mô tả</label>
+                    <input [(ngModel)]="templateContractNew.description" type="text"
+                           class="form-control border border-dark"
+                           name="description" id="input4" placeholder="Nhập mô tả">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input2" class="col-form-label">Mã hợp đồng</label>
+                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
+                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input2" class="col-form-label">Mã hợp đồng</label>
+                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
+                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3>Thông tin ngân hàng</h3>
+              <div class="row">
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input2" class="col-form-label">ID</label>
+                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
+                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input3" class="col-form-label">Tên hợp đồng</label>
+                    <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
+                           name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input4" class="col-form-label">Mô tả</label>
+                    <input [(ngModel)]="templateContractNew.description" type="text"
+                           class="form-control border border-dark"
+                           name="description" id="input4" placeholder="Nhập mô tả">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input2" class="col-form-label">Mã hợp đồng</label>
+                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
+                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input2" class="col-form-label">Mã hợp đồng</label>
+                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
+                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- /.card-body -->
+        <div class="card-footer btn-center">
+          <button type="submit" class="btn btn-info btn-sm mr-1">Thêm</button>
+          <button (click)="actionCreate()" type="submit" class="btn btn-default btn-sm ml-1">Hủy</button>
+        </div>
+        <!-- /.card-footer -->
+      </form>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+

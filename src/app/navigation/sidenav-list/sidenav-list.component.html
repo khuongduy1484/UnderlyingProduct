@@ -19,13 +19,49 @@
             </p>
           </a>
         </li>
+        <!-- thong tin-->
         <li class="nav-item">
-          <a routerLink="/home" (click)="onSidenavClose()" class="nav-link">
-            <i class="nav-icon fas fa-info-circle"></i>
+          <a href="#" class="nav-link">
+            <i class="nav-icon far fa-money-bill-alt"></i>
             <p>
               Thông tin
+              <i class="right fas fa-angle-left"></i>
             </p>
           </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="/info_issuer" class="nav-link">
+                <i class="nav-icon fas fa-file-contract"></i>
+                <p>
+                  Tổ chức phát hành
+                </p>
+              </a>
+              <a href="/template-contract" class="nav-link">
+                <i class="nav-icon fas fa-file-contract"></i>
+                <p>
+                  Lãi suất tham chiếu
+                </p>
+              </a>
+              <a href="/info-customer" class="nav-link">
+                <i class="nav-icon fas fa-file-contract"></i>
+                <p>
+                  Khách hàng
+                </p>
+              </a>
+              <a href="/system-param" class="nav-link">
+                <i class="nav-icon fas fa-file-contract"></i>
+                <p>
+                  Đại lý
+                </p>
+              </a>
+              <a href="/primary-product" class="nav-link">
+                <i class="nav-icon fas fa-file-contract"></i>
+                <p>
+                  Sản phẩm sơ câp
+                </p>
+              </a>
+            </li>
+          </ul>
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link">
@@ -35,6 +71,27 @@
               <i class="right fas fa-angle-left"></i>
             </p>
           </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="/policies-product" class="nav-link">
+                <i class="nav-icon fas fa-file-contract"></i>
+                <p>
+                  Chính sách và sản phẩm
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="/financial-products" class="nav-link">
+                <i class="nav-icon fas fa-file-contract"></i>
+                <p>
+                  Sản phẩm chính
+                </p>
+              </a>
+            </li>
+
+
+          </ul>
           <ul class="nav nav-treeview">
             <li class="nav-item">
               <a href="/template-contract" class="nav-link">
@@ -61,11 +118,12 @@
                     </p>
                   </a>
                 </li>
+
                 <li class="nav-item">
-                  <a href="/group-contract" class="nav-link">
+                  <a href="/product-contract" class="nav-link">
                     <i class="nav-icon fas fa-copy"></i>
                     <p>
-                      Hợp đồng sản phẩm
+                      Hợp đồng và sản phẩm
                     </p>
                   </a>
                 </li>
@@ -88,19 +146,13 @@
 
               </ul>
             </li>
-            <li class="nav-item">
-              <a href="/product-attributes" class="nav-link">
-                <i class="nav-icon fas fa-paperclip"></i>
-                <p>
-                  Thuộc tính sản phẩm
-                </p>
-              </a>
-            </li>
+
+
           </ul>
 
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/template-contract" class="nav-link">
+              <a href="/product-attributes" class="nav-link">
                 <i class="nav-icon fas fa-file-contract"></i>
                 <p>
                   Thuộc tính sản phẩm
@@ -109,10 +161,26 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
+                  <a href="/product-attributes-approved-rules" class="nav-link">
+                    <i class="nav-icon fas fa-file-contract"></i>
+                    <p>
+                      Quy tắc áp dụng
+                    </p>
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a href="/prop-variable" class="nav-link">
                     <i class="nav-icon fas fa-file-contract"></i>
                     <p>
                       Thuộc tính
+                    </p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/prop-variable" class="nav-link">
+                    <i class="nav-icon fas fa-file-contract"></i>
+                    <p>
+                      Áp dụng thuộc tính
                     </p>
                   </a>
                 </li>
@@ -160,6 +228,8 @@
             </li>
           </ul>
         </li>
+
+
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

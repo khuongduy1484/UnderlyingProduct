@@ -27,6 +27,7 @@ export class ContractParametersComponent implements OnInit {
 
   ngOnInit() {
    this.buildForm();
+    this.getPageSymbol(0);
   }
 
   buildForm() {
@@ -38,8 +39,8 @@ export class ContractParametersComponent implements OnInit {
           format: ['', [Validators.required]],
           type: ['', [Validators.required]],
           id: ['', [Validators.required]],
-          createDate: ['', [Validators.required]],
-          updateDate: ['', [Validators.required]],
+          createdDate: ['', [Validators.required]],
+          updatedDate: ['', [Validators.required]],
         }
       )
     });
@@ -59,8 +60,8 @@ export class ContractParametersComponent implements OnInit {
 
   doSelected(contractParam) {
     this.contractParam.get('contractGroup').setValue(contractParam);
-    this.contractParam.get('contractGroup').get('code').disable();
-    this.contractParam.get('contractGroup').get('id').setValue(contractParam.id);
+    console.log(    this.contractParam.get('contractGroup').value);
+    console.log(contractParam);
   }
 
   doUpdate() {

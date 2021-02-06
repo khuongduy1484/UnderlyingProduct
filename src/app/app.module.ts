@@ -7,9 +7,6 @@ import {LoginComponent} from './modules/login/login.component';
 import {RegisterComponent} from './modules/register/register.component';
 import {HomeComponent} from './modules/home/home.component';
 import {ProfileComponent} from './modules/profile/profile.component';
-import {BoardAdminComponent} from './modules/board-admin/board-admin.component';
-import {BoardModeratorComponent} from './modules/board-moderator/board-moderator.component';
-import {BoardUserComponent} from './modules/board-user/board-user.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {authInterceptorProviders} from './modules/_helpers/auth.interceptor';
@@ -21,8 +18,9 @@ import {
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
-  MatListModule, MatOptionModule,
-  MatPaginatorModule, MatSelectModule,
+  MatListModule,
+  MatPaginatorModule,
+  MatSelectModule,
   MatSidenavModule,
   MatTabsModule,
   MatToolbarModule
@@ -48,9 +46,21 @@ import {GroupContractComponent} from './modules/product/group-contract/group-con
 import {GroupSystemComponent} from './modules/system/group-system/group-system.component';
 import {PropVariableComponent} from './modules/product/prop-variable/prop-variable.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+// tslint:disable-next-line:max-line-length
 import {GroupContractWaitingApproveComponent} from './modules/product/group-contract-waiting-approve/group-contract-waiting-approve.component';
 import {SystemComponent} from './modules/system/system/system.component';
-import {ListFormNotificaionComponent} from './modules/product/list-form-notificaion/list-form-notificaion.component';
+import {ProductAttributesComponent} from './modules/product/product-attributes/product-attributes.component';
+import {PendingRulesComponent} from './modules/product/product-attributes/pending-rules/pending-rules.component';
+import {ApprovedRulesComponent} from './modules/product/product-attributes/approved-rules/approved-rules.component';
+import {ProductContractComponent} from './modules/product/product-contract/product-contract.component';
+import {ProductContractApprovalPendingComponent} from './modules/product/product-contract-approval-pending/product-contract-approval-pending.component';
+import {IssuersComponent} from './modules/infomation/issuers/issuers.component';
+import {InformationComponent} from './modules/infomation/information.component';
+import {PrimaryProductsComponent} from './modules/infomation/primary-products/primary-products.component';
+import {PrimaryProductAprrovalPendingComponent} from './modules/infomation/primary-product-aprroval-pending/primary-product-aprroval-pending.component';
+import {PoliciesProductsComponent} from './modules/product/policies-products/policies-products.component';
+import {CustomerComponent} from './modules/infomation/customer/customer.component';
+import { FinancialProductsComponent } from './modules/product/financial-products/financial-products.component';
 
 
 @NgModule({
@@ -60,9 +70,6 @@ import {ListFormNotificaionComponent} from './modules/product/list-form-notifica
     RegisterComponent,
     HomeComponent,
     ProfileComponent,
-    BoardAdminComponent,
-    BoardModeratorComponent,
-    BoardUserComponent,
     OriginalBondsComponent,
     AutomationComponent,
     LayoutComponent,
@@ -79,7 +86,18 @@ import {ListFormNotificaionComponent} from './modules/product/list-form-notifica
     GroupSystemComponent,
     PropVariableComponent,
     SystemComponent,
-    ListFormNotificaionComponent
+    ProductAttributesComponent,
+    PendingRulesComponent,
+    ApprovedRulesComponent,
+    ProductContractComponent,
+    ProductContractApprovalPendingComponent,
+    IssuersComponent,
+    InformationComponent,
+    PrimaryProductsComponent,
+    PrimaryProductAprrovalPendingComponent,
+    PoliciesProductsComponent,
+    CustomerComponent,
+    FinancialProductsComponent
   ],
   imports: [
     BrowserModule,
@@ -103,7 +121,6 @@ import {ListFormNotificaionComponent} from './modules/product/list-form-notifica
     ToastrModule.forRoot(),
     ReactiveFormsModule,
     NgxPaginationModule,
-    MatOptionModule,
     MatSelectModule
 
 

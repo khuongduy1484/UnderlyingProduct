@@ -1,3 +1,302 @@
-<p>
-  pending-rules works!
-</p>
+<section *ngIf="!isHidden" class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <div class="card-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active  "
+               href="/product-attributes-approved-rules"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
+          </li>
+          <li class="nav-item  ">
+            <a class="nav-link "
+               href="/product-attributes-pending-rules"><i class="fas fa-list"></i> Danh sách chờ duyệt</a>
+          </li>
+        </ul>
+        <form (ngSubmit)="doSearch()">
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <div class="row">
+                <div class="col-3">
+                  <label class="col-form-label">Tên quy tắc</label>
+                </div>
+                <div class="col-3">
+                  <label class="col-form-label">Điều kiện</label>
+                </div>
+                <div class="col-3">
+                  <label class="col-form-label">Trạng thái</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 col-md-12">
+                  <div class="row">
+                    <div class="col-3">
+                      <div class="form-group">
+                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
+                               placeholder="Nhập từ khóa" name="contentSearch">
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="form-group">
+                        <select class="form-control form-control-sm" name="action" [(ngModel)]="conditionSearch">
+                          <option [value]="1">Áp dụng đồng thời các điều kiện</option>
+                          <option [value]="2">Áp dụng theo thứ tự ưu tiên</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="form-group">
+                        <select class="form-control form-control-sm" name="status" [(ngModel)]="statusSearch">
+                          <option [value]="1">Hoạt động</option>
+                          <option [value]="0">Không hoạt động</option>
+                        </select>
+                      </div>
+                    </div>
+
+
+                    <div class="col-3 btn-mt-33">
+                      <button (click)="actionCreate()" type="button" class="mr-1 btn btn-sm btn-info float-right"
+                              data-toggle="modal"
+                              data-target="#modal-add-new">Thêm mới
+                      </button>
+                      <button (click)="doSearch()" type="button" class="mr-1 btn btn-sm btn-secondary float-right">Tìm
+                        kiếm
+                      </button>
+                      <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right" (click)="clear()">
+                        Clear
+                      </button>
+                      <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right"><i
+                        class="fas fa-sync"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <h3 class="card-title mt-2">Danh sách quy tắc chờ duyệt</h3>
+            </div>
+            <div class="col-6">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Chọn và thực hiện tác vụ</label>
+                <div class="col-sm-6">
+                  <select class="form-control form-control-sm" name="action" [(ngModel)]="action">
+                    <option [value]="0">Gửi phê duyêt</option>
+                    <option [value]="1"> Phê duyêt</option>
+                    <option [value]="2">Từ chối</option>
+                    <option [value]="3">Xóa</option>
+                  </select>
+                </div>
+                <div class="col-sm-2">
+                  <button type="button" (click)="doSubmit()" class="btn btn-dark btn-sm">SUBMIT</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row mt-4">
+            <div class="col-md-12 col-12">
+
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tên quy tắc</th>
+                  <th>Mã quy tắc</th>
+                  <th>Mô tả</th>
+                  <th>Áp dụng cho</th>
+                  <th>Điều kiện</th>
+                  <th>Ngày tạo</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let approveRule of approveRules ; index as i">
+                  <td>{{i + 1}}</td>
+                  <td>{{approveRule.name}}</td>
+                  <td>{{approveRule.code}}</td>
+                  <td>{{approveRule.description}}</td>
+                  <td>{{approveRule.propRuleCondition.dataValue}}</td>
+                  <td>{{approveRule.condition}}</td>
+                  <td>{{approveRule.createdDate | date:'dd/MM/yyyy'}}</td>
+                  <td>{{approveRule.status === 1 ? 'Đang hoạt đông' : 'Không hoạt động' }}</td>
+                  <td>
+                    <a class="btn  btn-xs mr-1">
+                      <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn  btn-xs mr-1">
+                      <i class="fa fa-unlock" aria-hidden="true"></i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <ul *ngIf="approveRules != null && approveRules.length > 0"
+                  class="pagination pagination-sm m-0 float-right">
+                <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
+                                [collectionSize]=" approveRules.length > 0" [(page)]="page"
+                                aria-label="Custom pagination">
+                  <ng-template>Prev</ng-template>
+                  <ng-template>Next</ng-template>
+                  <ng-template></ng-template>
+                </ngb-pagination>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="isHidden" class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <form>
+        <div class="card-body">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link"
+                 href=""><i class="fas fa-list"></i> Danh sách đã duyệt</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"
+                 href=""><i class="fas fa-list"></i> Danh sách chờ duyệt</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active"
+                 href="">Thêm mới <i class="fas fa-times"></i></a>
+            </li>
+          </ul>
+
+          <div class="row mt-3">
+            <div class="col-6">
+              <h3 class="card-title mb-2">Thêm mới quy tắc áp dụng</h3>
+            </div>
+            <div class="col-6"></div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-6 col-12">
+              <div class="form-horizontal">
+                <div class="card-body">
+                  <div class="form-group row">
+                    <label for="ip1" class="col-sm-2 col-form-label">Tên quy tắc</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control form-control-sm" id="ip1" placeholder="Nhập tên quy tắc">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="ip2" class="col-sm-2 col-form-label">Mã quy tắc</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control form-control-sm" id="ip2" placeholder="Nhập mã quy tắc">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="ip3" class="col-sm-2 col-form-label">Mô tả</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control form-control-sm" id="ip3" placeholder="Nhập mô tả">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="ip4" class="col-sm-2 col-form-label">Điều kiện</label>
+                    <div class="col-sm-10">
+                      <select class="form-control form-control-sm" id="ip4">
+                        <option>Áp dụng đồng thời các điều kiện</option>
+                        <option>Áp dụng theo thứ tự ưu tiên</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <h6 class="text-bold mb-2">Áp dụng cho</h6>
+              <table class="table table-bordered table-center mb-2">
+                <thead>
+                <tr>
+                  <th style="width: 44%;text-align: center;">Nhóm</th>
+                  <th style="width: 44%;text-align: center;">Giá trị</th>
+                  <th style="width: 80px;text-align: center;">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>
+                    <select [(ngModel)]="sysParamSelect" (change)="doSelectGroup($event.target)" class="form-control form-control-sm"
+                            name="format">
+                      <option [ngValue]="sys.sysParamValue" *ngFor="let sys of sysParams">{{sys.name}}</option>
+                    </select>
+                  </td>
+                  <td>
+<!--                    <select [(ngModel)]="sysParamSelect" (change)="doSelectGroup()" class="form-control form-control-sm"-->
+<!--                            name="format">-->
+<!--                      <option [ngValue]="sys.sysParamValue" *ngFor="let sys of sysParams">{{sys.name}}</option>-->
+<!--                    </select>-->
+                  </td>
+
+                  <td class="ct-center">
+                    <button class="btn btn-xs btn-outline-danger"><i class="fas fa-times"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                  </td>
+                  <td>
+                  </td>
+                  <td class="ct-center">
+                    <button class="btn btn-xs btn-outline-success"><i class="fas fa-plus"></i></button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <table class="table table-bordered table-center mb-2">
+                <thead>
+                <tr>
+                  <th style="width: 44%;text-align: center;">STT</th>
+                  <th style="width: 44%;text-align: center;">Nhóm</th>
+                  <th style="width: 80px;text-align: center;">Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td class="ct-center">
+                    1
+                  </td>
+                  <td>
+                    <select class="form-control form-control-sm">
+                      <option>option 1</option>
+                      <option>option 2</option>
+                      <option>option 3</option>
+                      <option>option 4</option>
+                      <option>option 5</option>
+                    </select>
+                  </td>
+                  <td class="ct-center">
+                    <button class="btn btn-xs btn-outline-danger"><i class="fas fa-times"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                  </td>
+                  <td>
+                  </td>
+                  <td class="ct-center">
+                    <button class="btn btn-xs btn-outline-success"><i class="fas fa-plus"></i></button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer btn-center">
+          <button type="submit" class="btn btn-info btn-sm mr-1">Thêm</button>
+          <button (click)="actionCreate()" type="submit" class="btn btn-default btn-sm ml-1">Hủy</button>
+        </div>
+        <!-- /.card-footer -->
+      </form>
+    </div>
+  </div>
+</section>

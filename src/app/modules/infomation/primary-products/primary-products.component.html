@@ -1,0 +1,305 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <div class="card-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link  "
+               href="/primary-product"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
+          </li>
+          <li class="nav-item  ">
+            <a class="nav-link active"
+               href="/primary-product-approval-pending"><i class="fas fa-list"></i> Danh sách chờ duyệt</a>
+          </li>
+        </ul>
+        <form (ngSubmit)="doSearch()">
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <div class="row">
+                <div class="col-4">
+                  <label class="col-form-label">Tên sản phẩm</label>
+                </div>
+                <div class="col-4">
+                  <label class="col-form-label">Trái phiếu gốc</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 col-md-12">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="form-group">
+                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
+                               placeholder="Nhập từ khóa" name="contentSearch">
+                      </div>
+                    </div>
+                    <div class="col-4">
+                      <div class="form-group">
+                        <select class="form-control form-control-sm" name="action" [(ngModel)]="conditionSearch">
+                          <option [value]="1">Áp dụng đồng thời các điều kiện</option>
+                          <option [value]="2">Áp dụng theo thứ tự ưu tiên</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-4 btn-mt-33">
+                      <button (click)="doSearch()" type="button" class="mr-1 btn btn-sm btn-secondary float-right">Tìm
+                        kiếm
+                      </button>
+                      <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right" (click)="clear()">
+                        Clear
+                      </button>
+                      <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right" (click)="clear()">
+                        Tính tự động
+                      </button>
+                      <button data-toggle="modal"
+                              data-target="#modal-automation" type="button"
+                              class="mr-1 btn btn-sm btn-outline-info float-right"><i
+                        class="fas fa-sync"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <h3 class="card-title mb-2">Danh sách Sản phẩm gốc</h3>
+            </div>
+            <div class="col-6"></div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>Tên TP</th>
+                  <th>Mã TP</th>
+                  <th>Mã Niêm yết</th>
+                  <th>TCPM</th>
+                  <th>Ngày phát hành</th>
+                  <th>Ngày đáo hạn</th>
+                  <th>Loại TP</th>
+                  <th>Hình thức phát hành</th>
+                  <th>Trạng thái TSDB</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let approveRule of approveRules ; index as i" class="border border-dark">
+                  <td>{{i + 1}}</td>
+                  <td>{{approveRule.name}}</td>
+                  <td>{{approveRule.code}}</td>
+                  <td>{{approveRule.description}}</td>
+                  <td>{{approveRule.propRuleCondition.dataValue}}</td>
+                  <td *ngIf="approveRule.condition == 1 ">Áp dụng đồng thời các điều kiện</td>
+                  <td *ngIf="approveRule.condition == 2 ">Áp dụng theo thứ tự ưu tiên</td>
+                  <td>{{approveRule.createdDate | date:'dd/MM/yyyy'}}</td>
+                  <td>{{approveRule.status === 1 ? 'Đang hoạt đông' : 'Không hoạt động' }}</td>
+                  <td>
+                    <a class="btn  btn-xs mr-1">
+                      <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn  btn-xs mr-1">
+                      <i class="fa fa-unlock" aria-hidden="true"></i>
+                    </a>
+                    <a (click)="doShowDetailProRule(approveRule.propRuleCondition)" class="btn btn-info btn-xs"
+                       data-toggle="modal"
+                       data-target="#modal-detail">
+                      <i class="fas fa-eye"></i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <ul *ngIf="approveRules.length > 0" class="pagination pagination-sm m-0 float-right">
+                <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
+                                [collectionSize]="approveRules.length" [(page)]="page" aria-label="Custom pagination">
+                  <ng-template>Prev</ng-template>
+                  <ng-template>Next</ng-template>
+                  <ng-template></ng-template>
+                </ngb-pagination>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="modal fade" id="modal-automation" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Thông tin Tổ chức phát hành</h4>
+        <button (click)="doLoadData()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-11 col-form-label font-weight-bold">Kỳ tính lãi</label>
+
+        <div>
+          <div class=" col-sm-1 modal-header">
+            <div class="d-flex header-title justify-content-between">
+      <span (click)="onClose()" class="mat-button">
+                <mat-icon>close</mat-icon>
+            </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form>
+        <div class="form-group row">
+          <label for="frequency" class="col-sm-2 col-form-label">Tần suất </label>
+          <div class="col-sm-2">
+            <input type="text" readonly class="form-control" id="frequency">
+          </div>
+          <label for="fixed-interest-rate" class="col-sm-2 col-form-label">Lãi suất cố định</label>
+          <div class="col-sm-2">
+            <select class="form-control" id="fixed-interest-rate">
+              <option>SOB1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+          <label for="fixed-period-number" class="col-sm-2 col-form-label">Số kỳ cố định</label>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" id="fixed-period-number">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="amplitude" class="col-sm-2 col-form-label">Biên độ</label>
+          <div class="col-sm-2">
+            <input type="text" class="form-control" id="amplitude">
+          </div>
+          <label for="end-date-of-the-first-period" class="col-sm-2 col-form-label">Ngày kết thúc kỳ đầu</label>
+          <div class="col-sm-2">
+            <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
+                   name="datepicker" (ngModelChange)="myDate = $event" class="form-control"
+                   id="end-date-of-the-first-period">
+          </div>
+          <label for="start-date-of-the-first-period" class="col-sm-2 col-form-label">Ngày bắt đầu kỳ cuối</label>
+          <div class="col-sm-2">
+            <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
+                   name="datepicker" (ngModelChange)="myDate = $event" class="form-control"
+                   id="start-date-of-the-first-period">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="interest-rate-determination-date" class="col-sm-2 col-form-label">Ngày xác định lãi suất</label>
+          <div class="col-sm-1">
+            <input type="text" class="form-control" id="interest-rate-determination-date">
+          </div>
+          <div class="col-sm-1">
+            <select class="form-control" id="working-day">
+              <option>Ngày làm việc</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            <p>so với ngày đầu kỳ</p>
+          </div>
+          <div class="col-sm-2"></div>
+          <label for="adjust-workdays" class="col-sm-2 col-form-label">Điều chỉnh ngày làm việc</label>
+          <div class="col-sm-2">
+            <select class="form-control" id="adjust-workdays">
+              <option>Lần trước</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label font-weight-bold">Kỳ Thanh toán</label>
+        </div>
+
+        <div class="form-group row">
+          <label for="buy-back-before-maturity" class="col-sm-2 col-form-label">Tần suất</label>
+          <div class="col-sm-2">
+            <select class="form-control" id="buy-back-before-maturity">
+              <option>1 tháng</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+
+          <label for="end-date-of-the-first-period-1" class="col-sm-2 col-form-label">Ngày kết thúc kỳ đầu</label>
+          <div class="col-sm-2">
+            <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
+                   name="datepicker" (ngModelChange)="myDate = $event" class="form-control"
+                   id="end-date-of-the-first-period-1">
+          </div>
+          <label for="start-date-of-the-first-period-1" class="col-sm-2 col-form-label">Ngày bắt đầu kỳ cuối</label>
+          <div class="col-sm-2">
+            <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
+                   name="datepicker" (ngModelChange)="myDate = $event" class="form-control"
+                   id="start-date-of-the-first-period-1">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="interest-rate-determination-date-1" class="col-sm-2 col-form-label">Ngày lập danh sách</label>
+          <div class="col-sm-1">
+            <input type="text" class="form-control" id="interest-rate-determination-date-1">
+          </div>
+          <div class="col-sm-1">
+            <select class="form-control" id="working-day-1">
+              <option>Ngày làm việc</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            <p>so với ngày đầu kỳ</p>
+          </div>
+          <div class="col-sm-2"></div>
+          <label for="adjust-workdays-1" class="col-sm-2 col-form-label">Điều chỉnh ngày làm việc</label>
+          <div class="col-sm-2">
+            <select class="form-control" id="adjust-workdays-1">
+              <option>Lần trước</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-sm-5"></div>
+          <div class="col-sm-5">
+            <button style="position: relative;left: -8px;" type="button" class="btn btn-primary">TÍNH TỰ ĐỘNG</button>
+            <button type="button" class="btn btn-danger">HỦY</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+
+
+
+
+
+
+
+

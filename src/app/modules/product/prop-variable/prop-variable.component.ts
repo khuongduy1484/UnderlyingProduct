@@ -18,6 +18,7 @@ export class PropVariableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getPageSymbol(0);
   }
 
   getPageSymbol(current: number) {
