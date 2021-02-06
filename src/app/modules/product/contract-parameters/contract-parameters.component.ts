@@ -27,6 +27,7 @@ export class ContractParametersComponent implements OnInit {
 
   ngOnInit() {
    this.buildForm();
+    this.getPageSymbol(0);
   }
 
   buildForm() {

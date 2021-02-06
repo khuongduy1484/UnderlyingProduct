@@ -1,4 +1,3 @@
-
 export interface ITemplateContract {
   code: string;
   name: string;
@@ -32,7 +31,6 @@ export interface IGroupContract {
 }
 
 
-
 export interface IContractGroup {
   code: string;
   description: string;
@@ -43,11 +41,40 @@ export interface IContractGroup {
   id: string;
 }
 
-export interface IGroupContract {
+
+export interface IPropRuleApproval {
+  code: string;
+  condition: string;
+  description: string;
+  createdDate: Date;
+  status: string;
+  propRuleCondition: {
+    dataValue: '';
+    dataType: '';
+    orderNo: '';
+  };
+  name: string;
+}
+
+export interface IPropRulePending {
+  code: string;
+  condition: string;
+  description: string;
+  createdDate: Date;
+  status: string;
+  dataValue: '';
+  dataType: '';
+  orderNo: '';
+  name: string;
+}
+
+export interface ISysParam {
   name: string;
   sysParamValue: {
     value: '';
   };
 }
+
+
 
 

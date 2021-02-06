@@ -49,8 +49,8 @@
                   <label for="sl1" class="col-sm-4 col-form-label">Chọn và thực hiện tác vụ</label>
                   <div class="col-sm-6">
                     <select class="form-control form-control-sm" [(ngModel)]="action" name="action" id="sl1">
-                      <option value="1">Gửi phê duyệt</option>
-                      <option value="2">XÓA</option>
+                      <option [value] ="1">Gửi phê duyệt</option>
+                      <option [value] ="2">XÓA</option>
                     </select>
                   </div>
                   <div class="col-sm-2">

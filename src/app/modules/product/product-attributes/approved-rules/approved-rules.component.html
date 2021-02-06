@@ -1,3 +1,248 @@
-<p>
-  approved-rules works!
-</p>
+<section class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <div class="card-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link  "
+               href="/product-attributes-approved-rules"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
+          </li>
+          <li class="nav-item  ">
+            <a class="nav-link active"
+               href="/product-attributes-pending-rules"><i class="fas fa-list"></i> Danh sách chờ duyệt</a>
+          </li>
+        </ul>
+        <form (ngSubmit)="doSearch()">
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <div class="row">
+                <div class="col-3">
+                  <label class="col-form-label">Tên quy tắc</label>
+                </div>
+                <div class="col-3">
+                  <label class="col-form-label">Điều kiện</label>
+                </div>
+                <div class="col-3">
+                  <label class="col-form-label">Trạng thái</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 col-md-12">
+                  <div class="row">
+                    <div class="col-3">
+                      <div class="form-group">
+                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
+                               placeholder="Nhập từ khóa" name="contentSearch">
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="form-group">
+                        <select class="form-control form-control-sm" name="action" [(ngModel)]="conditionSearch">
+                          <option [value]="1">Áp dụng đồng thời các điều kiện</option>
+                          <option [value]="2">Áp dụng theo thứ tự ưu tiên</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="form-group">
+                        <select class="form-control form-control-sm" name="action" [(ngModel)]="statusSearch">
+                          <option [value]="1">Hoạt động</option>
+                          <option [value]="0">Không hoạt động</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-3 btn-mt-33">
+                      <button (click)="doSearch()" type="button" class="mr-1 btn btn-sm btn-secondary float-right">Tìm
+                        kiếm
+                      </button>
+                      <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right" (click)="clear()">
+                        Clear
+                      </button>
+                      <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right"><i
+                        class="fas fa-sync"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <h3 class="card-title mb-2">Danh sách nhóm hợp đồng đã duyệt</h3>
+            </div>
+            <div class="col-6"></div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tên quy tắc</th>
+                  <th>Mã quy tắc</th>
+                  <th>Mô tả</th>
+                  <th>Áp dụng cho</th>
+                  <th>Điều kiện</th>
+                  <th>Ngày tạo</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let approveRule of approveRules ; index as i" class="border border-dark">
+                  <td>{{i + 1}}</td>
+                  <td>{{approveRule.name}}</td>
+                  <td>{{approveRule.code}}</td>
+                  <td>{{approveRule.description}}</td>
+                  <td>{{approveRule.propRuleCondition.dataValue}}</td>
+                  <td *ngIf="approveRule.condition == 1 ">Áp dụng đồng thời các điều kiện</td>
+                  <td *ngIf="approveRule.condition == 2 ">Áp dụng theo thứ tự ưu tiên</td>
+                  <td>{{approveRule.createdDate | date:'dd/MM/yyyy'}}</td>
+                  <td>{{approveRule.status === 1 ? 'Đang hoạt đông' : 'Không hoạt động' }}</td>
+                  <td>
+                    <a class="btn  btn-xs mr-1" >
+                      <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn  btn-xs mr-1">
+                      <i class="fa fa-unlock" aria-hidden="true"></i>
+                    </a>
+                    <a (click)="doShowDetailProRule(approveRule.propRuleCondition)" class="btn btn-info btn-xs"
+                       data-toggle="modal"
+                       data-target="#modal-detail">
+                      <i class="fas fa-eye"></i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <ul *ngIf="approveRules.length > 0" class="pagination pagination-sm m-0 float-right">
+                <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
+                                [collectionSize]="approveRules.length" [(page)]="page" aria-label="Custom pagination">
+                  <ng-template>Prev</ng-template>
+                  <ng-template>Next</ng-template>
+                  <ng-template></ng-template>
+                </ngb-pagination>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="modal fade" id="modal-detail" aria-modal="true" role="dialog">
+<div class="modal-dialog modal-xl">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Chi tiết Quy tắc áp dụng </h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>STT</th>
+          <th>Nhóm</th>
+          <th>Giá trị</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>{{propRuleCondition.orderNo}}</td>
+          <td>{{propRuleCondition.dataType}}</td>
+          <td>{{propRuleCondition.dataValue}}</td>
+
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+  <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>
+
+
+<!--<div class="modal fade" id="modal-update" aria-modal="true" role="dialog">-->
+<!--  <div class="modal-dialog modal-xl">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <h4 class="modal-title">Cập nhật nhóm hợp đồng</h4>-->
+<!--        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--          <span aria-hidden="true">×</span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--      <form>-->
+<!--        <div class="modal-body">-->
+
+<!--          <div>-->
+<!--            <div class="row">-->
+<!--              <div class="col-md-6 col-12">-->
+<!--                <div class="form-group">-->
+<!--                  <label class="col-form-label">Tên nhóm hợp đồng</label>-->
+<!--                  <input type="text" class="form-control form-control-sm"-->
+<!--                         name="name" [(ngModel)]="groupContractUpdate.name" placeholder="Nhập tên nhóm hợp đồng">-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="col-md-6 col-12">-->
+<!--                <div class="form-group">-->
+<!--                  <label class="col-form-label">Ngày áp dụng</label>-->
+<!--                  <input class="form-control form-control-sm"-->
+<!--                         type="date" [ngModel]="groupContractUpdate.appliedDate | date:'yyyy-MM-dd'"-->
+<!--                         name="appliedDate" (ngModelChange)="groupContractUpdate.appliedDate = $event">-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="col-md-6 col-12">-->
+<!--                <div class="form-group">-->
+<!--                  <label class="col-form-label">Mã nhóm hợp đồng</label>-->
+<!--                  <input [disabled]="true" type="text" class="form-control form-control-sm"-->
+<!--                         [(ngModel)]="groupContractUpdate.code" name="description" placeholder="Nhập mã nhóm hợp đồng">-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="col-md-6 col-12">-->
+<!--                <div class="form-group">-->
+<!--                  <label class="col-form-label">Tên hợp đồng</label>-->
+<!--                  <select class="form-control form-control-sm" name="action"-->
+<!--                          [(ngModel)]="groupContractUpdate.templateId">-->
+<!--                    <option *ngFor="let templateContract of templateContracts"-->
+<!--                            [ngValue]="templateContract.id">{{templateContract.code}}</option>-->
+<!--                  </select>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="col-md-12 col-12">-->
+<!--                <div class="form-group">-->
+<!--                  <label class="col-form-label">Mô tả</label>-->
+<!--                  <textarea [(ngModel)]="groupContractUpdate.description" class="form-control form-control-sm"-->
+<!--                            name="description" placeholder="Mô tả"></textarea>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--            </div>-->
+
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="modal-footer">-->
+<!--          <button (click)="doLoadData()" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close-->
+<!--          </button>-->
+<!--          <button (click)="clear()" type="button" class="btn btn-secondary btn-sm float-right">Clear</button>-->
+<!--          <button (click)="doUpdate()" type="button" class="btn btn-primary btn-sm float-right">Cập nhật hợp đồng-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </form>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+
+
+

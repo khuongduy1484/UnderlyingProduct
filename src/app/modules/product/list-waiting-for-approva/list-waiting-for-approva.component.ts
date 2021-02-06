@@ -58,6 +58,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getPageSymbol(0);
   }
 
   getPageSymbol(current: number) {

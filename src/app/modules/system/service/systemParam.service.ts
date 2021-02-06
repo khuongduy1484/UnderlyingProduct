@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {IContractGroup, IGroupContract} from '../../../model/models';
-import {ContractParamService} from '../../../service/product/contract-param.service';
-import {GroupSystemService} from '../../../service/system/groupSystem.service';
+import {environment} from '../../../../environments/environment';
+import {HttpClient} from '@angular/common/http';
 
 
 @Injectable({
@@ -10,12 +9,16 @@ import {GroupSystemService} from '../../../service/system/groupSystem.service';
 })
 export class SystemParamService {
   constructor(
-    private groupSystemService: GroupSystemService
+    private http: HttpClient
   ) {
   }
 
   findGroupSystem(offset: number, pageSize: number): Observable<any> {
-    return this.groupSystemService.findGroupSystem(offset, pageSize);
+    return this.http.get(`${environment.apiUrl}/system-param/search?offset=${offset}&pageSize=${pageSize}`);
+  }
+
+  findAll(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/system-param`);
   }
 
 
