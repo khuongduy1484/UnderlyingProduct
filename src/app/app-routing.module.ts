@@ -15,9 +15,17 @@ import {GroupSystemComponent} from './modules/system/group-system/group-system.c
 import {PropVariableComponent} from './modules/product/prop-variable/prop-variable.component';
 import {ProductComponent} from './modules/product/product.component';
 import {SystemComponent} from './modules/system/system/system.component';
-import {ProductAttributesComponent} from './modules/product/product-attributes/product-attributes.component';
 import {PendingRulesComponent} from './modules/product/product-attributes/pending-rules/pending-rules.component';
 import {ApprovedRulesComponent} from './modules/product/product-attributes/approved-rules/approved-rules.component';
+import {ProductContractComponent} from './modules/product/product-contract/product-contract.component';
+import {ProductContractApprovalPendingComponent} from './modules/product/product-contract-approval-pending/product-contract-approval-pending.component';
+import {InformationComponent} from './modules/infomation/information.component';
+import {IssuersComponent} from './modules/infomation/issuers/issuers.component';
+import {PrimaryProductsComponent} from './modules/infomation/primary-products/primary-products.component';
+import {PrimaryProductAprrovalPendingComponent} from './modules/infomation/primary-product-aprroval-pending/primary-product-aprroval-pending.component';
+import {PoliciesProductsComponent} from './modules/product/policies-products/policies-products.component';
+import {CustomerComponent} from './modules/infomation/customer/customer.component';
+import { FinancialProductsComponent } from './modules/product/financial-products/financial-products.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -63,6 +71,20 @@ const routes: Routes = [
         component: GroupContractWaitingApproveComponent
       },
       {
+        path: 'product-contract',
+        data: {
+          breadcrumb: 'Hợp đồng sản phẩm'
+        },
+        component: ProductContractComponent
+      },
+      {
+        path: 'product-contract-approval-pending',
+        data: {
+          breadcrumb: 'Hợp đồng sản phẩm'
+        },
+        component: ProductContractApprovalPendingComponent
+      },
+      {
         path: 'contract-param',
         data: {
           breadcrumb: 'Tham số hợp đồng'
@@ -90,6 +112,20 @@ const routes: Routes = [
           breadcrumb: 'Thuộc tính Sản phẩm / Quy tắc áp dụng'
         },
         component: PendingRulesComponent
+      },
+      {
+        path: 'policies-product',
+        data: {
+          breadcrumb: 'Chính sách và sản phẩm'
+        },
+        component: PoliciesProductsComponent
+      },
+      {
+        path: 'financial-products',
+        data: {
+          breadcrumb: 'Sản phảm tài chính'
+        },
+        component: FinancialProductsComponent
       }
 
 
@@ -108,6 +144,43 @@ const routes: Routes = [
           breadcrumb: 'Tham số hệ thống'
         },
         component: GroupSystemComponent
+      }
+    ]
+  },
+  {
+    path: '',
+    component: InformationComponent,
+    data: {
+      breadcrumb: 'Thông tin'
+    },
+    children: [
+      {
+        path: 'info_issuer',
+        data: {
+          breadcrumb: 'Tổ chức phát hành'
+        },
+        component: IssuersComponent
+      },
+      {
+        path: 'primary-product',
+        data: {
+          breadcrumb: 'Sản phảm sơ cấp'
+        },
+        component: PrimaryProductsComponent
+      },
+      {
+        path: 'primary-product-approval-pending',
+        data: {
+          breadcrumb: 'Sản phảm sơ cấp'
+        },
+        component: PrimaryProductAprrovalPendingComponent
+      },
+      {
+        path: 'info-customer',
+        data: {
+          breadcrumb: 'Khách hàng'
+        },
+        component: CustomerComponent
       }
     ]
   }

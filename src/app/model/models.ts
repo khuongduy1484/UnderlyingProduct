@@ -34,8 +34,8 @@ export interface IGroupContract {
 export interface IContractGroup {
   code: string;
   description: string;
-  createDate: Date;
-  updateDate: Date;
+  createdDate: Date;
+  updatedDate: Date;
   format: string;
   type: string;
   id: string;

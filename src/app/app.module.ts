@@ -52,6 +52,15 @@ import {SystemComponent} from './modules/system/system/system.component';
 import {ProductAttributesComponent} from './modules/product/product-attributes/product-attributes.component';
 import {PendingRulesComponent} from './modules/product/product-attributes/pending-rules/pending-rules.component';
 import {ApprovedRulesComponent} from './modules/product/product-attributes/approved-rules/approved-rules.component';
+import {ProductContractComponent} from './modules/product/product-contract/product-contract.component';
+import {ProductContractApprovalPendingComponent} from './modules/product/product-contract-approval-pending/product-contract-approval-pending.component';
+import {IssuersComponent} from './modules/infomation/issuers/issuers.component';
+import {InformationComponent} from './modules/infomation/information.component';
+import {PrimaryProductsComponent} from './modules/infomation/primary-products/primary-products.component';
+import {PrimaryProductAprrovalPendingComponent} from './modules/infomation/primary-product-aprroval-pending/primary-product-aprroval-pending.component';
+import {PoliciesProductsComponent} from './modules/product/policies-products/policies-products.component';
+import {CustomerComponent} from './modules/infomation/customer/customer.component';
+import { FinancialProductsComponent } from './modules/product/financial-products/financial-products.component';
 
 
 @NgModule({
@@ -79,9 +88,16 @@ import {ApprovedRulesComponent} from './modules/product/product-attributes/appro
     SystemComponent,
     ProductAttributesComponent,
     PendingRulesComponent,
-
-
-    ApprovedRulesComponent
+    ApprovedRulesComponent,
+    ProductContractComponent,
+    ProductContractApprovalPendingComponent,
+    IssuersComponent,
+    InformationComponent,
+    PrimaryProductsComponent,
+    PrimaryProductAprrovalPendingComponent,
+    PoliciesProductsComponent,
+    CustomerComponent,
+    FinancialProductsComponent
   ],
   imports: [
     BrowserModule,

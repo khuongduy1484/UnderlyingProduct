@@ -1,0 +1,319 @@
+<section *ngIf="!isHidden" class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <div class="card-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link  "
+               href="/product-attributes-approved-rules"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
+          </li>
+          <li class="nav-item  ">
+            <a class="nav-link active"
+               href="/product-attributes-pending-rules"><i class="fas fa-list"></i> Danh sách chờ duyệt</a>
+          </li>
+        </ul>
+        <form>
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <div class="row">
+                <div class="col-3">
+                  <label class="col-form-label">Sản phẩm</label>
+                </div>
+                <div class="col-2">
+                  <label class="col-form-label">GD thứ cấp</label>
+                </div>
+                <div class="col-2">
+                  <label class="col-form-label">Disscout</label>
+                </div>
+                <div class="col-2">
+                  <label class="col-form-label">Cầm cố</label>
+                </div>
+                <div class="col-3">
+                  <label class="col-form-label">Phong tảo hàng khi bán</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 col-md-12">
+                  <div class="row">
+                    <div class="col-3">
+                      <div class="form-group">
+                        <input type="text" class="form-control form-control-sm"
+                               placeholder="Nhập từ khóa" name="contentSearch">
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div class="form-group">
+                        <select class="form-control form-control-sm" name="action">
+                          <option [value]="1">Áp dụng đồng thời các điều kiện</option>
+                          <option [value]="2">Áp dụng theo thứ tự ưu tiên</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div class="form-group">
+                        <select class="form-control form-control-sm" name="action">
+                          <option [value]="1">Áp dụng đồng thời các điều kiện</option>
+                          <option [value]="2">Áp dụng theo thứ tự ưu tiên</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div class="form-group">
+                        <select class="form-control form-control-sm" name="action">
+                          <option [value]="1">Áp dụng đồng thời các điều kiện</option>
+                          <option [value]="2">Áp dụng theo thứ tự ưu tiên</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="form-group">
+                        <select class="form-control form-control-sm" name="action">
+                          <option [value]="1">Hoạt động</option>
+                          <option [value]="0">Không hoạt động</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <div class="row">
+                <div class="col-3">
+                  <label class="col-form-label">Ngày tạo</label>
+                </div>
+                <div class="col-2">
+                  <label class="col-form-label">Thời gian nắm giỮ tối thiểu</label>
+                </div>
+                <div class="col-2">
+                  <label class="col-form-label">Phong tỏa tiền khi mua</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 col-md-12">
+                  <div class="row">
+                    <div class="col-3">
+                      <div class="form-group">
+                        <input type="text" class="form-control form-control-sm" id="input1"
+                               placeholder="Nhập từ khóa" name="contentSearch">
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div class="form-group">
+                        <select class="form-control form-control-sm" name="action">
+                          <option [value]="1">Áp dụng đồng thời các điều kiện</option>
+                          <option [value]="2">Áp dụng theo thứ tự ưu tiên</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div class="form-group">
+                        <select class="form-control form-control-sm" name="action">
+                          <option [value]="1">Áp dụng đồng thời các điều kiện</option>
+                          <option [value]="2">Áp dụng theo thứ tự ưu tiên</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-2 btn-mt-33"></div>
+                    <div class="col-3 btn-mt-33">
+                      <button type="button" class="mr-1 btn btn-sm btn-secondary float-right">Tìm
+                        kiếm
+                      </button>
+                      <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right">
+                        Clear
+                      </button>
+                      <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right"><i
+                        class="fas fa-sync"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-6">
+              <h3 class="card-title mb-2">Danh sách chính sách</h3>
+            </div>
+            <div class="col-6">
+              <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right" (click)="actionCreate()">
+                Thêm mới
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>Tên cấu trcus</th>
+                  <th>Cam kết mua lại</th>
+                  <th>GD thứ cấp</th>
+                  <th>Cầm cố</th>
+                  <th>Thời gian nắm giữ tối thiểu</th>
+                  <th>Phong tỏa tiền khi mua</th>
+                  <th>Ngày tạo</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--                <tr *ngFor="let approveRule of approveRules ; index as i" class="border border-dark">-->
+                <!--                  <td>{{i + 1}}</td>-->
+                <!--                  <td>{{approveRule.name}}</td>-->
+                <!--                  <td>{{approveRule.code}}</td>-->
+                <!--                  <td>{{approveRule.description}}</td>-->
+                <!--                  <td>{{approveRule.propRuleCondition.dataValue}}</td>-->
+                <!--                  <td *ngIf="approveRule.condition == 1 ">Áp dụng đồng thời các điều kiện</td>-->
+                <!--                  <td *ngIf="approveRule.condition == 2 ">Áp dụng theo thứ tự ưu tiên</td>-->
+                <!--                  <td>{{approveRule.createdDate | date:'dd/MM/yyyy'}}</td>-->
+                <!--                  <td>{{approveRule.status === 1 ? 'Đang hoạt đông' : 'Không hoạt động' }}</td>-->
+                <!--                  <td>-->
+                <!--                    <a class="btn  btn-xs mr-1">-->
+                <!--                      <i class="fa fa-unlock-alt" aria-hidden="true"></i>-->
+                <!--                    </a>-->
+                <!--                    <a class="btn  btn-xs mr-1">-->
+                <!--                      <i class="fa fa-unlock" aria-hidden="true"></i>-->
+                <!--                    </a>-->
+                <!--                    <a (click)="doShowDetailProRule(approveRule.propRuleCondition)" class="btn btn-info btn-xs"-->
+                <!--                       data-toggle="modal"-->
+                <!--                       data-target="#modal-detail">-->
+                <!--                      <i class="fas fa-eye"></i>-->
+                <!--                    </a>-->
+                <!--                  </td>-->
+                <!--                </tr>-->
+                </tbody>
+              </table>
+              <!--              <ul *ngIf="approveRules.length > 0" class="pagination pagination-sm m-0 float-right">-->
+              <!--                <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"-->
+              <!--                                [collectionSize]="approveRules.length" [(page)]="page" aria-label="Custom pagination">-->
+              <!--                  <ng-template>Prev</ng-template>-->
+              <!--                  <ng-template>Next</ng-template>-->
+              <!--                  <ng-template></ng-template>-->
+              <!--                </ngb-pagination>-->
+              <!--              </ul>-->
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section *ngIf="isHidden" class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <form>
+        <div class="card-body">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link"
+                 href=""><i class="fas fa-list"></i> Danh sách đã duyệt</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"
+                 href=""><i class="fas fa-list"></i> Danh sách chờ duyệt</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active"
+                 href="">Thêm mới <i class="fas fa-times"></i></a>
+            </li>
+          </ul>
+
+          <div class="row mt-3">
+            <div class="col-6">
+              <h3 class="card-title mb-2">Thêm mới chinh sách sản phẩm</h3>
+            </div>
+            <div class="col-6"></div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <label class="col-form-label">Tên chinh sách sản phẩm</label>
+              <input type="text" class="form-control border border-dark"
+                     name="name" id="input3" placeholder="Nhập tên hợp đồng">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <label class="col-form-label">Cam kết</label>
+            </div>
+            <div class="col-6">
+              <label class="col-form-label">Được cầm cố trái phiếu</label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="bonds-name" class="col-sm-2 col-form-label">Cam kết mua lại sau </label>
+            <div class="col-sm-3">
+              <select class="form-control border border-dark" id="organization-reissue">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-3">
+              <select class="form-control border border-dark" id="organization-reissue">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <label class="col-form-label">Không cam kết mua lại</label>
+            </div>
+            <div class="col-6">
+              <label class="col-form-label">Được giao dịch trên sàn thứ cấp</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <label class=" col-sm-6 col-form-label">Chính sách Discount</label>
+            <div class="col-sm-1">
+              <input type="checkbox">
+            </div>
+            <label class=" col-sm-1 col-form-label">Yes</label>
+
+            <div class="col-sm-1">
+              <input type="checkbox">
+            </div>
+            <label class=" col-sm-1 col-form-label">No</label>
+          </div>
+
+          <div class="row">
+            <label class=" col-sm-6 col-form-label">Phong toa tien khi mua</label>
+            <div class="col-sm-1">
+              <input type="checkbox">
+            </div>
+            <label class=" col-sm-1 col-form-label">Yes</label>
+
+            <div class="col-sm-1">
+              <input type="checkbox">
+            </div>
+            <label class=" col-sm-1 col-form-label">No</label>
+          </div>
+
+          <!-- /.card-body -->
+          <div class="card-footer btn-center">
+            <button type="submit" class="btn btn-info btn-sm mr-1">Thêm</button>
+            <button (click)="actionCreate()" type="submit" class="btn btn-default btn-sm ml-1">Hủy</button>
+          </div><!-- /.card-footer -->
+        </div><!-- /.card-footer -->
+      </form>
+    </div>
+  </div>
+</section>
+
+
