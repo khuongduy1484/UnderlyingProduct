@@ -43,6 +43,19 @@ export interface IContractGroup {
   id: string;
 }
 
+export interface IFormNotification {
+  code: string;
+  notiType: string;
+  transType: string;
+  description: string;
+  content: string;
+  createdDate: Date;
+  updatedDate: Date;
+  status: number;
+  name: string;
+  id: string;
+}
+
 export interface IGroupContract {
   name: string;
   sysParamValue: {

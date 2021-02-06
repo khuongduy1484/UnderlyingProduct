@@ -1,0 +1,261 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <div class="card-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link "
+               href="/form-notification"><i class="fas fa-list"></i> Danh sách thông báo</a>
+          </li>
+        </ul>
+        <div class="row">
+          <div class="col-12 col-md-12">
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="input1" class="col-form-label">Tìm kiếm theo mã thông báo</label>
+                  <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
+                         placeholder="Nhập từ khóa" name="contentSearch">
+                </div>
+              </div>
+              <div class="col-6 btn-mt-33">
+                <button (click)="doSearch()" type="button" class="mr-1 btn btn-sm btn-secondary float-right">Tìm kiếm
+                </button>
+                <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right"><i class="fas fa-sync"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <h3 class="card-title mb-2">Danh sách mẫu thông báo</h3>
+          </div>
+          <div class="col-6">
+            <div class="col-12 btn-mt-33">
+              <button type="button" class="mr-1 btn btn-sm btn-secondary float-right" data-toggle="modal"
+                      (click)="onOptionsSelected('SMS')" data-target="#modal-add">Thêm mới
+              </button>
+            </div>
+          </div>
+        </div>
+        <form (ngSubmit)="doSearch()">
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>Mã Thông báo</th>
+                  <th>Tên thông báo</th>
+                  <th>Loại TB</th>
+                  <th>Loại lệnh</th>
+                  <th>Mô tả</th>
+                  <th>Ngày áp dụng</th>
+                  <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let formNotification of formNotifications" class="border border-dark">
+                  <td>{{formNotification.code}}</td>
+                  <td>{{formNotification.name}}</td>
+                  <td>{{formNotification.notiType}}</td>
+                  <td>{{formNotification.transType}}</td>
+                  <td>{{formNotification.description}}</td>
+                  <td>{{formNotification.createdDate | date:'dd/MM/yyyy'}}</td>
+                  <td>
+                    <a class="btn btn-primary btn-xs mr-1" data-toggle="modal"
+                       (click)="doSelected(formNotification)" data-target="#modal-update">
+                      <i class="far fa-edit"></i>
+                    </a>
+                    <a (click)="doShowDetailTemplateContract(formNotification)" class="btn btn-info btn-xs"
+                       data-toggle="modal"
+                       data-target="#modal-detail">
+                      <i class="fas fa-eye"></i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <ul class="pagination pagination-sm m-0 float-right">
+                <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
+                                [collectionSize]="30" [(page)]="page" aria-label="Custom pagination">
+                  <ng-template>Prev</ng-template>
+                  <ng-template>Next</ng-template>
+                  <ng-template></ng-template>
+                </ngb-pagination>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="modal-update" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Chỉnh sửa mẫu thông báo</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form name="form" [formGroup]="formNotification">
+        <div class="modal-body">
+          <div formGroupName="notificationGroup">
+            <div class="row">
+              <div class="col-md-3 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">Loại thông báo</label>
+                  <select class="form-control form-control-sm" name="notiType"
+                          formControlName="notiType" #t (change)="onOptionsSelected(t.value)">
+                    <option *ngFor="let noticeType of lstNoticeType"
+                            >{{noticeType}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">Loại lệnh</label>
+                  <select class="form-control form-control-sm" name="transType"
+                          formControlName="transType">
+                    <option *ngFor="let transType of lstTransType"
+                            [ngValue]="transType">{{transType}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">Tên Thông báo</label>
+                  <select class="form-control form-control-sm" name="name"
+                          formControlName="name">
+                    <option *ngFor="let name of lstNameNotificationByNoticeType"
+                            [ngValue]="name">{{name}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">Mô tả</label>
+                  <textarea formControlName="description" class="form-control form-control-sm"
+                            name="description"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">Mẫu Thông báo</label>
+                  <textarea formControlName="content" class="form-control form-control-sm"
+                            name="content"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button (click)="doLoadData()" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+          <button (click)="clear()" type="button" class="btn btn-secondary btn-sm float-right">Clear</button>
+          <button (click)="doUpdate()" type="button" class="btn btn-primary btn-sm float-right">Cập nhật thông báo
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-add" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Thông tin mẫu thông báo</h4>
+        <button (click)="doLoadData()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div>
+            <div class="row">
+              <div class="col-md-3 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">Loại thông báo</label>
+                  <select class="form-control form-control-sm" name="notiType" [(ngModel)]="notificationGroupNew.notiType"
+                           #a (change)="onOptionsSelected(a.value)"
+                  >
+                    <option *ngFor="let noticeType of lstNoticeType"
+                            >{{noticeType}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">Loại lệnh</label>
+                  <select class="form-control form-control-sm" name="transType" [(ngModel)]="notificationGroupNew.transType">
+                    <option *ngFor="let transType of lstTransType"
+                            [ngValue]="transType">{{transType}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-3 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">Tên Thông báo</label>
+                  <select class="form-control form-control-sm" name="name" [(ngModel)]="notificationGroupNew.name"
+                          (change)="getByNotiTypeAndName(notificationGroupNew)">
+                    <option *ngFor="let name of lstNameNotificationByNoticeType"
+                            [ngValue]="name">{{name}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">Mô tả</label>
+                  <textarea class="form-control form-control-sm" [(ngModel)]="notificationGroupNew.description"
+                            name="description"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-12">
+                <div class="form-group">
+                  <label class="col-form-label">Mẫu Thông báo</label>
+                  <textarea class="form-control form-control-sm" [(ngModel)]="notificationGroupNew.content"
+                            name="content"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button (click)="clear()" type="button" class="btn btn-secondary btn-sm float-right">CLEAR</button>
+          <button (click)="doAdd()" type="button" class="btn btn-primary btn-sm float-right">THÊM THÔNG BÁO
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-detail" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{nameNoti}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div>{{contentNoti}}</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

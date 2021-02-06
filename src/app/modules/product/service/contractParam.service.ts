@@ -13,11 +13,11 @@ export class ContractParamServices {
   ) {
   }
 
-  getGroupContract(code: string, offset: number, pageSize: number): Observable<any> {
+  getContractParam(code: string, offset: number, pageSize: number): Observable<any> {
     return this.contractParamService.findContractParam(offset, pageSize, code);
   }
 
-  updateGroupContract(body): Observable<any> {
+  updateContractParam(body): Observable<any> {
     return this.contractParamService.updateContractParam(body);
 
   }

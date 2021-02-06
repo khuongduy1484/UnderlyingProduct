@@ -21,8 +21,8 @@ import {
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
-  MatListModule,
-  MatPaginatorModule,
+  MatListModule, MatOptionModule,
+  MatPaginatorModule, MatSelectModule,
   MatSidenavModule,
   MatTabsModule,
   MatToolbarModule
@@ -50,6 +50,7 @@ import {PropVariableComponent} from './modules/product/prop-variable/prop-variab
 import {NgxPaginationModule} from 'ngx-pagination';
 import {GroupContractWaitingApproveComponent} from './modules/product/group-contract-waiting-approve/group-contract-waiting-approve.component';
 import {SystemComponent} from './modules/system/system/system.component';
+import {ListFormNotificaionComponent} from './modules/product/list-form-notificaion/list-form-notificaion.component';
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import {SystemComponent} from './modules/system/system/system.component';
     GroupContractWaitingApproveComponent,
     GroupSystemComponent,
     PropVariableComponent,
-    SystemComponent
+    SystemComponent,
+    ListFormNotificaionComponent
   ],
   imports: [
     BrowserModule,
@@ -100,7 +102,9 @@ import {SystemComponent} from './modules/system/system/system.component';
     EditorModule,
     ToastrModule.forRoot(),
     ReactiveFormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MatOptionModule,
+    MatSelectModule
 
 
   ],

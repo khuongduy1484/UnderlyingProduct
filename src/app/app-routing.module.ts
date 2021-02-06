@@ -18,6 +18,7 @@ import {GroupSystemComponent} from './modules/system/group-system/group-system.c
 import {PropVariableComponent} from './modules/product/prop-variable/prop-variable.component';
 import {ProductComponent} from './modules/product/product.component';
 import {SystemComponent} from './modules/system/system/system.component';
+import {ListFormNotificaionComponent} from './modules/product/list-form-notificaion/list-form-notificaion.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -64,6 +65,13 @@ const routes: Routes = [
           breadcrumb: 'Nhóm hợp đồng'
         },
         component: GroupContractWaitingApproveComponent
+      },
+      {
+        path: 'form-notification',
+        data: {
+          breadcrumb: 'Thông báo mẫu'
+        },
+        component: ListFormNotificaionComponent
       },
       {
         path: 'contract-param',
