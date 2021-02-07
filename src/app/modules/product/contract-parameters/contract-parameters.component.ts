@@ -60,13 +60,11 @@ export class ContractParametersComponent implements OnInit {
 
   doSelected(contractParam) {
     this.contractParam.get('contractGroup').setValue(contractParam);
-    console.log(    this.contractParam.get('contractGroup').value);
-    console.log(contractParam);
   }
 
   doUpdate() {
     this.contractParamServices.updateGroupContract(this.contractParam.value.contractGroup).subscribe(data => {
-      if (data.errorCode === '0') {
+      if (data.status === 200) {
         this.notificationService.showSuccess('Đã cập nhập thành công', 'Thông báo');
       } else {
         this.notificationService.showError('Thông báo', data.description);

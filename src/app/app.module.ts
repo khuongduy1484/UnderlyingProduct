@@ -19,7 +19,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatListModule,
-  MatPaginatorModule,
+  MatPaginatorModule, MatRadioModule,
   MatSelectModule,
   MatSidenavModule,
   MatTabsModule,
@@ -56,11 +56,13 @@ import {ProductContractComponent} from './modules/product/product-contract/produ
 import {ProductContractApprovalPendingComponent} from './modules/product/product-contract-approval-pending/product-contract-approval-pending.component';
 import {IssuersComponent} from './modules/infomation/issuers/issuers.component';
 import {InformationComponent} from './modules/infomation/information.component';
-import {PrimaryProductsComponent} from './modules/infomation/primary-products/primary-products.component';
-import {PrimaryProductAprrovalPendingComponent} from './modules/infomation/primary-product-aprroval-pending/primary-product-aprroval-pending.component';
+import {PrimaryProductsComponent} from './modules/product/primary-products/primary-products.component';
+import {PrimaryProductAprrovalPendingComponent} from './modules/product/primary-product-aprroval-pending/primary-product-aprroval-pending.component';
 import {PoliciesProductsComponent} from './modules/product/policies-products/policies-products.component';
 import {CustomerComponent} from './modules/infomation/customer/customer.component';
 import { FinancialProductsComponent } from './modules/product/financial-products/financial-products.component';
+import { ApplyAttributesComponent } from './modules/product/apply-attributes/apply-attributes.component';
+import { PoliciesProductPendingApprovalComponent } from './modules/product/policies-product-pending-approval/policies-product-pending-approval.component';
 
 
 @NgModule({
@@ -97,7 +99,10 @@ import { FinancialProductsComponent } from './modules/product/financial-products
     PrimaryProductAprrovalPendingComponent,
     PoliciesProductsComponent,
     CustomerComponent,
-    FinancialProductsComponent
+    FinancialProductsComponent,
+    ContractParametersComponent,
+    ApplyAttributesComponent,
+    PoliciesProductPendingApprovalComponent,
   ],
   imports: [
     BrowserModule,
@@ -121,7 +126,8 @@ import { FinancialProductsComponent } from './modules/product/financial-products
     ToastrModule.forRoot(),
     ReactiveFormsModule,
     NgxPaginationModule,
-    MatSelectModule
+    MatSelectModule,
+    MatRadioModule
 
 
   ],

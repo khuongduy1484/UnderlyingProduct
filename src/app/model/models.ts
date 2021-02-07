@@ -75,6 +75,41 @@ export interface ISysParam {
   };
 }
 
+export interface Issuer {
+  code: string;
+  address: string;
+  description: string;
+  fax: string;
+  email: string;
+  phone: string;
+  createdDate: Date;
+  contractPoint: string;
+  active: string;
+  businessSector: string;
+  name: string;
+  groupName: string;
+  businessNumber: string;
+  businessGroupId: number;
+  id: number;
+}
+
+export interface IPolicesProduct {
+  code: string;
+  holdingPeriod: number;
+  description: string;
+  repurchase: number;
+  autoSell: number;
+  holdMoney: number;
+  holdAsset: Date;
+  discount: number;
+  discountRate: number;
+  name: string;
+  mortgage: number;
+  transfer: number;
+  id: number;
+  createdDate: Date;
+  status: number;
+}
 
 
 

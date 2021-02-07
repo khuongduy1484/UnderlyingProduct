@@ -86,7 +86,7 @@ export class GroupContractComponent implements OnInit {
       return;
     }
     this.groupContractService.updateGroupContractWaitingForApproval(this.groupContractUpdate).subscribe(data => {
-      if (data.errorCode === '0') {
+      if (data.status === 200) {
         this.notificationService.showSuccess('Đã cập nhập xong hợp đồng', 'Thông báo');
       } else {
         this.notificationService.showError('Thông báo', data.description);

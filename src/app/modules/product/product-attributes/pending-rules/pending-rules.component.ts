@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NotificationService} from '../../../../shared/notification.service';
-import {IPropRuleApproval, ISysParam} from '../../../../model/models';
+import {IPropRuleApproval} from '../../../../model/models';
 import {RulesManageService} from '../../service/ruleManeges.service';
 import {SystemParamService} from '../../../system/service/systemParam.service';
 
@@ -19,9 +19,11 @@ export class PendingRulesComponent implements OnInit {
   propRuleConditionNew: FormGroup;
   approveRules: IPropRuleApproval[] = [];
   isHidden = false;
-  sysParams: ISysParam [] = [];
+  sysParams: any [] = [];
   sysParamSelect: any;
   dataValue: string;
+  sysValue: any [] = [];
+  showTable = false;
 
 
   constructor(
@@ -50,8 +52,36 @@ export class PendingRulesComponent implements OnInit {
       code: ['', [Validators.required]],
       description: ['', [Validators.required]],
       condition: ['', [Validators.required]],
-      sysParam: [[], [Validators.required]]
+      sysParam: this.fb.array([])
     });
+    this.addSysParam();
+  }
+
+  addSysParam(): void {
+    const formGroup = this.fb.group({
+      id: [],
+      name: [],
+      sysParamValue: this.fb.group({
+        value: []
+      })
+    });
+    this.sysParamForm.push(formGroup);
+    this.onChangeGroup(0);
+  }
+
+  removeSysParam(index: number): void {
+    this.sysParamForm.removeAt(index);
+  }
+
+  onChangeGroup(index): void {
+    this.sysParamForm.controls[index].get('id').valueChanges.subscribe(x => {
+      // this.sysValue = this.sysParams.filter(sys => sys.name = x.name);
+      console.log(x);
+    });
+  }
+
+  get sysParamForm(): FormArray {
+    return this.propRuleConditionNew.get('sysParam') as FormArray;
   }
 
 
@@ -80,7 +110,7 @@ export class PendingRulesComponent implements OnInit {
   }
 
   doSubmit() {
-  };
+  }
 
 
   actionCreate() {
@@ -88,9 +118,20 @@ export class PendingRulesComponent implements OnInit {
   }
 
   doSelectGroup(sys) {
-    console.log(sys);
-    console.log(this.dataValue);
-    console.log(this.dataValue);
-   this.dataValue = this.sysParamSelect.value;
+    this.dataValue = this.sysParamSelect.value;
   }
+
+  onChangeCondition(condition) {
+    if (condition === '1') {
+      this.showTable = true;
+    } else {
+      this.showTable = false;
+    }
+
+  }
+
+  doCreate() {
+
+  }
+
 }

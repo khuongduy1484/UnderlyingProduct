@@ -68,7 +68,7 @@ export class TemplateContractComponent implements OnInit {
       return;
     }
     this.templateContractService.createTemplateContractWaitingForApproval(this.templateContractUpdate).subscribe(data => {
-      if (data.errorCode === '0') {
+      if (data.status === 200) {
         this.notificationService.showSuccess('Đã cập nhập xong hợp đồng', 'Thông báo');
       } else {
         this.notificationService.showError('Thông báo', data.description);
@@ -82,7 +82,7 @@ export class TemplateContractComponent implements OnInit {
   doCreate() {
     this.templateContractNew.status = '3';
     this.templateContractService.createTemplateContract(this.templateContractNew).subscribe(data => {
-      if (data.errorCode === '0') {
+      if (data.status === 200) {
         this.notificationService.showSuccess('Đã tạo bản ghi thành công', 'Thông báo');
       } else {
         this.notificationService.showError(data.description, 'Thông báo');
