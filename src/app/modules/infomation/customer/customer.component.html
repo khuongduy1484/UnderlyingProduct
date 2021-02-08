@@ -184,236 +184,258 @@
       <form name="form" [formGroup]="customer">
         <div class="modal-body">
           <div formGroupName="customerNew">
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-tabs mb-4">
               <li class="nav-item">
                 <a class="nav-link  "
                    href="/add-customer"><i class="fas fa-list"></i> Thêm mới khách hàng</a>
               </li>
             </ul>
-            <div>
-              <h3>Thông tin chung</h3>
-              <div class="row">
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label class="col-form-label">ID</label>
-                    <input formControlName="code" name="code" type="text" class="form-control border border-dark">
+            <div class="row">
+              <div class="col-md-9">
+                <div class="callout callout-info">
+                  <div class="row">
+                    <div class="col-6">
+                      <h3 class="card-title mb-2 mt-2">Thông tin chung</h3>
+                    </div>
+                    <div class="col-6"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label class="col-form-label">ID</label>
+                        <input formControlName="code" name="code" type="text" class="form-control form-control-sm">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label class="col-form-label">Tên KH</label>
+                        <input formControlName="name" name="name" type="text" class="form-control form-control-sm">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input4" class="col-form-label">Số tài khoản</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="userName" name="userName">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input5" class="col-form-label">Ngày sinh</label>
+                        <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
+                               formControlName="dob" name="dob" (ngModelChange)="myDate = $event" class="form-control form-control-sm"
+                               id="start-date-of-the-first-period">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input6" class="col-form-label">SĐT</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="phone" name="phone" id="input6">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input7" class="col-form-label">Email</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="email" name="email" id="input7">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label class="col-form-label">Giới tính</label>
+                        <select class="form-control form-control-sm" formControlName="gender" name="gender">
+                          <option value="1">Nam</option>
+                          <option value="0">Nữ</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input9" class="col-form-label">Địa chỉ</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="address" name="address" id="input9">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input10" class="col-form-label">Nghề nghiệp</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="jd" name="jd" id="input10">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input11" class="col-form-label">Chức vụ</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="occupation" name="occupation" id="input11">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input12" class="col-form-label">Quốc tịch</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="nationality" name="nationality" id="input12">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input13" class="col-form-label">Mã số thuế</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="taxCode" name="taxCode" id="input13">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label class="col-form-label">Trạng thái tài khoản</label>
+                        <select class="form-control form-control-sm" formControlName="status" name="status">
+                          <option value="1">Hoạt động</option>
+                          <option value="0">Ngưng hoạt động</option>
+                          <option value="2">Chờ kích hoạt</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input25" class="col-form-label">CMT</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="idCard" name="idCard" id="input25">
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label class="col-form-label">Tên KH</label>
-                    <input formControlName="name" name="name" type="text" class="form-control border border-dark">
+                <div class="callout callout-info">
+                  <div class="row">
+                    <div class="col-6">
+                      <h3 class="card-title mb-2 mt-2">Thông tin chứng khoán</h3>
+                    </div>
+                    <div class="col-6"></div>
                   </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label for="input4" class="col-form-label">Số tài khoản</label>
-                    <input type="text" class="form-control border border-dark"
-                           formControlName="userName" name="userName">
+                  <div class="row">
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input15" class="col-form-label">Tài khoản chứng khoán</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="stockAccount" name="stockAccount" id="input15">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input16" class="col-form-label">Số tài khoản kích hoạt VSD</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="vsdActivateAccount" name="vsdActivateAccount" id="input16">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label class="col-form-label">Số tiểu khoản</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="subAccountNumber" name="subAccountNumber">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label  class="col-form-label">Trạng thái tài khoản</label>
+                        <select class="form-control form-control-sm" formControlName="statusAccount" name="statusAccount">
+                          <option value="1">Hoạt động</option>
+                          <option value="0">Ngưng hoạt động</option>
+                          <option value="2">Chờ kích hoạt</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label  class="col-form-label">Trạng thái VSD</label>
+                        <select class="form-control form-control-sm" formControlName="vsdActivateStatus" name="vsdActivateStatus">
+                          <option value="2">Đã gửi VSD</option>
+                          <option value="1">Đã kích hoạt VSD</option>
+                          <option value="0">Chưa kích hoạt VSD</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label for="input5" class="col-form-label">Ngày sinh</label>
-                    <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-                           formControlName="dob" name="dob" (ngModelChange)="myDate = $event" class="form-control border border-dark"
-                           id="start-date-of-the-first-period">
+              <div class="col-md-3">
+                <div class="callout callout-info">
+                  <div class="row">
+                    <div class="col-6">
+                      <h3 class="card-title mb-2 mt-2">Thông tin ngân hàng</h3>
+                    </div>
+                    <div class="col-6"></div>
                   </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label for="input6" class="col-form-label">SĐT</label>
-                    <input type="text" class="form-control border border-dark"
-                           formControlName="phone" name="phone" id="input6">
+                  <div class="row">
+                    <div class="col-md-12 col-12">
+                      <div class="form-group">
+                        <label  class="col-form-label">Chủ tài khoản</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="accountName" name="accountName" id="input20">
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                      <div class="form-group">
+                        <label  class="col-form-label">Tỉnh/Thành phố</label>
+                        <select class="form-control form-control-sm" formControlName="bankCity" name="bankCity">
+                          <option>Hà Nội</option>
+                          <option>TP HCM</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                      <div class="form-group">
+                        <label class="col-form-label">Chi nhánh</label>
+                        <select class="form-control form-control-sm" formControlName="branchName" name="branchName">
+                          <option>Chi nhánh Hà Nội</option>
+                          <option>Chi nhánh TP HCM</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label for="input7" class="col-form-label">Email</label>
-                    <input type="text" class="form-control border border-dark"
-                           formControlName="email" name="email" id="input7">
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label class="col-form-label">Giới tính</label>
-                    <select class="form-control border border-dark" formControlName="gender" name="gender">
-                      <option value="1">Nam</option>
-                      <option value="0">Nữ</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label for="input9" class="col-form-label">Địa chỉ</label>
-                    <input type="text" class="form-control border border-dark"
-                           formControlName="address" name="address" id="input9">
-                  </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label for="input10" class="col-form-label">Nghề nghiệp</label>
-                    <input type="text" class="form-control border border-dark"
-                           formControlName="jd" name="jd" id="input10">
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label for="input11" class="col-form-label">Chức vụ</label>
-                    <input type="text" class="form-control border border-dark"
-                           formControlName="occupation" name="occupation" id="input11">
-                  </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label for="input12" class="col-form-label">Quốc tịch</label>
-                    <input type="text" class="form-control border border-dark"
-                           formControlName="nationality" name="nationality" id="input12">
-                  </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label for="input13" class="col-form-label">Mã số thuế</label>
-                    <input type="text" class="form-control border border-dark"
-                           formControlName="taxCode" name="taxCode" id="input13">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label class="col-form-label">Trạng thái tài khoản</label>
-                    <select class="form-control border border-dark" formControlName="status" name="status">
-                      <option value="1">Hoạt động</option>
-                      <option value="0">Ngưng hoạt động</option>
-                      <option value="2">Chờ kích hoạt</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label for="input25" class="col-form-label">CMT</label>
-                    <input type="text" class="form-control border border-dark"
-                           formControlName="idCard" name="idCard" id="input25">
+                  <div class="row">
+                    <div class="col-md-12 col-12">
+                      <div class="form-group">
+                        <label  class="col-form-label">Số tài khoản</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="accountNumber" name="accountNumber" id="input23">
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                      <div class="form-group">
+                        <label class="col-form-label">Tên ngân hàng</label>
+                        <select class="form-control form-control-sm" formControlName="bankName" name="bankName">
+                          <option>Vietcombank</option>
+                          <option>Techcombank</option>
+                          <option>TPBank</option>
+                          <option>MB</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div>
-              <h3>Thông tin chứng khoán</h3>
-              <div class="row">
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label for="input15" class="col-form-label">Tài khoản chứng khoán</label>
-                    <input type="text" class="form-control border border-dark"
-                           formControlName="stockAccount" name="stockAccount" id="input15">
-                  </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label for="input16" class="col-form-label">Số tài khoản kích hoạt VSD</label>
-                    <input type="text" class="form-control border border-dark"
-                           formControlName="vsdActivateAccount" name="vsdActivateAccount" id="input16">
-                  </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label class="col-form-label">Số tiểu khoản</label>
-                    <input type="text" class="form-control border border-dark"
-                           formControlName="subAccountNumber" name="subAccountNumber">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label  class="col-form-label">Trạng thái tài khoản</label>
-                    <select class="form-control border border-dark" formControlName="statusAccount" name="statusAccount">
-                      <option value="1">Hoạt động</option>
-                      <option value="0">Ngưng hoạt động</option>
-                      <option value="2">Chờ kích hoạt</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label  class="col-form-label">Trạng thái VSD</label>
-                    <select class="form-control border border-dark" formControlName="vsdActivateStatus" name="vsdActivateStatus">
-                      <option value="2">Đã gửi VSD</option>
-                      <option value="1">Đã kích hoạt VSD</option>
-                      <option value="0">Chưa kích hoạt VSD</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div>
-              <h3>Thông tin ngân hàng</h3>
-              <div class="row">
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label  class="col-form-label">Chủ tài khoản</label>
-                    <input type="text" class="form-control border border-dark"
-                           formControlName="accountName" name="accountName" id="input20">
-                  </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label  class="col-form-label">Tỉnh/Thành phố</label>
-                    <select class="form-control border border-dark" formControlName="bankCity" name="bankCity">
-                      <option>Hà Nội</option>
-                      <option>TP HCM</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label class="col-form-label">Chi nhánh</label>
-                    <select class="form-control border border-dark" formControlName="branchName" name="branchName">
-                      <option>Chi nhánh Hà Nội</option>
-                      <option>Chi nhánh TP HCM</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label  class="col-form-label">Số tài khoản</label>
-                    <input type="text" class="form-control border border-dark"
-                           formControlName="accountNumber" name="accountNumber" id="input23">
-                  </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label class="col-form-label">Tên ngân hàng</label>
-                    <select class="form-control border border-dark" formControlName="bankName" name="bankName">
-                      <option>Vietcombank</option>
-                      <option>Techcombank</option>
-                      <option>TPBank</option>
-                      <option>MB</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
+
+
+
           </div>
         </div>
 
         <div class="card-footer btn-center">
-          <button (click)="closeAdd()" type="button" class="btn btn-secondary btn-sm float-right">CLOSE</button>
-          <button (click)="clearAdd()" type="button" class="btn btn-secondary btn-sm float-right">CLEAR</button>
-          <button (click)="doCreate()" type="button" class="btn btn-default btn-sm ml-1">THÊM KHÁCH HÀNG</button>
+          <button (click)="closeAdd()" type="button" class="btn btn-secondary btn-sm float-right mr-1">CLOSE</button>
+          <button (click)="clearAdd()" type="button" class="btn btn-secondary btn-sm float-right mr-1">CLEAR</button>
+          <button (click)="doCreate()" type="button" class="btn btn-info btn-sm float-right mr-1">THÊM KHÁCH HÀNG</button>
         </div>
 
       </form>
