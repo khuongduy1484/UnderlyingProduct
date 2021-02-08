@@ -21,10 +21,15 @@ import {ProductContractComponent} from './modules/product/product-contract/produ
 import {ProductContractApprovalPendingComponent} from './modules/product/product-contract-approval-pending/product-contract-approval-pending.component';
 import {InformationComponent} from './modules/infomation/information.component';
 import {IssuersComponent} from './modules/infomation/issuers/issuers.component';
-import {PrimaryProductsComponent} from './modules/infomation/primary-products/primary-products.component';
-import {PrimaryProductAprrovalPendingComponent} from './modules/infomation/primary-product-aprroval-pending/primary-product-aprroval-pending.component';
+import {PrimaryProductsComponent} from './modules/product/primary-products/primary-products.component';
+import {PrimaryProductAprrovalPendingComponent} from './modules/product/primary-product-aprroval-pending/primary-product-aprroval-pending.component';
 import {PoliciesProductsComponent} from './modules/product/policies-products/policies-products.component';
 import {CustomerComponent} from './modules/infomation/customer/customer.component';
+import {FinancialProductsComponent} from './modules/product/financial-products/financial-products.component';
+import {ApplyAttributesComponent} from './modules/product/apply-attributes/apply-attributes.component';
+import {PoliciesProductPendingApprovalComponent} from './modules/product/policies-product-pending-approval/policies-product-pending-approval.component';
+import {FinancialProductPendingApprovalComponent} from './modules/product/financial-product-pending-approval/financial-product-pending-approval.component';
+import {ProVariableApprovalComponent} from './modules/product/prop-variable/pro-variable-approval/pro-variable-approval.component';
 import { FinancialProductsComponent } from './modules/product/financial-products/financial-products.component';
 import {ListFormNotificaionComponent} from './modules/product/list-form-notificaion/list-form-notificaion.component';
 
@@ -122,11 +127,24 @@ const routes: Routes = [
         component: PendingRulesComponent
       },
       {
+        path: 'prop-variable-approval',
+        data: {
+          breadcrumb: 'Thuộc tính Sản phẩm / Quy tắc áp dụng'
+        },
+        component: ProVariableApprovalComponent
+      },
+      {
         path: 'policies-product',
         data: {
           breadcrumb: 'Chính sách và sản phẩm'
         },
         component: PoliciesProductsComponent
+      }, {
+        path: 'policies-product-pending-approval',
+        data: {
+          breadcrumb: 'Chính sách và sản phẩm'
+        },
+        component: PoliciesProductPendingApprovalComponent
       },
       {
         path: 'financial-products',
@@ -134,11 +152,24 @@ const routes: Routes = [
           breadcrumb: 'Sản phảm tài chính'
         },
         component: FinancialProductsComponent
+      },
+      {
+        path: 'financial-products-pending-approval',
+        data: {
+          breadcrumb: 'Sản phảm tài chính'
+        },
+        component: FinancialProductPendingApprovalComponent
+      },
+      {
+        path: 'apply-attributes',
+        data: {
+          breadcrumb: 'Thuộc tính sản phẩm / Áp dụng thuộc tính '
+        },
+        component: ApplyAttributesComponent
       }
-
-
     ]
   },
+
   {
     path: '',
     component: SystemComponent,

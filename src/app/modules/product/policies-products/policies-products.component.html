@@ -4,12 +4,12 @@
       <div class="card-body">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link  "
-               href="/product-attributes-approved-rules"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
+            <a class="nav-link active "
+               href="/policies-product"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
           </li>
           <li class="nav-item  ">
-            <a class="nav-link active"
-               href="/product-attributes-pending-rules"><i class="fas fa-list"></i> Danh sách chờ duyệt</a>
+            <a class="nav-link "
+               href="/policies-product-pending-approval"><i class="fas fa-list"></i> Danh sách chờ duyệt</a>
           </li>
         </ul>
         <form>
@@ -37,39 +37,39 @@
                   <div class="row">
                     <div class="col-3">
                       <div class="form-group">
-                        <input type="text" class="form-control form-control-sm"
+                        <input [(ngModel)]="contentSearch.name" type="text" class="form-control form-control-sm"
                                placeholder="Nhập từ khóa" name="contentSearch">
                       </div>
                     </div>
                     <div class="col-2">
                       <div class="form-group">
-                        <select class="form-control form-control-sm" name="action">
-                          <option [value]="1">Áp dụng đồng thời các điều kiện</option>
-                          <option [value]="2">Áp dụng theo thứ tự ưu tiên</option>
+                        <select [(ngModel)]="contentSearch.transfer" class="form-control form-control-sm" name="action">
+                          <option [value]="1">Có</option>
+                          <option [value]="0">Không</option>
                         </select>
                       </div>
                     </div>
                     <div class="col-2">
                       <div class="form-group">
-                        <select class="form-control form-control-sm" name="action">
-                          <option [value]="1">Áp dụng đồng thời các điều kiện</option>
-                          <option [value]="2">Áp dụng theo thứ tự ưu tiên</option>
+                        <select [(ngModel)]="contentSearch.discount" class="form-control form-control-sm" name="action">
+                          <option [value]="1">Có</option>
+                          <option [value]="0">Không</option>
                         </select>
                       </div>
                     </div>
                     <div class="col-2">
                       <div class="form-group">
-                        <select class="form-control form-control-sm" name="action">
-                          <option [value]="1">Áp dụng đồng thời các điều kiện</option>
-                          <option [value]="2">Áp dụng theo thứ tự ưu tiên</option>
+                        <select  [(ngModel)]="contentSearch.mortgage" class="form-control form-control-sm" name="action">
+                          <option   [value]="1">Có</option>
+                          <option [value]="0">Không</option>
                         </select>
                       </div>
                     </div>
                     <div class="col-3">
                       <div class="form-group">
-                        <select class="form-control form-control-sm" name="action">
-                          <option [value]="1">Hoạt động</option>
-                          <option [value]="0">Không hoạt động</option>
+                        <select [(ngModel)]="contentSearch.holdAsset" class="form-control form-control-sm" name="action">
+                          <option [value]="1">Có</option>
+                          <option [value]="0">Không</option>
                         </select>
                       </div>
                     </div>
@@ -96,24 +96,23 @@
                 <div class="col-12 col-md-12">
                   <div class="row">
                     <div class="col-3">
-                      <div class="form-group">
+                      <div class="form-group" [(ngModel)]="contentSearch.createdDate">
                         <input type="text" class="form-control form-control-sm" id="input1"
                                placeholder="Nhập từ khóa" name="contentSearch">
                       </div>
                     </div>
                     <div class="col-2">
                       <div class="form-group">
-                        <select class="form-control form-control-sm" name="action">
-                          <option [value]="1">Áp dụng đồng thời các điều kiện</option>
-                          <option [value]="2">Áp dụng theo thứ tự ưu tiên</option>
+                        <select  [(ngModel)]="contentSearch.holdPeriod" class="form-control form-control-sm" name="action">
+                          <option [value]="month" *ngFor="let month of month">{{month + 'tháng'}}</option>
                         </select>
                       </div>
                     </div>
                     <div class="col-2">
                       <div class="form-group">
-                        <select class="form-control form-control-sm" name="action">
-                          <option [value]="1">Áp dụng đồng thời các điều kiện</option>
-                          <option [value]="2">Áp dụng theo thứ tự ưu tiên</option>
+                        <select  [(ngModel)]="contentSearch.holdAsset" class="form-control form-control-sm" name="action">
+                          <option [value]="1">Yes</option>
+                          <option [value]="0">No</option>
                         </select>
                       </div>
                     </div>
@@ -139,11 +138,6 @@
             <div class="col-6">
               <h3 class="card-title mb-2">Danh sách chính sách</h3>
             </div>
-            <div class="col-6">
-              <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right" (click)="actionCreate()">
-                Thêm mới
-              </button>
-            </div>
           </div>
           <div class="row">
             <div class="col-12 col-md-12">
@@ -162,40 +156,44 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!--                <tr *ngFor="let approveRule of approveRules ; index as i" class="border border-dark">-->
-                <!--                  <td>{{i + 1}}</td>-->
-                <!--                  <td>{{approveRule.name}}</td>-->
-                <!--                  <td>{{approveRule.code}}</td>-->
-                <!--                  <td>{{approveRule.description}}</td>-->
-                <!--                  <td>{{approveRule.propRuleCondition.dataValue}}</td>-->
-                <!--                  <td *ngIf="approveRule.condition == 1 ">Áp dụng đồng thời các điều kiện</td>-->
-                <!--                  <td *ngIf="approveRule.condition == 2 ">Áp dụng theo thứ tự ưu tiên</td>-->
-                <!--                  <td>{{approveRule.createdDate | date:'dd/MM/yyyy'}}</td>-->
-                <!--                  <td>{{approveRule.status === 1 ? 'Đang hoạt đông' : 'Không hoạt động' }}</td>-->
-                <!--                  <td>-->
-                <!--                    <a class="btn  btn-xs mr-1">-->
-                <!--                      <i class="fa fa-unlock-alt" aria-hidden="true"></i>-->
-                <!--                    </a>-->
-                <!--                    <a class="btn  btn-xs mr-1">-->
-                <!--                      <i class="fa fa-unlock" aria-hidden="true"></i>-->
-                <!--                    </a>-->
-                <!--                    <a (click)="doShowDetailProRule(approveRule.propRuleCondition)" class="btn btn-info btn-xs"-->
-                <!--                       data-toggle="modal"-->
-                <!--                       data-target="#modal-detail">-->
-                <!--                      <i class="fas fa-eye"></i>-->
-                <!--                    </a>-->
-                <!--                  </td>-->
-                <!--                </tr>-->
+                <tr *ngFor="let policesProduct of policiesProductS ; index as i" class="">
+                  <td>{{i + 1}}</td>
+                  <td>{{policesProduct.name}}</td>
+                  <td>{{policesProduct.repurchase}}</td>
+                  <td>{{policesProduct.transfer}}</td>
+                  <td>{{policesProduct.discountRate}}</td>
+                  <td>{{policesProduct.holdingPeriod}}</td>
+                  <td>{{policesProduct.discountRate}}</td>
+                  <td>{{policesProduct.holdMoney }}</td>
+                  <td>{{policesProduct.holdAsset}}</td>
+                  <td>{{policesProduct.createdDate }}</td>
+                  <td *ngIf="policesProduct.status == 2 && policesProduct != null">Từ chối</td>
+                  <td *ngIf="policesProduct.status == 3 && policesProduct != null">Bản nháp</td>
+                  <td *ngIf="policesProduct.status == 0 && policesProduct != null">Chờ phê duyệt</td>
+                  <td *ngIf="policesProduct.status == 4 && policesProduct != null">Đã xóa</td>
+                  <td *ngIf="policesProduct.status == 1 && policesProduct != null">Đã phê duyệt</td>
+                  <td>
+                    <a  (click)="doSelectRecord(policesProduct)" class="btn btn-primary btn-xs mr-1"
+                        data-toggle="modal"
+                        data-target="#modal-update">
+                      <i class="far fa-edit"></i>
+                    </a>
+                    <a   (click)="doDelete(policesProduct)" class="btn btn-info btn-xs  mr-1" data-toggle="modal"
+                         data-target="#modal-delete">
+                      <i class="fas fa-trash-alt"></i>
+                    </a>
+                  </td>
+                </tr>
                 </tbody>
               </table>
-              <!--              <ul *ngIf="approveRules.length > 0" class="pagination pagination-sm m-0 float-right">-->
-              <!--                <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"-->
-              <!--                                [collectionSize]="approveRules.length" [(page)]="page" aria-label="Custom pagination">-->
-              <!--                  <ng-template>Prev</ng-template>-->
-              <!--                  <ng-template>Next</ng-template>-->
-              <!--                  <ng-template></ng-template>-->
-              <!--                </ngb-pagination>-->
-              <!--              </ul>-->
+              <ul *ngIf="policiesProductS.length > 0" class="pagination pagination-sm m-0 float-right">
+                <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
+                                [collectionSize]="policiesProductS.length" [(page)]="page" aria-label="Custom pagination">
+                  <ng-template>Prev</ng-template>
+                  <ng-template>Next</ng-template>
+                  <ng-template></ng-template>
+                </ngb-pagination>
+              </ul>
             </div>
           </div>
         </form>
@@ -205,10 +203,10 @@
 </section>
 
 
-<section *ngIf="isHidden" class="content">
-  <div class="container-fluid">
-    <div class="card card-primary card-outline">
-      <form>
+<div class="modal fade" id="modal-update" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <form [formGroup]="policiesProductUpdate">
         <div class="card-body">
           <ul class="nav nav-tabs">
             <li class="nav-item">
@@ -227,15 +225,22 @@
 
           <div class="row mt-3">
             <div class="col-6">
-              <h3 class="card-title mb-2">Thêm mới chinh sách sản phẩm</h3>
+              <h3 class="card-title mb-2">Thêm mới chính sách sản phẩm</h3>
             </div>
             <div class="col-6"></div>
           </div>
           <div class="row">
             <div class="col-6">
-              <label class="col-form-label">Tên chinh sách sản phẩm</label>
-              <input type="text" class="form-control border border-dark"
-                     name="name" id="input3" placeholder="Nhập tên hợp đồng">
+              <label class="col-form-label">Tên chính sách sản phẩm</label>
+              <input formControlName="name" type="text" class="form-control form-control-sm"
+                     name="name" placeholder="Nhập tên hợp đồng">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <label class="col-form-label">Mã chính sách sản phẩm</label>
+              <input  formControlName="code" type="text" class="form-control form-control-sm"
+                      name="name" placeholder="Nhập chinh sách sản phẩm">
             </div>
           </div>
 
@@ -248,72 +253,112 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="bonds-name" class="col-sm-2 col-form-label">Cam kết mua lại sau </label>
+            <label  class="col-sm-2 col-form-label">Cam kết mua lại sau </label>
             <div class="col-sm-3">
-              <select class="form-control border border-dark" id="organization-reissue">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+              <select formControlName="repurchase" class="form-control form-control-sm" name="action">
+                <option [value]="month"  *ngFor="let month of month">{{month + 'tháng'}}</option>
               </select>
             </div>
             <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+              <mat-radio-group formControlName="mortgage"  aria-label="Select an option">
+                <mat-radio-button value="1">yes</mat-radio-button>
+                <mat-radio-button value="0">no </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-6"></div>
+            <div class="col-6">
+              <label  class="col-form-label">Được giao dịch trên sàn thứ cấp</label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-6">
+              <input  formControlName="repurchase" type="checkbox">
+              <label  class="col-sm-2 col-form-label">Không cam kết mua lại </label>
+            </div>
+
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+              <mat-radio-group  aria-label="Select an option">
+                <mat-radio-button value="1">yes</mat-radio-button>
+                <mat-radio-button value="0">no </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+
+          <div class="row">
+            <label class="col-form-label">Chính sách discount</label>
+          </div>
+          <div class="row">
+            <div class="col-6">
+            </div>
+            <div class="col-6">
+              <label class="col-form-label">Phong tỏa khi mua</label>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label  class="col-sm-2 col-form-label">Có ưu đãi với tỉ lệ </label>
             <div class="col-sm-3">
-              <select class="form-control border border-dark" id="organization-reissue">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+              <input formControlName="discountRate" type="text">
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-2">
+              <mat-radio-group formControlName="holdMoney"  aria-label="Select an option">
+                <mat-radio-button value="1">yes</mat-radio-button>
+                <mat-radio-button value="0">no </mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+          </div>
+
+          <label  class="col-sm-2 col-form-label">Không có ưu đãi</label>
+          <div class="col-sm-3">
+            <input formControlName="discountRate" type="checkbox">
+          </div>
+
+
+          <div class="row">
+            <div class="col-6">
+            </div>
+            <div class="col-6">Phong tỏa khi bán
+              <label class="col-form-label">Phong tỏa khi bán</label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label  class="col-sm-2 col-form-label"> Thời gian nắm giữ tối thiểu</label>
+            <div class="col-sm-3">
+              <select formControlName="holdingPeriod" class="form-control form-control-sm" id="organization-reissue">
+                <option [value]="month" *ngFor="let month of month">{{month + 'tháng'}}</option>
               </select>
             </div>
+            <div class="col-sm-1"></div>
+
+            <div class="col-sm-2">
+              <mat-radio-group formControlName="holdAsset"  aria-label="Select an option">
+                <mat-radio-button value="1">yes</mat-radio-button>
+                <mat-radio-button value="0">no </mat-radio-button>
+              </mat-radio-group>
+            </div>
           </div>
 
-          <div class="row">
-            <div class="col-6">
-              <label class="col-form-label">Không cam kết mua lại</label>
-            </div>
-            <div class="col-6">
-              <label class="col-form-label">Được giao dịch trên sàn thứ cấp</label>
-            </div>
-          </div>
-
-          <div class="row">
-            <label class=" col-sm-6 col-form-label">Chính sách Discount</label>
-            <div class="col-sm-1">
-              <input type="checkbox">
-            </div>
-            <label class=" col-sm-1 col-form-label">Yes</label>
-
-            <div class="col-sm-1">
-              <input type="checkbox">
-            </div>
-            <label class=" col-sm-1 col-form-label">No</label>
-          </div>
-
-          <div class="row">
-            <label class=" col-sm-6 col-form-label">Phong toa tien khi mua</label>
-            <div class="col-sm-1">
-              <input type="checkbox">
-            </div>
-            <label class=" col-sm-1 col-form-label">Yes</label>
-
-            <div class="col-sm-1">
-              <input type="checkbox">
-            </div>
-            <label class=" col-sm-1 col-form-label">No</label>
-          </div>
 
           <!-- /.card-body -->
           <div class="card-footer btn-center">
-            <button type="submit" class="btn btn-info btn-sm mr-1">Thêm</button>
+            <button (click)="doCreateApprovalPending()" type="submit" class="btn btn-info btn-sm mr-1">Thêm</button>
             <button (click)="actionCreate()" type="submit" class="btn btn-default btn-sm ml-1">Hủy</button>
           </div><!-- /.card-footer -->
         </div><!-- /.card-footer -->
       </form>
     </div>
+    <!-- /.modal-content -->
   </div>
-</section>
+  <!-- /.modal-dialog -->
+</div>
+
 
 

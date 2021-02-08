@@ -50,6 +50,7 @@ export class GroupContractWaitingApproveComponent implements OnInit {
 
   ngOnInit() {
     this.getTemplateContract();
+    this.getPageSymbol(0);
   }
 
   getTemplateContract() {
@@ -59,7 +60,6 @@ export class GroupContractWaitingApproveComponent implements OnInit {
   }
 
   getPageSymbol(current: number) {
-    console.log(current);
     if (current === null) {
       current = 0;
     }
@@ -84,7 +84,7 @@ export class GroupContractWaitingApproveComponent implements OnInit {
     }
     this.groupContractUpdate.status = '3';
     this.groupContractService.updateGroupContractWaitingForApproval(this.groupContractUpdate).subscribe(data => {
-      if (data.errorCode === '0') {
+      if (data.status === 200) {
         this.notificationService.showSuccess('Đã cập nhập xong hợp đồng', 'Thông báo');
       } else {
         this.notificationService.showError('Thông báo', data.description);
@@ -98,7 +98,7 @@ export class GroupContractWaitingApproveComponent implements OnInit {
   doCreate() {
     this.groupContractNew.status =  '3';
     this.groupContractService.createGroupContractWaitingForApproval(this.groupContractNew).subscribe(data => {
-      if (data.errorCode === '0') {
+      if (data.status === 200) {
         this.notificationService.showSuccess('Đã  tạo bản ghi thành công', 'Thông báo');
       } else {
         this.notificationService.showError(data.description, 'Thông báo');
@@ -157,7 +157,7 @@ export class GroupContractWaitingApproveComponent implements OnInit {
         return;
       }
       this.groupContractService.updateGroupContractWaitingForApproval(groupContract).subscribe(data => {
-        if (data.errorCode === '0') {
+        if (data.status === 200) {
           this.notificationService.showSuccess('Đã gửi phê duyệt thành công', 'Thông báo');
         } else {
           this.notificationService.showError(data.description, 'Thông báo');
@@ -170,7 +170,7 @@ export class GroupContractWaitingApproveComponent implements OnInit {
 
     if (this.action === '2') {
       this.groupContractService.deleteGroupContract(groupContract).subscribe(data => {
-        if (data.errorCode === '0') {
+        if (data.status === 200) {
           groupContract.forEach(r => {
               r.status = '4';
             }
@@ -193,7 +193,7 @@ export class GroupContractWaitingApproveComponent implements OnInit {
     contract.status = '1';
     template.push(contract);
     this.groupContractService.createGroupContract(template).subscribe(data => {
-      if (data.errorCode === '0') {
+      if (data.status === 200) {
         this.doLoadData();
         this.notificationService.showSuccess('Đã  phê duyệt thành công', 'Thông báo');
       } else {
@@ -209,7 +209,7 @@ export class GroupContractWaitingApproveComponent implements OnInit {
     template.status = '4';
     this.lstGroupContract.push(template);
     this.groupContractService.deleteGroupContract(this.lstGroupContract).subscribe(data => {
-      if (data.errorCode === '0') {
+      if (data.status === 200) {
         this.notificationService.showSuccess('Đã xóa thành công', 'Thông báo');
       } else {
         this.notificationService.showError(data.description, 'Thông báo');
@@ -236,7 +236,7 @@ export class GroupContractWaitingApproveComponent implements OnInit {
     if (action === 'submit for approval') {
       groupContract.status = '0';
       this.groupContractService.updateGroupContractWaitingForApproval(groupContract).subscribe(data => {
-        if (data.errorCode === '0') {
+        if (data.status === 200) {
           this.notificationService.showSuccess('Đã gửi phê duyệt thành công', 'Thông báo');
         } else {
           this.notificationService.showError('Thông báo', data.description);
@@ -251,7 +251,7 @@ export class GroupContractWaitingApproveComponent implements OnInit {
     if (action === 'reject approval') {
       groupContract.status = '2';
       this.groupContractService.updateGroupContractWaitingForApproval(groupContract).subscribe(data => {
-        if (data.errorCode === '0') {
+        if (data.status === 200) {
           this.notificationService.showSuccess('Thành công', 'Thông báo');
         } else {
           this.notificationService.showError('Thông báo', data.description);

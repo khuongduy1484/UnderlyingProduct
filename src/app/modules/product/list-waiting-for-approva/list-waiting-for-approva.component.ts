@@ -1,21 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {TemplateContractService} from '../service/templateContract.service';
-import {IGroupContract, ITemplateContract} from '../../../model/models';
+import {ITemplateContract} from '../../../model/models';
 import {NotificationService} from '../../../shared/notification.service';
-import {forEach} from '@angular/router/src/utils/collection';
-
-const ELEMENT_DATA = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
 @Component({
@@ -45,7 +32,6 @@ export class ListWaitingForApprovaComponent implements OnInit {
     description: '',
     status: ''
   };
-  isActionSubmit = true;
 
 
   @ViewChild('divElement') detailContent: ElementRef;
@@ -53,13 +39,30 @@ export class ListWaitingForApprovaComponent implements OnInit {
 
   constructor(
     private notificationService: NotificationService,
-    private templateContractService: TemplateContractService
+    private templateContractService: TemplateContractService,
+    private fb: FormBuilder,
   ) {
   }
 
   ngOnInit() {
     this.getPageSymbol(0);
+    // this.buildForm();
   }
+
+  // buildForm() {
+  //   this.templateContractNew = this.fb.group({
+  //     contractGroup: this.fb.group(
+  //       {
+  //         name: ['',  [Validators.required]],
+  //         code: ['', [Validators.required]],
+  //         description: ['', [Validators.required]],
+  //         content: ['', [Validators.required]],
+  //         status: ['', [Validators.required]],
+  //
+  //       }
+  //     )
+  //   });
+  // }
 
   getPageSymbol(current: number) {
     if (current === null) {
@@ -120,20 +123,20 @@ export class ListWaitingForApprovaComponent implements OnInit {
         return;
       }
       this.templateContractService.updateOrCreateTemplateContract(templateContract).subscribe(data => {
-        if (data.errorCode === '0') {
+        if (data.status === 200) {
+          this.doLoadData();
           this.notificationService.showSuccess('Đã gửi phê duyệt thành công', 'Thông báo');
         } else {
           this.notificationService.showError(data.description, 'Thông báo');
         }
       }, error => {
-        console.log(error);
         this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
       });
     }
 
     if (this.action === '2') {
       this.templateContractService.deleteTemplateContract(templateContract).subscribe(data => {
-        if (data.errorCode === '0') {
+        if (data.status === 200) {
           templateContract.forEach(r => {
               r.status = '4';
             }
@@ -155,7 +158,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
     contract.status = '1';
     template.push(contract);
     this.templateContractService.updateOrCreateTemplateContract(template).subscribe(data => {
-      if (data.errorCode === '0') {
+      if (data.status === 200) {
         this.doLoadData();
         this.notificationService.showSuccess('Phê duyệt thành công', 'Thông báo');
       } else {
@@ -171,7 +174,8 @@ export class ListWaitingForApprovaComponent implements OnInit {
     template.status = '4';
     this.lstTemplate.push(template);
     this.templateContractService.deleteTemplateContract(this.lstTemplate).subscribe(data => {
-      if (data.errorCode === '0') {
+      if (data.status === 200) {
+        this.doLoadData();
         this.notificationService.showSuccess('Đã xóa thành công', 'Thông báo');
       } else {
         this.notificationService.showError(data.description, 'Thông báo');
@@ -196,7 +200,8 @@ export class ListWaitingForApprovaComponent implements OnInit {
       return;
     }
     this.templateContractService.createTemplateContractWaitingForApproval(this.templateContractUpdate).subscribe(data => {
-      if (data.errorCode === '0') {
+      if (data.status === 200) {
+        this.doLoadData();
         this.notificationService.showSuccess('Đã cập nhập xong hợp đồng', 'Thông báo');
       } else {
         this.notificationService.showError(data.description, 'Thông báo');
@@ -210,7 +215,8 @@ export class ListWaitingForApprovaComponent implements OnInit {
   doCreate() {
     this.templateContractNew.status = '3';
     this.templateContractService.createTemplateContract(this.templateContractNew).subscribe(data => {
-      if (data.errorCode === '0') {
+      if (data.status === 200) {
+      this.doLoadData();
         this.notificationService.showSuccess('Đã tạo  bản ghi  thành công', 'Thông báo');
       } else {
         this.notificationService.showError(data.description, 'Thông báo');
@@ -230,7 +236,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
     if (action === 'submit for approval') {
       templateContract.status = '0';
       this.templateContractService.createTemplateContractWaitingForApproval(templateContract).subscribe(data => {
-        if (data.errorCode === '0') {
+        if (data.status === 200) {
           this.doLoadData();
           this.notificationService.showSuccess('Đã gửi phê duyệt thành công', 'Thông báo');
         } else {
@@ -246,7 +252,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
     if (action === 'reject approval') {
       templateContract.status = '2';
       this.templateContractService.createTemplateContractWaitingForApproval(templateContract).subscribe(data => {
-        if (data.errorCode === '0') {
+        if (data.status === 200) {
           this.doLoadData();
           this.notificationService.showSuccess('Thành công', 'Thông báo');
         } else {

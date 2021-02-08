@@ -7,18 +7,18 @@
             <a class="nav-link active"
                href="/info_customer"><i class="fas fa-list"></i> Danh sách khách hàng</a>
           </li>
-<!--          <li class="nav-item">-->
-<!--            <a class="nav-link  "-->
-<!--               href="/add_customer"><i class="fas fa-list"></i> Thêm mới khách hàng</a>-->
-<!--          </li>-->
-<!--          <li class="nav-item">-->
-<!--            <a class="nav-link  "-->
-<!--               href="/update_customer"><i class="fas fa-list"></i> Cập nhật thông tin</a>-->
-<!--          </li>-->
-<!--          <li class="nav-item">-->
-<!--            <a class="nav-link  "-->
-<!--               href="/detail_customer"><i class="fas fa-list"></i> Chi tiết thông tin</a>-->
-<!--          </li>-->
+          <!--          <li class="nav-item">-->
+          <!--            <a class="nav-link  "-->
+          <!--               href="/add_customer"><i class="fas fa-list"></i> Thêm mới khách hàng</a>-->
+          <!--          </li>-->
+          <!--          <li class="nav-item">-->
+          <!--            <a class="nav-link  "-->
+          <!--               href="/update_customer"><i class="fas fa-list"></i> Cập nhật thông tin</a>-->
+          <!--          </li>-->
+          <!--          <li class="nav-item">-->
+          <!--            <a class="nav-link  "-->
+          <!--               href="/detail_customer"><i class="fas fa-list"></i> Chi tiết thông tin</a>-->
+          <!--          </li>-->
         </ul>
         <form (ngSubmit)="doSearch()">
           <div class="row">
@@ -141,7 +141,7 @@
                       <i class="fa fa-lock" aria-hidden="true"></i>
                     </a>
                     <a data-toggle="modal"
-                      data-target="#modal-unlock" class="btn  btn-xs mr-1" >
+                       data-target="#modal-unlock" class="btn  btn-xs mr-1" >
                       <i class="fa fa-unlock" aria-hidden="true"></i>
                     </a>
                     <a (click)="doShowDetail(customer)" class="btn btn-info btn-xs"
@@ -458,7 +458,7 @@
                     <label for="input5" class="col-form-label">Ngày sinh</label>
                     <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
                            formControlName="dob" name="dob" (ngModelChange)="myDate = $event" class="form-control border border-dark"
-                           >
+                    >
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
@@ -897,7 +897,7 @@
               <div class="form-group">
                 <h3 class="col-form-label">Nhập lí do khóa tài khoản KH:</h3>
                 <input [(ngModel)]="reasonLock" type="text" class="form-control form-control-sm"
-                           name="reasonLock">
+                       name="reasonLock">
               </div>
             </div>
           </div>

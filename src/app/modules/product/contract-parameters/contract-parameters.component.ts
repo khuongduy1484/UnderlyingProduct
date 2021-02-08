@@ -51,7 +51,7 @@ export class ContractParametersComponent implements OnInit {
       current = 0;
     }
     this.page = current;
-    this.contractParamServices.getContractParam('', current > 0 ? current - 1 : 0, 10).subscribe(data => {
+    this.contractParamServices.getGroupContract('', current > 0 ? current - 1 : 0, 10).subscribe(data => {
       if (data) {
         this.contractParams = data.data;
       }
@@ -60,13 +60,11 @@ export class ContractParametersComponent implements OnInit {
 
   doSelected(contractParam) {
     this.contractParam.get('contractGroup').setValue(contractParam);
-    console.log(    this.contractParam.get('contractGroup').value);
-    console.log(contractParam);
   }
 
   doUpdate() {
-    this.contractParamServices.updateContractParam(this.contractParam.value.contractGroup).subscribe(data => {
-      if (data.errorCode === '0') {
+    this.contractParamServices.updateGroupContract(this.contractParam.value.contractGroup).subscribe(data => {
+      if (data.status === 200) {
         this.notificationService.showSuccess('Đã cập nhập thành công', 'Thông báo');
       } else {
         this.notificationService.showError('Thông báo', data.description);
@@ -78,7 +76,7 @@ export class ContractParametersComponent implements OnInit {
   }
 
   doSearch() {
-    this.contractParamServices.getContractParam(this.contentSearch.trim(), 0, 10).subscribe(data => {
+    this.contractParamServices.getGroupContract(this.contentSearch.trim(), 0, 10).subscribe(data => {
       if (data) {
         this.contractParams = data.data;
       }

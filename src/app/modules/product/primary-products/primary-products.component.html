@@ -1,0 +1,410 @@
+<section *ngIf="!isHidden" class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <div class="card-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link  "
+               href="/primary-product"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
+          </li>
+          <li class="nav-item  ">
+            <a class="nav-link active"
+               href="/primary-product-approval-pending"><i class="fas fa-list"></i> Danh sách chờ duyệt</a>
+          </li>
+        </ul>
+        <form (ngSubmit)="doSearch()">
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <div class="row">
+                <div class="col-4">
+                  <label class="col-form-label">Tên sản phẩm</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 col-md-12">
+                  <div class="row">
+                    <div class="col-4">
+                      <div class="form-group">
+                        <input [(ngModel)]="codeSearch" type="text" class="form-control form-control-sm" id="input1"
+                               placeholder="Nhập từ khóa" name="contentSearch">
+                      </div>
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col-4 btn-mt-33">
+                      <button (click)="doSearch()" type="button" class="mr-1 btn btn-sm btn-secondary float-right">Tìm
+                        kiếm
+                      </button>
+                      <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right" (click)="clear()">
+                        Clear
+                      </button>
+                      <button data-toggle="modal"
+                              data-target="#modal-automation" type="button"
+                              class="mr-1 btn btn-sm btn-outline-info float-right"><i
+                        class="fas fa-sync"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <h3 class="card-title mb-2">Danh sách Sản phẩm gốc</h3>
+            </div>
+            <div class="col-6"></div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>Tên TP</th>
+                  <th>Mã TP</th>
+                  <th>Mã Niêm yết</th>
+                  <th>TCPM</th>
+                  <th>Ngày phát hành</th>
+                  <th>Ngày đáo hạn</th>
+                  <th>Loại TP</th>
+                  <th>Hình thức phát hành</th>
+                  <th>Trạng thái TSDB</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let primaryProduct of lstPrimaryProduct " class="border border-dark">
+                  <td>{{primaryProduct.name}}</td>
+                  <td>{{primaryProduct.code}}</td>
+                  <td>{{primaryProduct.listedCode}}</td>
+                  <td>{{getNameIssuer(primaryProduct.issuerId)}}</td>
+                  <td>{{primaryProduct.issueDate| date:'dd/MM/yyyy'}}</td>
+                  <td>{{primaryProduct.maturityDate| date:'dd/MM/yyyy'}}</td>
+                  <td>{{primaryProduct.listedCode}}</td>
+                  <td>{{primaryProduct.issueType}}</td>
+                  <td>{{primaryProduct.issueType}}</td>
+                  <td>{{primaryProduct.status}}</td>
+                  <td>
+                    <a *ngIf="primaryProduct.status == 0" (click)="doSelectRecordUnlock(primaryProduct ,1)"
+                       class="btn  btn-xs mr-1" data-target="#modal-update-status" data-toggle="modal">
+                      <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                    </a>
+                    <a *ngIf="primaryProduct.status == 1" (click)="doSelectRecordUnlock(primaryProduct, 0)"
+                       class="btn  btn-xs mr-1" data-target="#modal-update-status" data-toggle="modal">
+                      <i class="fa fa-unlock" aria-hidden="true"></i>
+                    </a>
+                    <a (click)="doSelectRecordUpdate(primaryProduct)" class="btn btn-primary btn-xs mr-1"
+                       data-toggle="modal"
+                       data-target="#modal-update">
+                      <i class="far fa-edit"></i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <ul *ngIf="lstPrimaryProduct.length > 0" class="pagination pagination-sm m-0 float-right">
+                <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
+                                [collectionSize]="lstPrimaryProduct.length" [(page)]="page"
+                                aria-label="Custom pagination">
+                  <ng-template>Prev</ng-template>
+                  <ng-template>Next</ng-template>
+                  <ng-template></ng-template>
+                </ngb-pagination>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="modal fade" id="modal-update-status" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Chi tiết hợp đồng</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div>Bạn có chắc chắn chắn mở khóa sản phẩm này?</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button (click)="doUpdateStatus()" type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<section *ngIf="isHidden" class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <form [formGroup]="primaryProductUpdate">
+        <div class="card-body">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+            <li class="nav-item">
+              <a class="nav-link active  "
+                 href="/primary-product"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
+            </li>
+            <li class="nav-item active ">
+              <a class="nav-link "
+                 href="/primary-product-approval-pending"><i class="fas fa-list"></i> Danh sách chờ duyệt</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link "
+                 href="">Thêm mới <i class="fas fa-times"></i></a>
+            </li>
+          </ul>
+
+          <div class="row mt-3">
+            <div class="col-6">
+              <h3 class="card-title mb-2">Thông tin phát hành</h3>
+            </div>
+            <div class="col-6"></div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="col-form-label">Tên trái phiếu</label>
+                <input formControlName="name" type="text" class="form-control border border-dark"
+                       name="code" placeholder="Nhập mã hợp đồng">
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="col-form-label">Tổ chức phát hành</label>
+                <select formControlName="issuerId" class="form-control form-control-sm">
+                  <option [ngValue]="issuer.id" *ngFor="let issuer of lstIssuer">{{issuer.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="col-form-label">Loại trái phiếu</label>
+                <select formControlName="bondType" class="form-control form-control-sm">
+                  <option value="1">Trái phiếu của Chính phủ</option>
+                  <option value="0">Trái phiếu của doanh nghiệp</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="col-form-label">Mã trái phiếu </label>
+                <input formControlName="code" type="text" class="form-control border border-dark"
+                       name="code" placeholder="Nhập mã trái phiếu">
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="col-form-label">Ngày phát hành</label>
+                <input formControlName="issueDate" name="issueDate" type="date" class="form-control border border-dark"
+                       placeholder="Nhập tên hợp đồng">
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="col-form-label">Hình thức phát hành</label>
+                <select formControlName="issueType" class="form-control form-control-sm">
+                  <option value="1">Public Offering</option>
+                  <option value="0">Private Placement</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="col-form-label">Mã niêm yết</label>
+                <input formControlName="listedCode" type="text" class="form-control border border-dark"
+                       placeholder="Nhập mã niêm yết">
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="col-form-label">Nhày đáo hạn</label>
+                <input formControlName="maturityDate" name="issueDate" type="date"
+                       class="form-control border border-dark"
+                       placeholder="Nhập tên hợp đồng">
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="col-form-label">Mục đích phát hành</label>
+                <input formControlName="issuePurpose" type="text"
+                       class="form-control border border-dark"
+                       placeholder="Nhập mục đích phát hành">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="col-form-label">Mênh giá</label>
+                <input formControlName="par" type="text" class="form-control border border-dark"
+                       placeholder="Nhập mênh giá">
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="col-form-label">Mua trước hạn</label>
+                <mat-radio-group formControlName="callBack" aria-label="Select an option">
+                  <mat-radio-button value="1">YES</mat-radio-button>
+                  <mat-radio-button value="0">NO</mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="row mt-3">
+            <div class="col-6">
+              <h3 class="card-title mb-2">Bảo lãnh và Yài sản đảm bảo</h3>
+            </div>
+            <div class="col-6"></div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="col-form-label">Tài sản đảm bảo</label>
+                <mat-radio-group formControlName="collateral" aria-label="Select an option">
+                  <mat-radio-button value="1">YES</mat-radio-button>
+                  <mat-radio-button value="0">NO</mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="col-form-label">Thông tin TSĐB</label>
+                <input formControlName="collateralInfo" type="text" class="form-control border border-dark"
+                       placeholder="Nhập thông tin TSĐB">
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="col-form-label">Tổng giá trị TSĐB</label>
+                <input formControlName="collateralValue" type="text"
+                       class="form-control border border-dark"
+                       placeholder="Nhập Tổng giá trị TSĐB">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="col-form-label">Trạng thái bảo lãnh</label>
+                <mat-radio-group formControlName="guarantee" aria-label="Select an option">
+                  <mat-radio-button value="1">YES</mat-radio-button>
+                  <mat-radio-button value="0">NO</mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="col-form-label">Đơn vị bảo lãnh</label>
+                <input formControlName="guaranteeInfo" type="text" class="form-control border border-dark"
+                       placeholder="Nhập đơn vị bảo lãnh">
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="col-form-label">Gía trị bảo lãnh</label>
+                <input formControlName="guaranteeValue" type="text"
+                       class="form-control border border-dark"
+                       placeholder="Nhập mô tả">
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-6">
+              <h3 class="card-title mb-2">Tính lãi và thanh toán</h3>
+            </div>
+            <div class="col-6">
+              <button data-toggle="modal"
+                      data-target="#modal-automation">
+                Cập nhập tính tự động
+              </button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>Kỳ</th>
+                  <th>Ngày xác định</th>
+                  <th>Ngày đầu coupon</th>
+                  <th>Ngày chốt danh sách</th>
+                  <th>Ngày thanh toán</th>
+                  <th>LS KỲ</th>
+                  <th>LS TC</th>
+                  <th>Biên độ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let approveRule of approveRules ; index as i" class="border border-dark">
+                  <td>{{i + 1}}</td>
+                  <td>{{approveRule.name}}</td>
+                  <td>{{approveRule.code}}</td>
+                  <td>{{approveRule.description}}</td>
+                  <td>{{approveRule.propRuleCondition.dataValue}}</td>
+                  <td *ngIf="approveRule.condition == 1 ">Áp dụng đồng thời các điều kiện</td>
+                  <td *ngIf="approveRule.condition == 2 ">Áp dụng theo thứ tự ưu tiên</td>
+                  <td>{{approveRule.createdDate | date:'dd/MM/yyyy'}}</td>
+                  <td>{{approveRule.status === 1 ? 'Đang hoạt đông' : 'Không hoạt động' }}</td>
+                  <td>
+                    <a class="btn  btn-xs mr-1">
+                      <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn  btn-xs mr-1">
+                      <i class="fa fa-unlock" aria-hidden="true"></i>
+                    </a>
+                    <a (click)="doShowDetailProRule(approveRule.propRuleCondition)" class="btn btn-info btn-xs"
+                       data-toggle="modal"
+                       data-target="#modal-detail">
+                      <i class="fas fa-eye"></i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer btn-center">
+          <button (click)="doUpdate()" type="submit" class="btn btn-info btn-sm mr-1">THÊM MỚI</button>
+          <button (click)="doActionCreate()" type="submit" class="btn btn-default btn-sm ml-1">Hủy</button>
+        </div>
+        <!-- /.card-footer -->
+      </form>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+

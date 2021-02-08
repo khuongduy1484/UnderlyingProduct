@@ -7,6 +7,10 @@
             <a class="nav-link  "
                href="/info_issuer"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
           </li>
+          <li class="nav-item ">
+            <a class="nav-link active  "
+               href="/financial-products-pending-approval"><i class="fas fa-list"></i> Danh sách chưa duyệt</a>
+          </li>
         </ul>
         <form (ngSubmit)="doSearch()">
           <div class="row">
@@ -18,34 +22,28 @@
                 <div class="col-3">
                   <label class="col-form-label">Trái phiếu gốc</label>
                 </div>
-                <div class="col-3">
-                  <label class="col-form-label">Trạng thái</label>
-                </div>
               </div>
               <div class="row">
                 <div class="col-12 col-md-12">
                   <div class="row">
                     <div class="col-3">
                       <div class="form-group">
-                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
+                        <input [(ngModel)]="contentSearch.name" type="text" class="form-control form-control-sm"
+                               id="input1"
                                placeholder="Nhập từ khóa" name="contentSearch">
                       </div>
                     </div>
                     <div class="col-3">
-                      <div class="form-group">
-                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
-                               placeholder="Nhập từ khóa" name="contentSearch">
-                      </div>
+                      <select [(ngModel)]="contentSearch.prodVanillaId" class="form-control form-control-sm"
+                              name="action">
+                        <option *ngFor="let primaryProduct of lstProdVanilla"
+                                [ngValue]="primaryProduct.id">{{primaryProduct.name}}</option>
+                      </select>
                     </div>
-                    <div class="col-3">
-                      <div class="form-group">
-                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
-                               placeholder="Nhập từ khóa" name="contentSearch">
-                      </div>
-                    </div>
+                    <div class="col-3"></div>
 
                     <div class="col-3 btn-mt-33">
-                      <button (click)="actionCreate()" type="button" class="mr-1 btn btn-sm btn-info float-right"
+                      <button type="button" class="mr-1 btn btn-sm btn-info float-right"
                               data-toggle="modal"
                               data-target="#modal-add">Thêm mới
                       </button>
@@ -74,44 +72,36 @@
               <table class="table table-bordered">
                 <thead>
                 <tr>
+                  <th>STT</th>
                   <th>Tên sản phẩm</th>
-                  <th>Tên tổ chức phát hành</th>
-                  <th>SỐ ĐKKD</th>
-                  <th>Nhóm Tập đoàn</th>
-                  <th>Trạng thái</th>
-                  <th>Trái phiếu phát hành</th>
-                  <th>Thao tác</th>
+                  <th>Trái phiếu gốc</th>
+                  <th>Aggrement</th>
+                  <th>Ngày mở bán</th>
+                  <th>Ngày kết thúc</th>
+                  <th>Status</th>
+                  <th>Ngày tạo</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr *ngFor="let approveRule of approveRules ; index as i" class="border border-dark">
+                <tbody *ngIf="lstIProdDerivative != null && lstIProdDerivative.length> 0">
+                <tr *ngFor="let prodDerivative of lstIProdDerivative ; index as i" class="border border-dark">
                   <td>{{i + 1}}</td>
-                  <td>{{approveRule.name}}</td>
-                  <td>{{approveRule.code}}</td>
-                  <td>{{approveRule.description}}</td>
-                  <td>{{approveRule.propRuleCondition.dataValue}}</td>
-                  <td *ngIf="approveRule.condition == 1 ">Áp dụng đồng thời các điều kiện</td>
-                  <td *ngIf="approveRule.condition == 2 ">Áp dụng theo thứ tự ưu tiên</td>
-                  <td>
-                    <a   data-toggle="modal"
-                         data-target="#modal-update" class="btn  btn-xs mr-1" >
-                      <i class="fa fa-unlock-alt" aria-hidden="true"></i>
-                    </a>
-                    <a class="btn  btn-xs mr-1">
-                      <i class="fa fa-unlock" aria-hidden="true"></i>
-                    </a>
-                    <a (click)="doShowDetailProRule(approveRule.propRuleCondition)" class="btn btn-info btn-xs"
-                       data-toggle="modal"
-                       data-target="#modal-detail">
-                      <i class="fas fa-eye"></i>
-                    </a>
-                  </td>
+                  <td>{{prodDerivative.name}}</td>
+                  <td>{{getProdVanillaName(prodDerivative.vanillaId)}}</td>
+                  <td>{{getProdAgreementName(prodDerivative.agreementId)}}</td>
+                  <td>{{prodDerivative.startDate | date:'dd/MM/yyyy'}}</td>
+                  <td>{{prodDerivative.endDate | date:'dd/MM/yyyy'}}</td>
+                  <td *ngIf="prodDerivative.status == 1 ">Hoat đông</td>
+                  <td *ngIf="prodDerivative.status == 0 ">Không hoat đông</td>
+                  <td>{{prodDerivative.createdDate | date:'dd/MM/yyyy'}}</td>
+
                 </tr>
                 </tbody>
               </table>
-              <ul *ngIf="approveRules.length > 0" class="pagination pagination-sm m-0 float-right">
+              <ul *ngIf="lstIProdDerivative != null && lstIProdDerivative.length > 0"
+                  class="pagination pagination-sm m-0 float-right">
                 <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
-                                [collectionSize]="approveRules.length" [(page)]="page" aria-label="Custom pagination">
+                                [collectionSize]="lstIProdDerivative.length" [(page)]="page"
+                                aria-label="Custom pagination">
                   <ng-template>Prev</ng-template>
                   <ng-template>Next</ng-template>
                   <ng-template></ng-template>
@@ -126,12 +116,11 @@
 </section>
 
 
-
 <div class="modal fade" id="modal-add" aria-modal="true" role="dialog">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Thông tin Tổ chức phát hành</h4>
+        <h4 class="modal-title">Thêm mới sản phẩm tài chính</h4>
         <button (click)="doLoadData()" type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
@@ -139,63 +128,65 @@
       <form>
         <div class="modal-body">
 
-          <div>
-            <div class="row">
-              <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label class="col-form-label">Mã TCPH*</label>
-                  <input [(ngModel)]="groupContractNew.name" type="text" class="form-control form-control-sm"
-                         name="name" placeholder="Nhập tên nhóm hợp đồng">
-                </div>
-              </div>
-              <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label class="col-form-label">Tên TCPHss</label>
-                  <input [(ngModel)]="groupContractNew.name" type="text" class="form-control form-control-sm"
-                         name="name" placeholder="Nhập tên nhóm hợp đồng">
-                </div>
-              </div>
-              <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label f class="col-form-label">Số đăng kí kinh doanh</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
-                </div>
-              </div>
-              <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label class="col-form-label">Email</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
-                </div>
-              </div>
+          <form [formGroup]="prodDerivativeNew">
+            <div class="modal-body">
 
-              <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label class="col-form-label">Ngành nghề</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
-                </div>
-              </div>
+              <div>
+                <div class="row">
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Tên tài chính</label>
+                      <input type="text" class="form-control form-control-sm"
+                             formControlName="name" placeholder="Nhập tên tài chính">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Sản phẩm gốc</label>
+                      <select formControlName="agreementId" class="form-control form-control-sm" name="action">
+                        <option *ngFor="let primaryProduct of lstPoliciesProductS"
+                                [ngValue]="primaryProduct.id">{{primaryProduct.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Agreement</label>
+                      <select formControlName="vanillaId" class="form-control form-control-sm" name="action">
+                        <option *ngFor="let prodVanilla of lstProdVanilla"
+                                [ngValue]="prodVanilla.id">{{prodVanilla.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Ngày mở bán</label>
+                      <input formControlName="startDate" name="issueDate" type="date"
+                             class="form-control border border-dark"
+                             placeholder="Nhập tên hợp đồng">
+                    </div>
+                  </div>
 
-              <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label class="col-form-label">Nhóm TCPH</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Ngày kết thức</label>
+                      <input formControlName="endDate" name="issueDate" type="date"
+                             class="form-control border border-dark"
+                             placeholder="Nhập tên hợp đồng">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Mô tả</label>
+                      <textarea formControlName="description" class="form-control form-control-sm"
+                                name="description" placeholder="Mô tả"></textarea>
+                    </div>
+                  </div>
                 </div>
-              </div>
 
-              <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label class="col-form-label">Trạng thái</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
-                </div>
               </div>
             </div>
-
-          </div>
+          </form>
         </div>
         <div class="modal-footer">
           <button (click)="doLoadData()" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close
@@ -210,93 +201,6 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
-
-
-<!--dialog update-->
-<div class="modal fade" id="modal-update" aria-modal="true" role="dialog">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Thông tin Tổ chức phát hành</h4>
-        <button (click)="doLoadData()" type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <form>
-        <div class="modal-body">
-
-          <div>
-            <div class="row">
-              <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label class="col-form-label">Mã TCPH*</label>
-                  <input [(ngModel)]="groupContractNew.name" type="text" class="form-control form-control-sm"
-                         name="name" placeholder="Nhập tên nhóm hợp đồng">
-                </div>
-              </div>
-              <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label class="col-form-label">Tên TCPHss</label>
-                  <input [(ngModel)]="groupContractNew.name" type="text" class="form-control form-control-sm"
-                         name="name" placeholder="Nhập tên nhóm hợp đồng">
-                </div>
-              </div>
-              <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label f class="col-form-label">Số đăng kí kinh doanh</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
-                </div>
-              </div>
-              <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label class="col-form-label">Email</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
-                </div>
-              </div>
-
-              <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label class="col-form-label">Ngành nghề</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
-                </div>
-              </div>
-
-              <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label class="col-form-label">Nhóm TCPH</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
-                </div>
-              </div>
-
-              <div class="col-md-6 col-12">
-                <div class="form-group">
-                  <label class="col-form-label">Trạng thái</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button (click)="doLoadData()" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close
-          </button>
-          <button (click)="clear()" type="button" class="btn btn-secondary btn-sm float-right">Clear</button>
-          <button (click)="doCreate()" type="button" class="btn btn-primary btn-sm float-right">Thêm mới
-          </button>
-        </div>
-      </form>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-
 
 
 

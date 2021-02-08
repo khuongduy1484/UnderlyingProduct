@@ -126,6 +126,98 @@ export interface IGroupContract {
   };
 }
 
+export interface Issuer {
+  code: string;
+  address: string;
+  description: string;
+  fax: string;
+  email: string;
+  phone: string;
+  createdDate: Date;
+  contractPoint: string;
+  active: string;
+  businessSector: string;
+  name: string;
+  groupName: string;
+  businessNumber: string;
+  businessGroupId: number;
+  id: number;
+}
 
+export interface IPolicesProduct {
+  code: string;
+  holdingPeriod: number;
+  description: string;
+  repurchase: number;
+  autoSell: number;
+  holdMoney: number;
+  holdAsset: Date;
+  discount: number;
+  discountRate: number;
+  name: string;
+  mortgage: number;
+  transfer: number;
+  id: number;
+  createdDate: Date;
+  status: number;
+}
+
+
+export interface IPrimaryProduct {
+  code: string;
+  name: string;
+  issueDate: string;
+  createDate: Date;
+  maturityDate: Date;
+  par: number;
+  listedCode: number;
+  issueType: string;
+  id: string;
+  issuePurpose: string;
+  status: number;
+  issuerId: number;
+  bondType: string;
+  collateral: string;
+  guarantee: string;
+  guaranteeInfo: number;
+  collateralValue: number;
+  guaranteeValue: string;
+  callBack: string;
+}
+
+export interface IProdVanillaBond {
+  id: string;
+  callBack: string;
+  collateral: string;
+  bondType: string;
+  guarantee: string;
+  guaranteeInfo: number;
+  collateralValue: number;
+  guaranteeValue: string;
+}
+
+export interface IProdDerivative {
+  id: number;
+  name: string;
+  agreementId: number;
+  vanillaId: number;
+  startDate: Date;
+  endDate: Date;
+  status: number;
+  createdDate: Date;
+}
+
+
+export interface IProdVariable {
+  id: number;
+  name: string;
+  propVariableValue: {
+    appliedDate: Date;
+    value: '';
+    createdDate: Date;
+    status: number;
+    description: string;
+  };
+}
 
 

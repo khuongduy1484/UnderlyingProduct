@@ -27,25 +27,25 @@
                   <div class="row">
                     <div class="col-3">
                       <div class="form-group">
-                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
+                        <input [(ngModel)]="codeSearch" type="text" class="form-control form-control-sm"
                                placeholder="Nhập từ khóa" name="contentSearch">
                       </div>
                     </div>
                     <div class="col-3">
                       <div class="form-group">
-                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
-                               placeholder="Nhập từ khóa" name="contentSearch">
+                        <input [(ngModel)]="nameSearch" type="text" class="form-control form-control-sm"
+                               placeholder="Nhập từ khóa" name="nameSearch">
                       </div>
                     </div>
                     <div class="col-3">
                       <div class="form-group">
-                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
-                               placeholder="Nhập từ khóa" name="contentSearch">
+                        <input [(ngModel)]="businessSector" type="text" class="form-control form-control-sm"
+                               placeholder="Nhập từ khóa" name="businessSector">
                       </div>
                     </div>
 
                     <div class="col-3 btn-mt-33">
-                      <button (click)="actionCreate()" type="button" class="mr-1 btn btn-sm btn-info float-right"
+                      <button type="button" class="mr-1 btn btn-sm btn-info float-right"
                               data-toggle="modal"
                               data-target="#modal-add">Thêm mới
                       </button>
@@ -84,34 +84,31 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let approveRule of approveRules ; index as i" class="border border-dark">
+                <tr *ngFor="let issuer of lstIssuer ; index as i" class="">
                   <td>{{i + 1}}</td>
-                  <td>{{approveRule.name}}</td>
-                  <td>{{approveRule.code}}</td>
-                  <td>{{approveRule.description}}</td>
-                  <td>{{approveRule.propRuleCondition.dataValue}}</td>
-                  <td *ngIf="approveRule.condition == 1 ">Áp dụng đồng thời các điều kiện</td>
-                  <td *ngIf="approveRule.condition == 2 ">Áp dụng theo thứ tự ưu tiên</td>
+                  <td><a href="">{{issuer.name}}</a></td>
+                  <td>{{issuer.businessNumber}}</td>
+                  <td>{{getBusinessName(issuer.id)}}</td>
+                  <td *ngIf="issuer.active == 1 ">Hoạt động</td>
+                  <td *ngIf="!(issuer.active == 1)"> Không hoạt động</td>
+                  <td><a href="">Danh sách</a></td>
                   <td>
-                    <a   data-toggle="modal"
-                         data-target="#modal-update" class="btn  btn-xs mr-1" >
-                      <i class="fa fa-unlock-alt" aria-hidden="true"></i>
-                    </a>
-                    <a class="btn  btn-xs mr-1">
-                      <i class="fa fa-unlock" aria-hidden="true"></i>
-                    </a>
-                    <a (click)="doShowDetailProRule(approveRule.propRuleCondition)" class="btn btn-info btn-xs"
+                    <a (click)="doSelectRecodeUpdate(issuer)" class="btn btn-primary btn-xs mr-1"
                        data-toggle="modal"
-                       data-target="#modal-detail">
-                      <i class="fas fa-eye"></i>
+                       data-target="#modal-update">
+                      <i class="far fa-edit"></i>
+                    </a>
+                    <a (click)="doDelete(issuer)" class="btn btn-info btn-xs  mr-1" data-toggle="modal"
+                       data-target="#modal-delete">
+                      <i class="fas fa-trash-alt"></i>
                     </a>
                   </td>
                 </tr>
                 </tbody>
               </table>
-              <ul *ngIf="approveRules.length > 0" class="pagination pagination-sm m-0 float-right">
+              <ul *ngIf="lstIssuer != null && lstIssuer.length > 0" class="pagination pagination-sm m-0 float-right">
                 <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
-                                [collectionSize]="approveRules.length" [(page)]="page" aria-label="Custom pagination">
+                                [collectionSize]="lstIssuer.length" [(page)]="page" aria-label="Custom pagination">
                   <ng-template>Prev</ng-template>
                   <ng-template>Next</ng-template>
                   <ng-template></ng-template>
@@ -126,7 +123,6 @@
 </section>
 
 
-
 <div class="modal fade" id="modal-add" aria-modal="true" role="dialog">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
@@ -136,61 +132,64 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <form>
-        <div class="modal-body">
+      <form [formGroup]="issuerAdd">
+        <div class="modal-body" formGroupName="issuer">
 
           <div>
             <div class="row">
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label class="col-form-label">Mã TCPH*</label>
-                  <input [(ngModel)]="groupContractNew.name" type="text" class="form-control form-control-sm"
-                         name="name" placeholder="Nhập tên nhóm hợp đồng">
+                  <input formControlName="code" type="text" class="form-control form-control-sm"
+                         name="name" placeholder="Mã TCPH*">
                 </div>
               </div>
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label class="col-form-label">Tên TCPHss</label>
-                  <input [(ngModel)]="groupContractNew.name" type="text" class="form-control form-control-sm"
-                         name="name" placeholder="Nhập tên nhóm hợp đồng">
+                  <input formControlName="name" type="text" class="form-control form-control-sm"
+                         name="name" placeholder="Tên TCPHss">
                 </div>
               </div>
               <div class="col-md-6 col-12">
                 <div class="form-group">
-                  <label f class="col-form-label">Số đăng kí kinh doanh</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
+                  <label class="col-form-label">Số đăng kí kinh doanh</label>
+                  <input formControlName="businessNumber" type="text" class="form-control form-control-sm"
+                         name="description" placeholder="Số đăng kí kinh doanh">
                 </div>
               </div>
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label class="col-form-label">Email</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
+                  <input formControlName="email" type="text" class="form-control form-control-sm"
+                         name="description" placeholder="Email">
                 </div>
               </div>
 
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label class="col-form-label">Ngành nghề</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
+                  <input formControlName="businessSector" type="text" class="form-control form-control-sm"
+                         name="businessSector" placeholder="Ngành nghề">
                 </div>
               </div>
 
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label class="col-form-label">Nhóm TCPH</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
+                  <select formControlName="businessGroupId" class="form-control form-control-sm">
+                    <option [ngValue]="business.id" *ngFor="let  business of businessGroup">{{business.name}}</option>
+                  </select>
                 </div>
               </div>
 
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label class="col-form-label">Trạng thái</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
+                  <select formControlName="active" class="form-control form-control-sm">
+                    <option value="1">Đang hoạt động</option>
+                    <option value="0">Tạm dừng hoạt động</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -212,71 +211,73 @@
 </div>
 
 
-<!--dialog update-->
 <div class="modal fade" id="modal-update" aria-modal="true" role="dialog">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Thông tin Tổ chức phát hành</h4>
-        <button (click)="doLoadData()" type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
+        <!--        <button (click)="doLoadData()" type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+        <!--          <span aria-hidden="true">×</span>-->
+        <!--        </button>-->
       </div>
-      <form>
-        <div class="modal-body">
+      <form [formGroup]="issuerUpdate">
+        <div class="modal-body" formGroupName="issuer">
 
           <div>
             <div class="row">
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label class="col-form-label">Mã TCPH*</label>
-                  <input [(ngModel)]="groupContractNew.name" type="text" class="form-control form-control-sm"
-                         name="name" placeholder="Nhập tên nhóm hợp đồng">
+                  <input formControlName="code" type="text" class="form-control form-control-sm"
+                         name="name" placeholder="Mã TCPH*">
                 </div>
               </div>
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label class="col-form-label">Tên TCPHss</label>
-                  <input [(ngModel)]="groupContractNew.name" type="text" class="form-control form-control-sm"
-                         name="name" placeholder="Nhập tên nhóm hợp đồng">
+                  <input formControlName="name" type="text" class="form-control form-control-sm"
+                         name="name" placeholder="Tên TCPHss">
                 </div>
               </div>
               <div class="col-md-6 col-12">
                 <div class="form-group">
-                  <label f class="col-form-label">Số đăng kí kinh doanh</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
+                  <label class="col-form-label">Số đăng kí kinh doanh</label>
+                  <input formControlName="businessNumber" type="text" class="form-control form-control-sm"
+                         name="description" placeholder="Số đăng kí kinh doanh">
                 </div>
               </div>
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label class="col-form-label">Email</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
+                  <input formControlName="email" type="text" class="form-control form-control-sm"
+                         name="description" placeholder="Email">
                 </div>
               </div>
 
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label class="col-form-label">Ngành nghề</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
+                  <input formControlName="businessSector" type="text" class="form-control form-control-sm"
+                         name="businessSector" placeholder="Ngành nghề">
                 </div>
               </div>
 
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label class="col-form-label">Nhóm TCPH</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
+                  <select formControlName="businessGroupId" class="form-control form-control-sm">
+                    <option [value]="group.id" *ngFor="let group of businessGroup">{{group.name}}</option>
+                  </select>
                 </div>
               </div>
 
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label class="col-form-label">Trạng thái</label>
-                  <input [(ngModel)]="groupContractNew.code" type="text" class="form-control form-control-sm"
-                         name="description" placeholder="Nhập mã nhóm hợp đồng">
+                  <select formControlName="active" class="form-control form-control-sm">
+                    <option value="1">Đang hoạt động</option>
+                    <option value="0">Tạm dừng hoạt động</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -287,7 +288,7 @@
           <button (click)="doLoadData()" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close
           </button>
           <button (click)="clear()" type="button" class="btn btn-secondary btn-sm float-right">Clear</button>
-          <button (click)="doCreate()" type="button" class="btn btn-primary btn-sm float-right">Thêm mới
+          <button (click)="doUpdate()" type="button" class="btn btn-primary btn-sm float-right">Cập nhập
           </button>
         </div>
       </form>

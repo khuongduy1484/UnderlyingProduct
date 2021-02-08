@@ -153,7 +153,7 @@
 <section *ngIf="isHidden" class="content">
   <div class="container-fluid">
     <div class="card card-primary card-outline">
-      <form>
+      <form [formGroup]="propRuleConditionNew">
         <div class="card-body">
           <ul class="nav nav-tabs">
             <li class="nav-item">
@@ -183,27 +183,31 @@
                   <div class="form-group row">
                     <label for="ip1" class="col-sm-2 col-form-label">Tên quy tắc</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control form-control-sm" id="ip1" placeholder="Nhập tên quy tắc">
+                      <input formControlName="name" type="text" class="form-control form-control-sm" id="ip1"
+                             placeholder="Nhập tên quy tắc">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="ip2" class="col-sm-2 col-form-label">Mã quy tắc</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control form-control-sm" id="ip2" placeholder="Nhập mã quy tắc">
+                      <input formControlName="code" type="text" class="form-control form-control-sm" id="ip2"
+                             placeholder="Nhập mã quy tắc">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="ip3" class="col-sm-2 col-form-label">Mô tả</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control form-control-sm" id="ip3" placeholder="Nhập mô tả">
+                      <input formControlName="description" type="text" class="form-control form-control-sm" id="ip3"
+                             placeholder="Nhập mô tả">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="ip4" class="col-sm-2 col-form-label">Điều kiện</label>
                     <div class="col-sm-10">
-                      <select class="form-control form-control-sm" id="ip4">
-                        <option>Áp dụng đồng thời các điều kiện</option>
-                        <option>Áp dụng theo thứ tự ưu tiên</option>
+                      <select formControlName="condition" (change)="onChangeCondition($event.target.value)"
+                              class="form-control form-control-sm" id="ip4">
+                        <option value="1">Áp dụng đồng thời các điều kiện</option>
+                        <option value="2">Áp dụng theo thứ tự ưu tiên</option>
                       </select>
                     </div>
                   </div>
@@ -212,7 +216,7 @@
             </div>
             <div class="col-md-6 col-12">
               <h6 class="text-bold mb-2">Áp dụng cho</h6>
-              <table class="table table-bordered table-center mb-2">
+              <table *ngIf="showTable" class="table table-bordered table-center mb-2">
                 <thead>
                 <tr>
                   <th style="width: 44%;text-align: center;">Nhóm</th>
@@ -220,23 +224,25 @@
                   <th style="width: 80px;text-align: center;">Thao tác</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                  <td>
-                    <select [(ngModel)]="sysParamSelect" (change)="doSelectGroup($event.target)" class="form-control form-control-sm"
-                            name="format">
-                      <option [ngValue]="sys.sysParamValue" *ngFor="let sys of sysParams">{{sys.name}}</option>
+                <tbody formArrayName="sysParam">
+                <tr *ngFor="let param of sysParamForm.controls; index as index">
+                  <td [formGroupName]="index">
+                    <select formCo trolName="name" form class="form-control form-control-sm"
+                            name="name">
+                      <option  [value]="sys.id" *ngFor="let sys of sysParams">{{sys.name}}</option>
+
                     </select>
                   </td>
                   <td>
-<!--                    <select [(ngModel)]="sysParamSelect" (change)="doSelectGroup()" class="form-control form-control-sm"-->
-<!--                            name="format">-->
-<!--                      <option [ngValue]="sys.sysParamValue" *ngFor="let sys of sysParams">{{sys.name}}</option>-->
-<!--                    </select>-->
+                    <select class="form-control form-control-sm"
+                            name="format">
+                      <option *ngFor="let sys of sysValue">{{sys.name}}</option>
+                    </select>
                   </td>
 
                   <td class="ct-center">
-                    <button class="btn btn-xs btn-outline-danger"><i class="fas fa-times"></i></button>
+                    <button (click)="removeSysParam(index)" class="btn btn-xs btn-outline-danger"><i
+                      class="fas fa-times"></i></button>
                   </td>
                 </tr>
                 <tr>
@@ -245,12 +251,13 @@
                   <td>
                   </td>
                   <td class="ct-center">
-                    <button class="btn btn-xs btn-outline-success"><i class="fas fa-plus"></i></button>
+                    <button (click)="addSysParam()" class="btn btn-xs btn-outline-success"><i class="fas fa-plus"></i>
+                    </button>
                   </td>
                 </tr>
                 </tbody>
               </table>
-              <table class="table table-bordered table-center mb-2">
+              <table class="table table-bordered table-center mb-2" *ngIf="!showTable">
                 <thead>
                 <tr>
                   <th style="width: 44%;text-align: center;">STT</th>
@@ -258,22 +265,19 @@
                   <th style="width: 80px;text-align: center;">Thao tác</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                  <td class="ct-center">
-                    1
-                  </td>
-                  <td>
-                    <select class="form-control form-control-sm">
-                      <option>option 1</option>
-                      <option>option 2</option>
-                      <option>option 3</option>
-                      <option>option 4</option>
-                      <option>option 5</option>
+                <tbody formArrayName="sysParam">
+                <tr *ngFor="let param of sysParamForm.controls; index as index">
+                  <td>{{index}}</td>
+                  <td [formGroupName]="index">
+                    <select formControlName="name" form class="form-control form-control-sm"
+                            name="format">
+                      <option *ngFor="let sys of sysParams">{{sys.name}}</option>
+
                     </select>
                   </td>
                   <td class="ct-center">
-                    <button class="btn btn-xs btn-outline-danger"><i class="fas fa-times"></i></button>
+                    <button (click)="removeSysParam(index)" class="btn btn-xs btn-outline-danger"><i
+                      class="fas fa-times"></i></button>
                   </td>
                 </tr>
                 <tr>
@@ -282,7 +286,8 @@
                   <td>
                   </td>
                   <td class="ct-center">
-                    <button class="btn btn-xs btn-outline-success"><i class="fas fa-plus"></i></button>
+                    <button (click)="addSysParam()" class="btn btn-xs btn-outline-success"><i class="fas fa-plus"></i>
+                    </button>
                   </td>
                 </tr>
                 </tbody>
@@ -292,7 +297,7 @@
         </div>
         <!-- /.card-body -->
         <div class="card-footer btn-center">
-          <button type="submit" class="btn btn-info btn-sm mr-1">Thêm</button>
+          <button (click)="doCreate()" type="submit" class="btn btn-info btn-sm mr-1">Thêm</button>
           <button (click)="actionCreate()" type="submit" class="btn btn-default btn-sm ml-1">Hủy</button>
         </div>
         <!-- /.card-footer -->
