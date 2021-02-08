@@ -18,13 +18,13 @@ export class PendingRulesComponent implements OnInit {
   action: '';
   propRuleConditionNew: FormGroup;
   approveRules: IPropRuleApproval[] = [];
-  isHidden = false;
+  isHidden = true;
   sysParams: any [] = [];
   sysParamSelect: any;
   dataValue: string;
   sysValue: any [] = [];
   showTable = false;
-
+  typeSelected: number;
 
   constructor(
     private rulesManageService: RulesManageService,
@@ -63,10 +63,11 @@ export class PendingRulesComponent implements OnInit {
       name: [],
       sysParamValue: this.fb.group({
         value: []
-      })
+      }),
+      sysParamValueOption: []
     });
     this.sysParamForm.push(formGroup);
-    this.onChangeGroup(0);
+    this.onChangeGroup(this.sysParamForm.controls.length - 1);
   }
 
   removeSysParam(index: number): void {
@@ -75,8 +76,8 @@ export class PendingRulesComponent implements OnInit {
 
   onChangeGroup(index): void {
     this.sysParamForm.controls[index].get('id').valueChanges.subscribe(x => {
-      // this.sysValue = this.sysParams.filter(sys => sys.name = x.name);
-      console.log(x);
+      const value = this.sysParams.filter(sys => (sys.id) == x)[0].sysParamValue;
+      this.sysParamForm.controls[index].get('sysParamValueOption').patchValue(value);
     });
   }
 
@@ -131,7 +132,8 @@ export class PendingRulesComponent implements OnInit {
   }
 
   doCreate() {
-
+    this.propRuleConditionNew.get('description').markAsTouched();
+   console.log(this.sysParamForm.value);
   }
 
 }
