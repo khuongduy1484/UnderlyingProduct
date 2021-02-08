@@ -239,12 +239,12 @@
             <div class="col-6"></div>
           </div>
           <div class="row">
-            <div class="col-6">
+            <div class="col-5">
               <label class="col-form-label">Tên chính sách sản phẩm</label>
               <input formControlName="name" type="text" class="form-control form-control-sm"
                      name="name" placeholder="Nhập tên hợp đồng">
             </div>
-            <div class="col-6">
+            <div class="col-5 offset-1">
               <label class="col-form-label">Mã chính sách sản phẩm</label>
               <input  formControlName="code" type="text" class="form-control form-control-sm"
                       name="name" placeholder="Nhập chinh sách sản phẩm">
@@ -267,7 +267,7 @@
                     <label class="form-check-label text-bold">Cam kết mua lại sau </label>
                   </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-5">
                   <select formControlName="repurchase" class="form-control form-control-sm" name="action">
                     <option [value]="month"  *ngFor="let month of month">{{month + 'tháng'}}</option>
                   </select>
@@ -285,7 +285,7 @@
                     <label class="form-check-label text-bold">Có ưu đãi với tỉ lệ </label>
                   </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-5">
                   <input formControlName="discountRate" class="form-control-sm form-control" type="text">
                 </div>
               </div>
@@ -295,7 +295,7 @@
               </div>
               <div class="form-group row mt-3">
                 <label class="col-sm-5 col-form-label">Thời gian nắm giữ tối thiểu </label>
-                <div class="col-sm-4">
+                <div class="col-sm-5">
                   <select formControlName="holdingPeriod" class="form-control form-control-sm" >
                     <option [value]="month" *ngFor="let month of month">{{month + 'tháng'}}</option>
                   </select>
