@@ -61,6 +61,7 @@ import {PrimaryProductAprrovalPendingComponent} from './modules/infomation/prima
 import {PoliciesProductsComponent} from './modules/product/policies-products/policies-products.component';
 import {CustomerComponent} from './modules/infomation/customer/customer.component';
 import { FinancialProductsComponent } from './modules/product/financial-products/financial-products.component';
+import {ListFormNotificaionComponent} from './modules/product/list-form-notificaion/list-form-notificaion.component';
 
 
 @NgModule({
@@ -97,7 +98,8 @@ import { FinancialProductsComponent } from './modules/product/financial-products
     PrimaryProductAprrovalPendingComponent,
     PoliciesProductsComponent,
     CustomerComponent,
-    FinancialProductsComponent
+    FinancialProductsComponent,
+    ListFormNotificaionComponent
   ],
   imports: [
     BrowserModule,

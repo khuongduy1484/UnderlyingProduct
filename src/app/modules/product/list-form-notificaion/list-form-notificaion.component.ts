@@ -21,6 +21,7 @@ export class ListFormNotificaionComponent implements OnInit {
   noticeTypeSelected = '';
   lstNameNotificationByNoticeType = [];
   formNotifications: IFormNotification[] = [];
+  formNotificationByNotiTypeAndNames: IFormNotification[] = [];
   lstNoticeType = ['SMS', 'Email'];
   lstTransType = ['BUY', 'SELL'];
   notificationGroupNew = {
@@ -49,20 +50,6 @@ export class ListFormNotificaionComponent implements OnInit {
   buildForm() {
     this.formNotification = this.fb.group({
       notificationGroup: this.fb.group(
-        {
-          code: ['',  [Validators.required]],
-          notiType: ['', [Validators.required]],
-          transType: [ '', [Validators.required]],
-          description: ['', [Validators.required]],
-          content: ['', [Validators.required]],
-          status: [, [Validators.required]],
-          name: ['', [Validators.required]],
-          id: ['', [Validators.required]],
-        }
-      )
-    });
-    this.formNotificationNew = this.fb.group({
-      notificationGroupNew: this.fb.group(
         {
           code: ['',  [Validators.required]],
           notiType: ['', [Validators.required]],
@@ -136,7 +123,7 @@ export class ListFormNotificaionComponent implements OnInit {
 
   doUpdate() {
     this.formNotificationServices.updateFormNotification(this.formNotification.value.notificationGroup).subscribe(data => {
-      if (data.errorCode === '0') {
+      if (data.status === 200) {
         this.notificationService.showSuccess('Đã cập nhập thành công', 'Thông báo');
       } else {
         this.notificationService.showError('Thông báo', data.description);
@@ -148,9 +135,8 @@ export class ListFormNotificaionComponent implements OnInit {
   }
 
   doAdd() {
-    console.log(this.notificationGroupNew);
     this.formNotificationServices.updateFormNotification(this.notificationGroupNew).subscribe(data => {
-      if (data.errorCode === '0') {
+      if (data.status === 200) {
         this.notificationService.showSuccess('Đã thêm mới thành công', 'Thông báo');
       } else {
         this.notificationService.showError('Thông báo', data.description);
