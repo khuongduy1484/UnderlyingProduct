@@ -204,7 +204,6 @@ export class CustomerComponent implements OnInit {
         this.customerDetail.get('customerDe').get('branchName').setValue(data.data[0].cusBankAccount.branchName);
         this.customerDetail.get('customerDe').get('accountNumber').setValue(data.data[0].cusBankAccount.accountNumber);
         this.customerDetail.get('customerDe').get('bankName').setValue(data.data[0].cusBankAccount.bankName);
-        console.log(data.data[0]);
       }
     });
   }
@@ -217,32 +216,33 @@ export class CustomerComponent implements OnInit {
     this.customerSelected.get('customerSe').setValue(customer);
     this.customerService.getDetail(0, 10, customer.id).subscribe(data => {
       if (data) {
-        this.customerSelected.get('customerSe').get('id').setValue(data.data.id);
-        this.customerSelected.get('customerSe').get('code').setValue(data.data.code);
-        this.customerSelected.get('customerSe').get('userName').setValue(data.data.userName);
-        this.customerSelected.get('customerSe').get('dob').setValue(data.data.dob);
-        this.customerSelected.get('customerSe').get('phone').setValue(data.data.phone);
-        this.customerSelected.get('customerSe').get('account').setValue(data.data.account);
-        this.customerSelected.get('customerSe').get('email').setValue(data.data.email);
-        this.customerSelected.get('customerSe').get('gender').setValue(data.data.gender);
-        this.customerSelected.get('customerSe').get('address').setValue(data.data.address);
-        this.customerSelected.get('customerSe').get('jd').setValue(data.data.jd);
-        this.customerSelected.get('customerSe').get('occupation').setValue(data.data.occupation);
-        this.customerSelected.get('customerSe').get('nationality').setValue(data.data.nationality);
-        this.customerSelected.get('customerSe').get('taxCode').setValue(data.data.taxCode);
-        this.customerSelected.get('customerSe').get('idCard').setValue(data.data.idCard);
-        this.customerSelected.get('customerSe').get('status').setValue(data.data.status);
-        this.customerSelected.get('customerSe').get('userName').setValue(data.data.userName);
-        this.customerSelected.get('customerSe').get('stockAccount').setValue(data.data.stockAccount);
-        this.customerSelected.get('customerSe').get('vsdActivateAccount').setValue(data.data.vsdActivateAccount);
-        this.customerSelected.get('customerSe').get('subAccountNumber').setValue(data.data.subAccountNumber);
-        this.customerSelected.get('customerSe').get('statusAccount').setValue(data.data.statusAccount);
-        this.customerSelected.get('customerSe').get('vsdActivateStatus').setValue(data.data.vsdActivateStatus);
-        this.customerSelected.get('customerSe').get('accountName').setValue(data.data.accountName);
-        this.customerSelected.get('customerSe').get('bankCity').setValue(data.data.bankCity);
-        this.customerSelected.get('customerSe').get('branchName').setValue(data.data.branchName);
-        this.customerSelected.get('customerSe').get('accountNumber').setValue(data.data.accountNumber);
-        this.customerSelected.get('customerSe').get('bankName').setValue(data.data.bankName);
+        console.log(data.data[0]);
+        this.customerSelected.get('customerSe').get('id').setValue(data.data[0].id);
+        this.customerSelected.get('customerSe').get('code').setValue(data.data[0].code);
+        this.customerSelected.get('customerSe').get('name').setValue(data.data[0].name);
+        this.customerSelected.get('customerSe').get('dob').setValue(data.data[0].dob);
+        this.customerSelected.get('customerSe').get('phone').setValue(data.data[0].phone);
+        this.customerSelected.get('customerSe').get('account').setValue(data.data[0].account);
+        this.customerSelected.get('customerSe').get('email').setValue(data.data[0].email);
+        this.customerSelected.get('customerSe').get('gender').setValue(data.data[0].gender);
+        this.customerSelected.get('customerSe').get('address').setValue(data.data[0].address);
+        this.customerSelected.get('customerSe').get('jd').setValue(data.data[0].jd);
+        this.customerSelected.get('customerSe').get('occupation').setValue(data.data[0].occupation);
+        this.customerSelected.get('customerSe').get('nationality').setValue(data.data[0].nationality);
+        this.customerSelected.get('customerSe').get('taxCode').setValue(data.data[0].taxCode);
+        this.customerSelected.get('customerSe').get('idCard').setValue(data.data[0].idCard);
+        this.customerSelected.get('customerSe').get('status').setValue(data.data[0].status);
+        this.customerSelected.get('customerSe').get('userName').setValue(data.data[0].cusUser.userName);
+        this.customerSelected.get('customerSe').get('stockAccount').setValue(data.data[0].cusStockAccount.stockAccount);
+        this.customerSelected.get('customerSe').get('vsdActivateAccount').setValue(data.data[0].cusStockAccount.vsdActivateAccount);
+        this.customerSelected.get('customerSe').get('subAccountNumber').setValue(data.data[0].cusBankSubAccount.subAccountNumber);
+        this.customerSelected.get('customerSe').get('statusAccount').setValue(data.data[0].cusStockAccount.statusAccount);
+        this.customerSelected.get('customerSe').get('vsdActivateStatus').setValue(data.data[0].cusStockAccount.vsdActivateStatus);
+        this.customerSelected.get('customerSe').get('accountName').setValue(data.data[0].cusBankAccount.accountName);
+        this.customerSelected.get('customerSe').get('bankCity').setValue(data.data[0].cusBankAccount.bankCity);
+        this.customerSelected.get('customerSe').get('branchName').setValue(data.data[0].cusBankAccount.branchName);
+        this.customerSelected.get('customerSe').get('accountNumber').setValue(data.data[0].cusBankAccount.accountNumber);
+        this.customerSelected.get('customerSe').get('bankName').setValue(data.data[0].cusBankAccount.bankName);
       }
     });
   }

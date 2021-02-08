@@ -678,19 +678,19 @@
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label class="col-form-label">ID</label>
-                    <input formControlName="code" name="code" type="text" class="form-control border border-dark">
+                    <input formControlName="code" name="code" disabled="true" type="text" class="form-control border border-dark">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label class="col-form-label">Tên KH</label>
-                    <input formControlName="name" name="name" type="text" class="form-control border border-dark">
+                    <input formControlName="name" name="name" disabled="true" type="text" class="form-control border border-dark">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label for="input4" class="col-form-label">Số tài khoản</label>
-                    <input type="text" class="form-control border border-dark"
+                    <input type="text" class="form-control border border-dark" disabled="true"
                            formControlName="account" name="account">
                   </div>
                 </div>
@@ -699,7 +699,7 @@
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label for="dob" class="col-form-label">Ngày sinh</label>
-                    <input type="date"
+                    <input type="date" disabled="true"
                            formControlName="dob" name="dob" class="form-control border border-dark"
                            id="dob">
                   </div>
@@ -707,14 +707,14 @@
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label for="input6" class="col-form-label">SĐT</label>
-                    <input type="text" class="form-control border border-dark"
+                    <input type="text" class="form-control border border-dark" disabled="true"
                            formControlName="phone" name="phone">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label for="input7" class="col-form-label">Email</label>
-                    <input type="text" class="form-control border border-dark"
+                    <input type="text" class="form-control border border-dark" disabled="true"
                            formControlName="email" name="email">
                   </div>
                 </div>
@@ -724,21 +724,23 @@
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label class="col-form-label">Giới tính</label>
-                    <select class="form-control border border-dark" formControlName="gender" name="gender">
+                    <select class="form-control border border-dark" disabled="true" formControlName="gender" name="gender">
+                      <option value="1">Nam</option>
+                      <option value="0">Nữ</option>
                     </select>
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label for="input9" class="col-form-label">Địa chỉ</label>
-                    <input type="text" class="form-control border border-dark"
+                    <input type="text" disabled="true" class="form-control border border-dark"
                            formControlName="address" name="address">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label for="input10" class="col-form-label">Nghề nghiệp</label>
-                    <input type="text" class="form-control border border-dark"
+                    <input type="text" disabled="true" class="form-control border border-dark"
                            formControlName="jd" name="jd">
                   </div>
                 </div>
@@ -748,21 +750,21 @@
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label for="input11" class="col-form-label">Chức vụ</label>
-                    <input type="text" class="form-control border border-dark"
+                    <input type="text" disabled="true" class="form-control border border-dark"
                            formControlName="occupation" name="occupation">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label for="input12" class="col-form-label">Quốc tịch</label>
-                    <input type="text" class="form-control border border-dark"
+                    <input type="text" disabled="true" class="form-control border border-dark"
                            formControlName="nationality" name="nationality">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label for="input13" class="col-form-label">Mã số thuế</label>
-                    <input type="text" class="form-control border border-dark"
+                    <input type="text" disabled="true" class="form-control border border-dark"
                            formControlName="taxCode" name="taxCode">
                   </div>
                 </div>
@@ -771,14 +773,17 @@
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label class="col-form-label">Trạng thái tài khoản</label>
-                    <select class="form-control border border-dark" formControlName="status" name="status">
+                    <select class="form-control border border-dark" disabled="true" formControlName="status" name="status">
+                      <option value="1">Hoạt động</option>
+                      <option value="0">Ngưng hoạt động</option>
+                      <option value="2">Chờ kích hoạt</option>
                     </select>
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label for="input25" class="col-form-label">CMT</label>
-                    <input type="text" class="form-control border border-dark"
+                    <input type="text" disabled="true" class="form-control border border-dark"
                            formControlName="idCard" name="idCard">
                   </div>
                 </div>
@@ -791,21 +796,21 @@
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label for="input15" class="col-form-label">Tài khoản chứng khoán</label>
-                    <input type="text" class="form-control border border-dark"
+                    <input type="text" disabled="true" class="form-control border border-dark"
                            formControlName="stockAccount" name="stockAccount">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label for="input16" class="col-form-label">Số tài khoản kích hoạt VSD</label>
-                    <input type="text" class="form-control border border-dark"
+                    <input type="text" disabled="true" class="form-control border border-dark"
                            formControlName="vsdActivateAccount" name="vsdActivateAccount">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label class="col-form-label">Số tiểu khoản</label>
-                    <input type="text" class="form-control border border-dark"
+                    <input type="text" disabled="true" class="form-control border border-dark"
                            formControlName="subAccountNumber" name="subAccountNumber" id="input17">
                   </div>
                 </div>
@@ -814,14 +819,20 @@
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label  class="col-form-label">Trạng thái tài khoản</label>
-                    <select class="form-control border border-dark" formControlName="statusAccount" name="statusAccount">
+                    <select class="form-control border border-dark" disabled="true" formControlName="statusAccount" name="statusAccount">
+                      <option value="1">Hoạt động</option>
+                      <option value="0">Ngưng hoạt động</option>
+                      <option value="2">Chờ kích hoạt</option>
                     </select>
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label  class="col-form-label">Trạng thái VSD</label>
-                    <select class="form-control border border-dark" formControlName="vsdActivateStatus" name="vsdActivateStatus">
+                    <select class="form-control border border-dark" disabled="true" formControlName="vsdActivateStatus" name="vsdActivateStatus">
+                      <option value="2">Đã gửi VSD</option>
+                      <option value="1">Đã kích hoạt VSD</option>
+                      <option value="0">Chưa kích hoạt VSD</option>
                     </select>
                   </div>
                 </div>
@@ -834,21 +845,25 @@
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label  class="col-form-label">Chủ tài khoản</label>
-                    <input type="text" class="form-control border border-dark"
+                    <input type="text" class="form-control border border-dark" disabled="true"
                            formControlName="accountName" name="accountName">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label  class="col-form-label">Tỉnh/Thành phố</label>
-                    <select class="form-control border border-dark" formControlName="bankCity" name="bankCity">
+                    <select class="form-control border border-dark" disabled="true" formControlName="bankCity" name="bankCity">
+                      <option value="Hà Nội">Hà Nội</option>
+                      <option value="TP HCM">TP HCM</option>
                     </select>
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label class="col-form-label">Chi nhánh</label>
-                    <select class="form-control border border-dark" formControlName="branchName" name="branchName">
+                    <select class="form-control border border-dark" disabled="true" formControlName="branchName" name="branchName">
+                      <option value="Chi nhánh Hà Nội">Chi nhánh Hà Nội</option>
+                      <option value="Chi nhánh TP HCM">Chi nhánh TP HCM</option>
                     </select>
                   </div>
                 </div>
@@ -857,14 +872,18 @@
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label  class="col-form-label">Số tài khoản</label>
-                    <input type="text" class="form-control border border-dark"
+                    <input type="text" disabled="true" class="form-control border border-dark"
                            formControlName="accountNumber" name="accountNumber">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
                     <label class="col-form-label">Tên ngân hàng</label>
-                    <select class="form-control border border-dark" formControlName="bankName" name="bankName">
+                    <select class="form-control border border-dark" disabled="true" formControlName="bankName" name="bankName">
+                      <option value="Vietcombank">Vietcombank</option>
+                      <option value="Techcombank">Techcombank</option>
+                      <option value="TPBank">TPBank</option>
+                      <option value="MB">MB</option>
                     </select>
                   </div>
                 </div>
