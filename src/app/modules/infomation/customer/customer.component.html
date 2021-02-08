@@ -4,9 +4,21 @@
       <div class="card-body">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link  "
-               href="/info_issuer"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
+            <a class="nav-link active"
+               href="/info_customer"><i class="fas fa-list"></i> Danh sách khách hàng</a>
           </li>
+          <!--          <li class="nav-item">-->
+          <!--            <a class="nav-link  "-->
+          <!--               href="/add_customer"><i class="fas fa-list"></i> Thêm mới khách hàng</a>-->
+          <!--          </li>-->
+          <!--          <li class="nav-item">-->
+          <!--            <a class="nav-link  "-->
+          <!--               href="/update_customer"><i class="fas fa-list"></i> Cập nhật thông tin</a>-->
+          <!--          </li>-->
+          <!--          <li class="nav-item">-->
+          <!--            <a class="nav-link  "-->
+          <!--               href="/detail_customer"><i class="fas fa-list"></i> Chi tiết thông tin</a>-->
+          <!--          </li>-->
         </ul>
         <form (ngSubmit)="doSearch()">
           <div class="row">
@@ -27,20 +39,20 @@
                   <div class="row">
                     <div class="col-4">
                       <div class="form-group">
-                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
-                               placeholder="Nhập từ khóa" name="contentSearch">
+                        <input [(ngModel)]="nameSearch" type="text" class="form-control form-control-sm" id="input1"
+                               name="nameSearch">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
-                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
-                               placeholder="Nhập từ khóa" name="contentSearch">
+                        <input [(ngModel)]="idCardSearch" type="text" class="form-control form-control-sm" id="input2"
+                               name="idCardSearch">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
-                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
-                               placeholder="Nhập từ khóa" name="contentSearch">
+                        <input [(ngModel)]="phoneSearch" type="text" class="form-control form-control-sm" id="input3"
+                               name="phoneSearch">
                       </div>
                     </div>
                   </div>
@@ -58,35 +70,35 @@
                 <div class="col-4">
                   <label class="col-form-label">Chi nhánh mở tài khoản</label>
                 </div>
-                <div class="col-4">
-                  <button (click)="actionCreate()" type="button" class="mr-1 btn btn-sm btn-info float-right"
-                          data-toggle="modal"
-                          data-target="#modal-add">Thêm mới
-                  </button>
-                  <button (click)="doSearch()" type="button" class="mr-1 btn btn-sm btn-secondary float-right">Tìm
-                    kiếm
-                  </button>
-                  <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right" (click)="clear()">
-                    Clear
-                  </button>
-                  <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right"><i
-                    class="fas fa-sync"></i></button>
-                </div>
               </div>
               <div class="row">
                 <div class="col-12 col-md-12">
                   <div class="row">
                     <div class="col-4">
                       <div class="form-group">
-                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
-                               placeholder="Nhập từ khóa" name="contentSearch">
+                        <input [(ngModel)]="emailSearch" type="text" class="form-control form-control-sm" id="input4"
+                               name="emailSearch">
                       </div>
                     </div>
                     <div class="col-4">
                       <div class="form-group">
-                        <input [(ngModel)]="contentSearch" type="text" class="form-control form-control-sm" id="input1"
-                               placeholder="Nhập từ khóa" name="contentSearch">
+                        <input [(ngModel)]="branchNameSearch" type="text" class="form-control form-control-sm" id="input5"
+                               name="branchNameSearch">
                       </div>
+                    </div>
+                    <div class="col-4">
+                      <button (click)="doShowAdd()" type="button" class="mr-1 btn btn-sm btn-info float-right"
+                              data-toggle="modal"
+                              data-target="#modal-add">Thêm mới
+                      </button>
+                      <button (click)="doSearch()" type="button" class="mr-1 btn btn-sm btn-secondary float-right">Tìm
+                        kiếm
+                      </button>
+                      <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right" (click)="clear()">
+                        Clear
+                      </button>
+                      <button (click)="getPageSymbol(0)" type="button" class="mr-1 btn btn-sm btn-outline-info float-right"><i
+                        class="fas fa-sync"></i></button>
                     </div>
                   </div>
                 </div>
@@ -114,34 +126,40 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let approveRule of approveRules ; index as i" class="border border-dark">
-                  <td>{{i + 1}}</td>
-                  <td>{{approveRule.name}}</td>
-                  <td>{{approveRule.code}}</td>
-                  <td>{{approveRule.description}}</td>
-                  <td>{{approveRule.propRuleCondition.dataValue}}</td>
-                  <td *ngIf="approveRule.condition == 1 ">Áp dụng đồng thời các điều kiện</td>
-                  <td *ngIf="approveRule.condition == 2 ">Áp dụng theo thứ tự ưu tiên</td>
+                <tr *ngFor="let customer of customers ; index as i" class="border border-dark">
+                  <td>{{customer.name}}</td>
+                  <td>{{customer.idCard}}</td>
+                  <td>{{customer.email}}</td>
+                  <td>{{customer.phone}}</td>
+                  <td>{{customer.account}}</td>
+                  <td *ngIf="customer.status == 0 ">Ngưng hoạt động</td>
+                  <td *ngIf="customer.status == 1 ">Hoạt động</td>
+                  <td *ngIf="customer.status == 2 ">Chờ xác nhận</td>
                   <td>
                     <a data-toggle="modal"
-                       data-target="#modal-update" class="btn  btn-xs mr-1">
-                      <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                       data-target="#modal-lock" class="btn  btn-xs mr-1">
+                      <i class="fa fa-lock" aria-hidden="true"></i>
                     </a>
-                    <a class="btn  btn-xs mr-1">
+                    <a data-toggle="modal"
+                       data-target="#modal-unlock" class="btn  btn-xs mr-1" >
                       <i class="fa fa-unlock" aria-hidden="true"></i>
                     </a>
-                    <a (click)="doShowDetailProRule(approveRule.propRuleCondition)" class="btn btn-info btn-xs"
+                    <a (click)="doShowDetail(customer)" class="btn btn-info btn-xs"
                        data-toggle="modal"
                        data-target="#modal-detail">
                       <i class="fas fa-eye"></i>
+                    </a>
+                    <a class="btn btn-primary btn-xs mr-1" data-toggle="modal"
+                       (click)="doSelected(customer)" data-target="#modal-update">
+                      <i class="far fa-edit"></i>
                     </a>
                   </td>
                 </tr>
                 </tbody>
               </table>
-              <ul *ngIf="approveRules.length > 0" class="pagination pagination-sm m-0 float-right">
+              <ul *ngIf="customers.length > 0" class="pagination pagination-sm m-0 float-right">
                 <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
-                                [collectionSize]="approveRules.length" [(page)]="page" aria-label="Custom pagination">
+                                [collectionSize]="customers.length" [(page)]="page" aria-label="Custom pagination">
                   <ng-template>Prev</ng-template>
                   <ng-template>Next</ng-template>
                   <ng-template></ng-template>
@@ -155,17 +173,282 @@
   </div>
 </section>
 
-
-<section *ngIf="isHidden" class="content">
+<!--add-->
+<section *ngIf="isShowAdd" class="content">
   <div class="container-fluid">
     <div class="card card-primary card-outline">
-      <form>
-        <div>
-          <div class="modal-body">
+      <form name="form" [formGroup]="customer">
+        <div class="modal-body">
+          <div formGroupName="customerNew">
+            <ul class="nav nav-tabs mb-4">
+              <li class="nav-item">
+                <a class="nav-link  "
+                   href="/add-customer"><i class="fas fa-list"></i> Thêm mới khách hàng</a>
+              </li>
+            </ul>
+            <div class="row">
+              <div class="col-md-9">
+                <div class="callout callout-info">
+                  <div class="row">
+                    <div class="col-6">
+                      <h3 class="card-title mb-2 mt-2">Thông tin chung</h3>
+                    </div>
+                    <div class="col-6"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label class="col-form-label">ID</label>
+                        <input formControlName="code" name="code" type="text" class="form-control form-control-sm">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label class="col-form-label">Tên KH</label>
+                        <input formControlName="name" name="name" type="text" class="form-control form-control-sm">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input4" class="col-form-label">Số tài khoản</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="userName" name="userName">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input5" class="col-form-label">Ngày sinh</label>
+                        <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
+                               formControlName="dob" name="dob" (ngModelChange)="myDate = $event" class="form-control form-control-sm"
+                               id="start-date-of-the-first-period">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input6" class="col-form-label">SĐT</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="phone" name="phone" id="input6">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input7" class="col-form-label">Email</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="email" name="email" id="input7">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label class="col-form-label">Giới tính</label>
+                        <select class="form-control form-control-sm" formControlName="gender" name="gender">
+                          <option value="1">Nam</option>
+                          <option value="0">Nữ</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input9" class="col-form-label">Địa chỉ</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="address" name="address" id="input9">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input10" class="col-form-label">Nghề nghiệp</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="jd" name="jd" id="input10">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input11" class="col-form-label">Chức vụ</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="occupation" name="occupation" id="input11">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input12" class="col-form-label">Quốc tịch</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="nationality" name="nationality" id="input12">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input13" class="col-form-label">Mã số thuế</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="taxCode" name="taxCode" id="input13">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label class="col-form-label">Trạng thái tài khoản</label>
+                        <select class="form-control form-control-sm" formControlName="status" name="status">
+                          <option value="1">Hoạt động</option>
+                          <option value="0">Ngưng hoạt động</option>
+                          <option value="2">Chờ kích hoạt</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input25" class="col-form-label">CMT</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="idCard" name="idCard" id="input25">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="callout callout-info">
+                  <div class="row">
+                    <div class="col-6">
+                      <h3 class="card-title mb-2 mt-2">Thông tin chứng khoán</h3>
+                    </div>
+                    <div class="col-6"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input15" class="col-form-label">Tài khoản chứng khoán</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="stockAccount" name="stockAccount" id="input15">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input16" class="col-form-label">Số tài khoản kích hoạt VSD</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="vsdActivateAccount" name="vsdActivateAccount" id="input16">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label class="col-form-label">Số tiểu khoản</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="subAccountNumber" name="subAccountNumber">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label  class="col-form-label">Trạng thái tài khoản</label>
+                        <select class="form-control form-control-sm" formControlName="statusAccount" name="statusAccount">
+                          <option value="1">Hoạt động</option>
+                          <option value="0">Ngưng hoạt động</option>
+                          <option value="2">Chờ kích hoạt</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label  class="col-form-label">Trạng thái VSD</label>
+                        <select class="form-control form-control-sm" formControlName="vsdActivateStatus" name="vsdActivateStatus">
+                          <option value="2">Đã gửi VSD</option>
+                          <option value="1">Đã kích hoạt VSD</option>
+                          <option value="0">Chưa kích hoạt VSD</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="callout callout-info">
+                  <div class="row">
+                    <div class="col-6">
+                      <h3 class="card-title mb-2 mt-2">Thông tin ngân hàng</h3>
+                    </div>
+                    <div class="col-6"></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 col-12">
+                      <div class="form-group">
+                        <label  class="col-form-label">Chủ tài khoản</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="accountName" name="accountName" id="input20">
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                      <div class="form-group">
+                        <label  class="col-form-label">Tỉnh/Thành phố</label>
+                        <select class="form-control form-control-sm" formControlName="bankCity" name="bankCity">
+                          <option>Hà Nội</option>
+                          <option>TP HCM</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                      <div class="form-group">
+                        <label class="col-form-label">Chi nhánh</label>
+                        <select class="form-control form-control-sm" formControlName="branchName" name="branchName">
+                          <option>Chi nhánh Hà Nội</option>
+                          <option>Chi nhánh TP HCM</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 col-12">
+                      <div class="form-group">
+                        <label  class="col-form-label">Số tài khoản</label>
+                        <input type="text" class="form-control form-control-sm"
+                               formControlName="accountNumber" name="accountNumber" id="input23">
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-12">
+                      <div class="form-group">
+                        <label class="col-form-label">Tên ngân hàng</label>
+                        <select class="form-control form-control-sm" formControlName="bankName" name="bankName">
+                          <option>Vietcombank</option>
+                          <option>Techcombank</option>
+                          <option>TPBank</option>
+                          <option>MB</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+          </div>
+        </div>
+
+        <div class="card-footer btn-center">
+          <button (click)="closeAdd()" type="button" class="btn btn-secondary btn-sm float-right mr-1">CLOSE</button>
+          <button (click)="clearAdd()" type="button" class="btn btn-secondary btn-sm float-right mr-1">CLEAR</button>
+          <button (click)="doCreate()" type="button" class="btn btn-info btn-sm float-right mr-1">THÊM KHÁCH HÀNG</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</section>
+<!--update-->
+<section *ngIf="isShowUpdate" class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <form name="form" [formGroup]="customerSelected">
+        <div class="modal-body">
+          <div formGroupName="customerNew">
             <ul class="nav nav-tabs">
               <li class="nav-item">
                 <a class="nav-link  "
-                   href="/info-customer"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
+                   href="/update-customer"><i class="fas fa-list"></i> Cập nhật thông tin khách hàng</a>
               </li>
             </ul>
             <div>
@@ -173,48 +456,45 @@
               <div class="row">
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input2" class="col-form-label">ID</label>
-                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                    <label class="col-form-label">ID</label>
+                    <input formControlName="code" name="code" type="text" class="form-control border border-dark">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input3" class="col-form-label">Tên hợp đồng</label>
-                    <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
-                           name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                    <label class="col-form-label">Tên KH</label>
+                    <input formControlName="name" name="name" type="text" class="form-control border border-dark">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input4" class="col-form-label">Mô tả</label>
-                    <input [(ngModel)]="templateContractNew.description" type="text"
-                           class="form-control border border-dark"
-                           name="description" id="input4" placeholder="Nhập mô tả">
+                    <label for="input4" class="col-form-label">Số tài khoản</label>
+                    <input type="text" class="form-control border border-dark"
+                           formControlName="account" name="account">
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input2" class="col-form-label">Mã hợp đồng</label>
-                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                    <label for="input5" class="col-form-label">Ngày sinh</label>
+                    <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
+                           formControlName="dob" name="dob" (ngModelChange)="myDate = $event" class="form-control border border-dark"
+                    >
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input3" class="col-form-label">Tên hợp đồng</label>
-                    <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
-                           name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                    <label for="input6" class="col-form-label">SĐT</label>
+                    <input type="text" class="form-control border border-dark"
+                           formControlName="phone" name="phone">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input4" class="col-form-label">Mô tả</label>
-                    <input [(ngModel)]="templateContractNew.description" type="text"
-                           class="form-control border border-dark"
-                           name="description" id="input4" placeholder="Nhập mô tả">
+                    <label for="input7" class="col-form-label">Email</label>
+                    <input type="text" class="form-control border border-dark"
+                           formControlName="email" name="email">
                   </div>
                 </div>
               </div>
@@ -222,24 +502,25 @@
               <div class="row">
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input2" class="col-form-label">Mã hợp đồng</label>
-                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                    <label class="col-form-label">Giới tính</label>
+                    <select class="form-control border border-dark" formControlName="gender" name="gender">
+                      <option value="1">Nam</option>
+                      <option value="0">Nữ</option>
+                    </select>
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input3" class="col-form-label">Tên hợp đồng</label>
-                    <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
-                           name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                    <label for="input9" class="col-form-label">Địa chỉ</label>
+                    <input type="text" class="form-control border border-dark"
+                           formControlName="address" name="address">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input4" class="col-form-label">Mô tả</label>
-                    <input [(ngModel)]="templateContractNew.description" type="text"
-                           class="form-control border border-dark"
-                           name="description" id="input4" placeholder="Nhập mô tả">
+                    <label for="input10" class="col-form-label">Nghề nghiệp</label>
+                    <input type="text" class="form-control border border-dark"
+                           formControlName="jd" name="jd">
                   </div>
                 </div>
               </div>
@@ -247,35 +528,43 @@
               <div class="row">
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input2" class="col-form-label">Mã hợp đồng</label>
-                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                    <label for="input11" class="col-form-label">Chức vụ</label>
+                    <input type="text" class="form-control border border-dark"
+                           formControlName="occupation" name="occupation">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input3" class="col-form-label">Tên hợp đồng</label>
-                    <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
-                           name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                    <label for="input12" class="col-form-label">Quốc tịch</label>
+                    <input type="text" class="form-control border border-dark"
+                           formControlName="nationality" name="nationality">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input4" class="col-form-label">Mô tả</label>
-                    <input [(ngModel)]="templateContractNew.description" type="text"
-                           class="form-control border border-dark"
-                           name="description" id="input4" placeholder="Nhập mô tả">
+                    <label for="input13" class="col-form-label">Mã số thuế</label>
+                    <input type="text" class="form-control border border-dark"
+                           formControlName="taxCode" name="taxCode">
                   </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group mb-1">
-                    <label for="input4" class="col-form-label">Mẫu hợp đồng</label>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label class="col-form-label">Trạng thái tài khoản</label>
+                    <select class="form-control border border-dark" formControlName="status" name="status">
+                      <option value="1">Hoạt động</option>
+                      <option value="0">Ngưng hoạt động</option>
+                      <option value="2">Chờ kích hoạt</option>
+                    </select>
                   </div>
-                  <editor [(ngModel)]="templateContractNew.content" name="template"
-                          apiKey="hav5qg0mp5r2o7hc34vo0f15zmp4i8wk7wiwoysk8g4y4cz9"
-                          plugins="wordcount"></editor>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input25" class="col-form-label">CMT</label>
+                    <input type="text" class="form-control border border-dark"
+                           formControlName="idCard" name="idCard">
+                  </div>
                 </div>
               </div>
             </div>
@@ -285,40 +574,45 @@
               <div class="row">
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input2" class="col-form-label">ID</label>
-                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                    <label for="input15" class="col-form-label">Tài khoản chứng khoán</label>
+                    <input type="text" class="form-control border border-dark"
+                           formControlName="stockAccount" name="stockAccount">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input3" class="col-form-label">Tên hợp đồng</label>
-                    <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
-                           name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                    <label for="input16" class="col-form-label">Số tài khoản kích hoạt VSD</label>
+                    <input type="text" class="form-control border border-dark"
+                           formControlName="vsdActivateAccount" name="vsdActivateAccount" >
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input4" class="col-form-label">Mô tả</label>
-                    <input [(ngModel)]="templateContractNew.description" type="text"
-                           class="form-control border border-dark"
-                           name="description" id="input4" placeholder="Nhập mô tả">
+                    <label class="col-form-label">Số tiểu khoản</label>
+                    <input type="text" class="form-control border border-dark"
+                           formControlName="subAccountNumber" name="subAccountNumber">
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input2" class="col-form-label">Mã hợp đồng</label>
-                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                    <label  class="col-form-label">Trạng thái tài khoản</label>
+                    <select class="form-control border border-dark" formControlName="statusAccount" name="statusAccount">
+                      <option value="1">Hoạt động</option>
+                      <option value="0">Ngưng hoạt động</option>
+                      <option value="2">Chờ kích hoạt</option>
+                    </select>
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input2" class="col-form-label">Mã hợp đồng</label>
-                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                    <label  class="col-form-label">Trạng thái VSD</label>
+                    <select class="form-control border border-dark" formControlName="vsdActivateStatus" name="vsdActivateStatus">
+                      <option value="2">Đã gửi VSD</option>
+                      <option value="1">Đã kích hoạt VSD</option>
+                      <option value="0">Chưa kích hoạt VSD</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -329,40 +623,47 @@
               <div class="row">
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input2" class="col-form-label">ID</label>
-                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                    <label  class="col-form-label">Chủ tài khoản</label>
+                    <input type="text" class="form-control border border-dark"
+                           formControlName="accountName" name="accountName">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input3" class="col-form-label">Tên hợp đồng</label>
-                    <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
-                           name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                    <label  class="col-form-label">Tỉnh/Thành phố</label>
+                    <select class="form-control border border-dark" formControlName="bankCity" name="bankCity">
+                      <option>Hà Nội</option>
+                      <option>TP HCM</option>
+                    </select>
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input4" class="col-form-label">Mô tả</label>
-                    <input [(ngModel)]="templateContractNew.description" type="text"
-                           class="form-control border border-dark"
-                           name="description" id="input4" placeholder="Nhập mô tả">
+                    <label class="col-form-label">Chi nhánh</label>
+                    <select class="form-control border border-dark" formControlName="branchName" name="branchName">
+                      <option>Chi nhánh Hà Nội</option>
+                      <option>Chi nhánh TP HCM</option>
+                    </select>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input2" class="col-form-label">Mã hợp đồng</label>
-                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                    <label  class="col-form-label">Số tài khoản</label>
+                    <input type="text" class="form-control border border-dark"
+                           formControlName="accountNumber" name="accountNumber">
                   </div>
                 </div>
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input2" class="col-form-label">Mã hợp đồng</label>
-                    <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                           name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                    <label class="col-form-label">Tên ngân hàng</label>
+                    <select class="form-control border border-dark" formControlName="bankName" name="bankName">
+                      <option>Vietcombank</option>
+                      <option>Techcombank</option>
+                      <option>TPBank</option>
+                      <option>MB</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -370,18 +671,313 @@
           </div>
         </div>
 
-
-        <!-- /.card-body -->
         <div class="card-footer btn-center">
-          <button type="submit" class="btn btn-info btn-sm mr-1">Thêm</button>
-          <button (click)="actionCreate()" type="submit" class="btn btn-default btn-sm ml-1">Hủy</button>
+          <button (click)="closeUpdate()" type="button" class="btn btn-secondary btn-sm float-right">CLOSE</button>
+          <button (click)="clearAdd()" type="button" class="btn btn-secondary btn-sm float-right">CLEAR</button>
+          <button (click)="doUpdateCus()" type="button" class="btn btn-default btn-sm ml-1">CẬP NHẬT KHÁCH HÀNG</button>
         </div>
-        <!-- /.card-footer -->
+
+      </form>
+    </div>
+  </div>
+</section>
+<!--detail-->
+<section *ngIf="isShowDetail" class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <form name="form" [formGroup]="customerDetail">
+        <div class="modal-body">
+          <div formGroupName="customerDe">
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a class="nav-link  "
+                   href="/detail-customer"><i class="fas fa-list"></i> Chi tiết thông tin</a>
+              </li>
+            </ul>
+            <div>
+              <h3>Thông tin chung</h3>
+              <div class="row">
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label class="col-form-label">ID</label>
+                    <input formControlName="code" name="code" disabled="true" type="text" class="form-control border border-dark">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label class="col-form-label">Tên KH</label>
+                    <input formControlName="name" name="name" disabled="true" type="text" class="form-control border border-dark">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input4" class="col-form-label">Số tài khoản</label>
+                    <input type="text" class="form-control border border-dark" disabled="true"
+                           formControlName="account" name="account">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="dob" class="col-form-label">Ngày sinh</label>
+                    <input type="date" disabled="true"
+                           formControlName="dob" name="dob" class="form-control border border-dark"
+                           id="dob">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input6" class="col-form-label">SĐT</label>
+                    <input type="text" class="form-control border border-dark" disabled="true"
+                           formControlName="phone" name="phone">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input7" class="col-form-label">Email</label>
+                    <input type="text" class="form-control border border-dark" disabled="true"
+                           formControlName="email" name="email">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label class="col-form-label">Giới tính</label>
+                    <select class="form-control border border-dark" disabled="true" formControlName="gender" name="gender">
+                      <option value="1">Nam</option>
+                      <option value="0">Nữ</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input9" class="col-form-label">Địa chỉ</label>
+                    <input type="text" disabled="true" class="form-control border border-dark"
+                           formControlName="address" name="address">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input10" class="col-form-label">Nghề nghiệp</label>
+                    <input type="text" disabled="true" class="form-control border border-dark"
+                           formControlName="jd" name="jd">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input11" class="col-form-label">Chức vụ</label>
+                    <input type="text" disabled="true" class="form-control border border-dark"
+                           formControlName="occupation" name="occupation">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input12" class="col-form-label">Quốc tịch</label>
+                    <input type="text" disabled="true" class="form-control border border-dark"
+                           formControlName="nationality" name="nationality">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input13" class="col-form-label">Mã số thuế</label>
+                    <input type="text" disabled="true" class="form-control border border-dark"
+                           formControlName="taxCode" name="taxCode">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label class="col-form-label">Trạng thái tài khoản</label>
+                    <select class="form-control border border-dark" disabled="true" formControlName="status" name="status">
+                      <option value="1">Hoạt động</option>
+                      <option value="0">Ngưng hoạt động</option>
+                      <option value="2">Chờ kích hoạt</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input25" class="col-form-label">CMT</label>
+                    <input type="text" disabled="true" class="form-control border border-dark"
+                           formControlName="idCard" name="idCard">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3>Thông tin chứng khoán</h3>
+              <div class="row">
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input15" class="col-form-label">Tài khoản chứng khoán</label>
+                    <input type="text" disabled="true" class="form-control border border-dark"
+                           formControlName="stockAccount" name="stockAccount">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input16" class="col-form-label">Số tài khoản kích hoạt VSD</label>
+                    <input type="text" disabled="true" class="form-control border border-dark"
+                           formControlName="vsdActivateAccount" name="vsdActivateAccount">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label class="col-form-label">Số tiểu khoản</label>
+                    <input type="text" disabled="true" class="form-control border border-dark"
+                           formControlName="subAccountNumber" name="subAccountNumber" id="input17">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label  class="col-form-label">Trạng thái tài khoản</label>
+                    <select class="form-control border border-dark" disabled="true" formControlName="statusAccount" name="statusAccount">
+                      <option value="1">Hoạt động</option>
+                      <option value="0">Ngưng hoạt động</option>
+                      <option value="2">Chờ kích hoạt</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label  class="col-form-label">Trạng thái VSD</label>
+                    <select class="form-control border border-dark" disabled="true" formControlName="vsdActivateStatus" name="vsdActivateStatus">
+                      <option value="2">Đã gửi VSD</option>
+                      <option value="1">Đã kích hoạt VSD</option>
+                      <option value="0">Chưa kích hoạt VSD</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3>Thông tin ngân hàng</h3>
+              <div class="row">
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label  class="col-form-label">Chủ tài khoản</label>
+                    <input type="text" class="form-control border border-dark" disabled="true"
+                           formControlName="accountName" name="accountName">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label  class="col-form-label">Tỉnh/Thành phố</label>
+                    <select class="form-control border border-dark" disabled="true" formControlName="bankCity" name="bankCity">
+                      <option value="Hà Nội">Hà Nội</option>
+                      <option value="TP HCM">TP HCM</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label class="col-form-label">Chi nhánh</label>
+                    <select class="form-control border border-dark" disabled="true" formControlName="branchName" name="branchName">
+                      <option value="Chi nhánh Hà Nội">Chi nhánh Hà Nội</option>
+                      <option value="Chi nhánh TP HCM">Chi nhánh TP HCM</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label  class="col-form-label">Số tài khoản</label>
+                    <input type="text" disabled="true" class="form-control border border-dark"
+                           formControlName="accountNumber" name="accountNumber">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label class="col-form-label">Tên ngân hàng</label>
+                    <select class="form-control border border-dark" disabled="true" formControlName="bankName" name="bankName">
+                      <option value="Vietcombank">Vietcombank</option>
+                      <option value="Techcombank">Techcombank</option>
+                      <option value="TPBank">TPBank</option>
+                      <option value="MB">MB</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer btn-center">
+          <button (click)="closeDetail()" type="button" class="btn btn-secondary btn-sm float-right">CLOSE</button>
+        </div>
+
       </form>
     </div>
   </div>
 </section>
 
+<div class="modal fade" id="modal-lock" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12 col-12">
+              <div class="form-group">
+                <h3 class="col-form-label">Nhập lí do khóa tài khoản KH:</h3>
+                <input [(ngModel)]="reasonLock" type="text" class="form-control form-control-sm"
+                       name="reasonLock">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button (click)="doLock()" type="button" class="mr-1 btn btn-sm btn-info" data-dismiss="modal">OK</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-unlock" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12 col-12">
+              <div class="form-group">
+                <h3 class="col-form-label">Bạn có chắc chắn muốn mở khóa trạng thái KH?</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button (click)="doUnLock()" type="button" class="mr-1 btn btn-sm btn-info" data-dismiss="modal">OK</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 
 

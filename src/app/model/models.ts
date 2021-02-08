@@ -41,6 +41,12 @@ export interface IContractGroup {
   id: string;
 }
 
+export interface ISysParam {
+  name: string;
+  sysParamValue: {
+    value: '';
+  };
+}
 
 export interface IPropRuleApproval {
   code: string;
@@ -68,7 +74,52 @@ export interface IPropRulePending {
   name: string;
 }
 
-export interface ISysParam {
+export interface IFormNotification {
+  code: string;
+  notiType: string;
+  transType: string;
+  description: string;
+  content: string;
+  createdDate: Date;
+  updatedDate: Date;
+  status: number;
+  name: string;
+  id: string;
+}
+
+export interface ICustomer {
+  id: string;
+  code: string;
+  name: string;
+  dob: Date;
+  phone: string;
+  email: string;
+  gender: string;
+  address: string;
+  jd: string;
+  occupation: string;
+  nationality: string;
+  taxCode: string;
+  idCard: number;
+  account: string;
+
+  status: number;
+  userName: string;
+
+  stockAccount: string;
+  vsdActivateAccount: number;
+  subAccountNumber: number;
+  statusAccount: number;
+  vsdActivateStatus: number;
+
+  accountName: string;
+  bankCity: string;
+  branchName: string;
+  accountNumber: number;
+  bankName: string;
+}
+
+export interface IGroupContract {
   name: string;
   sysParamValue: {
     value: '';
@@ -111,5 +162,62 @@ export interface IPolicesProduct {
   status: number;
 }
 
+
+export interface IPrimaryProduct {
+  code: string;
+  name: string;
+  issueDate: string;
+  createDate: Date;
+  maturityDate: Date;
+  par: number;
+  listedCode: number;
+  issueType: string;
+  id: string;
+  issuePurpose: string;
+  status: number;
+  issuerId: number;
+  bondType: string;
+  collateral: string;
+  guarantee: string;
+  guaranteeInfo: number;
+  collateralValue: number;
+  guaranteeValue: string;
+  callBack: string;
+}
+
+export interface IProdVanillaBond {
+  id: string;
+  callBack: string;
+  collateral: string;
+  bondType: string;
+  guarantee: string;
+  guaranteeInfo: number;
+  collateralValue: number;
+  guaranteeValue: string;
+}
+
+export interface IProdDerivative {
+  id: number;
+  name: string;
+  agreementId: number;
+  vanillaId: number;
+  startDate: Date;
+  endDate: Date;
+  status: number;
+  createdDate: Date;
+}
+
+
+export interface IProdVariable {
+  id: number;
+  name: string;
+  propVariableValue: {
+    appliedDate: Date;
+    value: '';
+    createdDate: Date;
+    status: number;
+    description: string;
+  };
+}
 
 

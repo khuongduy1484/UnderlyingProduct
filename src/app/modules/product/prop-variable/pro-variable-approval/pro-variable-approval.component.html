@@ -1,0 +1,182 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="card card-primary card-outline">
+      <div class="card-body">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active "
+               href="/prop-variable"><i class="fas fa-list"></i> Danh sách thuộc tính</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link  "
+               href="/prop-variable-approval"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
+          </li>
+
+          <li class="nav-item  ">
+            <a class="nav-link active"
+               href="/prop-variable"><i class="fas fa-list"></i> Danh sách chờ duyệt</a>
+          </li>
+        </ul>
+        <form (ngSubmit)="doSearch()">
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <div class="row">
+                <div class="col-3">
+                  <label class="col-form-label">Tên thuộc tínhc</label>
+                </div>
+                <div class="col-3">
+                  <label class="col-form-label">Từ ngày</label>
+                </div>
+                <div class="col-3">
+                  <label class="col-form-label">Đến ngày</label>
+                </div>
+              </div>
+          <div [formGroup]="contentSearch">
+            <div class="row">
+              <div class="col-12 col-md-12">
+                <div class="row" >
+                  <div class="col-3">
+                    <div class="form-group">
+                      <input formControlName="name" type="text" class="form-control form-control-sm" id="input1"
+                             placeholder="Nhập từ khóa" name="contentSearch">
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="form-group">
+                      <input class="form-control form-control-sm"
+                             type="date"
+                             name="createDate" >
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="form-group">
+                      <input class="form-control form-control-sm"
+                             type="date"
+                             name="endDate" >
+                    </div>
+                  </div>
+
+                  <div class="col-3 btn-mt-33">
+                    <button (click)="doSearch()" type="button" class="mr-1 btn btn-sm btn-secondary float-right">Tìm
+                      kiếm
+                    </button>
+                    <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right" (click)="clear()">
+                      Clear
+                    </button>
+                    <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right"><i
+                      class="fas fa-sync"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <h3 class="card-title mb-2">Danh sách nhóm hợp đồng đã duyệt</h3>
+            </div>
+            <div class="col-6"></div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-12">
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tên thuộc tính</th>
+                  <th>Ngày áp dụng</th>
+                  <th>Gía trị</th>
+                  <th>Quy tắc áp dụng</th>
+                  <th>Mô tả</th>
+                  <th>Ngày tạo</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let proVariable of lstProVariable ; index as i" class="border border-dark">
+                  <td>{{i + 1}}</td>
+                  <td>{{proVariable.name}}</td>
+                  <td>{{proVariable.propVariableValue.appliedDate | date:'dd/MM/yyyy'}}</td>
+                  <td>{{proVariable.propVariableValue.value}}</td>
+                  <td>{{proVariable.name}}</td>
+                  <td>{{proVariable.propVariableValue.description}}</td>
+                  <td>{{proVariable.propVariableValue.createdDate | date:'dd/MM/yyyy'}}</td>
+                  <td>{{proVariable.propVariableValue.status === 1 ? 'Đang hoạt đông' : 'Không hoạt động' }}</td>
+                  <td>
+                    <a class="btn  btn-xs mr-1">
+                      <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                    </a>
+                    <a class="btn  btn-xs mr-1">
+                      <i class="fa fa-unlock" aria-hidden="true"></i>
+                    </a>
+<!--                    <a (click)="doShowDetailProRule(proVariable.propRuleCondition)" class="btn btn-info btn-xs"-->
+<!--                       data-toggle="modal"-->
+<!--                       data-target="#modal-detail">-->
+<!--                      <i class="fas fa-eye"></i>-->
+<!--                    </a>-->
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <ul *ngIf="lstProVariable != null && lstProVariable.length > 0"
+                  class="pagination pagination-sm m-0 float-right">
+                <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
+                                [collectionSize]="lstProVariable.length" [(page)]="page" aria-label="Custom pagination">
+                  <ng-template>Prev</ng-template>
+                  <ng-template>Next</ng-template>
+                  <ng-template></ng-template>
+                </ngb-pagination>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!--<div class="modal fade" id="modal-detail" aria-modal="true" role="dialog">-->
+<!--  <div class="modal-dialog modal-xl">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <h4 class="modal-title">Chi tiết Quy tắc áp dụng </h4>-->
+<!--        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--          <span aria-hidden="true">×</span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--      <div class="modal-body">-->
+<!--        <table class="table table-bordered">-->
+<!--          <thead>-->
+<!--          <tr>-->
+<!--            <th>STT</th>-->
+<!--            <th>Nhóm</th>-->
+<!--            <th>Giá trị</th>-->
+<!--          </tr>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--          <tr>-->
+<!--            <td>{{propRuleCondition.orderNo}}</td>-->
+<!--            <td>{{propRuleCondition.dataType}}</td>-->
+<!--            <td>{{propRuleCondition.dataValue}}</td>-->
+
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+
+<!--      </div>-->
+<!--      <div class="modal-footer">-->
+<!--        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; /.modal-content &ndash;&gt;-->
+<!--  </div>-->
+<!--  &lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+<!--</div>-->
+
+
+
+
+

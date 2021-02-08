@@ -61,7 +61,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let templateContract of templateContracts" class="border border-dark">
+                <tr *ngFor="let templateContract of templateContracts" class="">
                   <td>{{templateContract.code}}</td>
                   <td>{{templateContract.name}}</td>
                   <td>{{templateContract.description}}</td>
@@ -80,7 +80,7 @@
                 </tr>
                 </tbody>
               </table>
-              <ul *ngIf="templateContracts.length > 0" class="pagination pagination-sm m-0 float-right">
+              <ul *ngIf="templateContracts != null && templateContracts.length > 0" class="pagination pagination-sm m-0 float-right">
                 <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
                                 [collectionSize]="templateContracts.length" [(page)]="page"
                                 aria-label="Custom pagination">
@@ -116,14 +116,14 @@
               <div class="col-md-4 col-12">
                 <div class="form-group">
                   <label for="input2" class="col-form-label">Mã hợp đồng</label>
-                  <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
+                  <input [(ngModel)]="templateContractNew.code" type="text" class="form-control form-control-sm"
                          name="code" placeholder="Nhập mã hợp đồng">
                 </div>
               </div>
               <div class="col-md-4 col-12">
                 <div class="form-group">
                   <label for="input3" class="col-form-label">Tên hợp đồng</label>
-                  <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
+                  <input [(ngModel)]="templateContractNew.name" type="text" class="form-control form-control-sm"
                          name="name" placeholder="Nhập tên hợp đồng">
                 </div>
               </div>
@@ -131,7 +131,7 @@
                 <div class="form-group">
                   <label for="input4" class="col-form-label">Mô tả</label>
                   <input [(ngModel)]="templateContractNew.description" type="text"
-                         class="form-control border border-dark"
+                         class="form-control form-control-sm"
                          name="description" placeholder="Nhập mô tả">
                 </div>
               </div>
@@ -180,14 +180,14 @@
                 <div class="form-group">
                   <label for="input2" class="col-form-label">Mã hợp đồng</label>
                   <input [disabled]="true" [(ngModel)]="templateContractUpdate.code" type="text"
-                         class="form-control border border-dark"
+                         class="form-control form-control-sm"
                          name="code" id="input2" placeholder="Nhập mã hợp đồng">
                 </div>
               </div>
               <div class="col-md-4 col-12">
                 <div class="form-group">
                   <label for="input3" class="col-form-label">Tên hợp đồng</label>
-                  <input [(ngModel)]="templateContractUpdate.name" type="text" class="form-control border border-dark"
+                  <input [(ngModel)]="templateContractUpdate.name" type="text" class="form-control form-control-sm"
                          name="name" id="input3" placeholder="Nhập tên hợp đồng">
                 </div>
               </div>
@@ -195,7 +195,7 @@
                 <div class="form-group">
                   <label for="input4" class="col-form-label">Mô tả</label>
                   <input [(ngModel)]="templateContractUpdate.description" type="text"
-                         class="form-control border border-dark"
+                         class="form-control form-control-sm"
                          name="description" id="input4" placeholder="Nhập mô tả">
                 </div>
               </div>

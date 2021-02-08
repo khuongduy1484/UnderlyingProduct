@@ -5,7 +5,15 @@
         <ul class="nav nav-tabs">
           <li class="nav-item">
             <a class="nav-link "
-               href="/group-contract"><i class="fas fa-list"></i> Danh sách thuộc tính</a>
+               href="/prop-variable"><i class="fas fa-list"></i> Danh sách thuộc tính</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active  "
+               href="/prop-variable-approval"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active "
+               href="/prop-variable-approval"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
           </li>
         </ul>
 
@@ -50,7 +58,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let propVariable of lstPropVariable;  index as i" class="border border-dark">
+                <tr *ngFor="let propVariable of lstPropVariable;  index as i" class="">
                   <td>{{i + 1}}</td>
                   <td>{{propVariable.name}}</td>
                   <td>{{propVariable.description}}</td>

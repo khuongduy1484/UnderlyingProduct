@@ -44,7 +44,7 @@ export class PoliciesProductsComponent implements OnInit {
       current = 0;
     }
     this.page = current;
-    this.policiesProductService.searchPoliceApprovalPending('', current > 0 ? current - 1 : 0, 10, '1', '', '', '', '', '').subscribe(result => {
+    this.policiesProductService.searchPoliceApproval('', current > 0 ? current - 1 : 0, 10, '1', '', '', '', '', '').subscribe(result => {
       if (result) {
         this.policiesProductS = result.data;
       }

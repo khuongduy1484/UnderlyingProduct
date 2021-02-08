@@ -66,18 +66,18 @@
               <h3 class="card-title mb-2">Danh sách Sản phẩm gốc</h3>
             </div>
             <div class="col-6">
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Chọn và thực hiện tác vụ</label>
-                <div class="col-sm-6">
-                  <select class="form-control form-control-sm" name="action" [(ngModel)]="action">
-                    <option [value]="0">Gửi phê duyệt</option>
-                    <option [value]="3">XÓA</option>
-                  </select>
-                </div>
-                <div class="col-sm-2">
-                  <button type="button" (click)="doSubmit()" class="btn btn-dark btn-sm">SUBMIT</button>
-                </div>
-              </div>
+<!--              <div class="form-group row">-->
+<!--                <label class="col-sm-4 col-form-label">Chọn và thực hiện tác vụ</label>-->
+<!--                <div class="col-sm-6">-->
+<!--                  <select class="form-control form-control-sm" name="action" [(ngModel)]="action">-->
+<!--                    <option [value]="0">Gửi phê duyệt</option>-->
+<!--                    <option [value]="3">XÓA</option>-->
+<!--                  </select>-->
+<!--                </div>-->
+<!--                <div class="col-sm-2">-->
+<!--                  <button type="button" (click)="doSubmit()" class="btn btn-dark btn-sm">SUBMIT</button>-->
+<!--                </div>-->
+<!--              </div>-->
             </div>
             <div class="col-6"></div>
           </div>
@@ -101,35 +101,37 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let approveRule of approveRules ; index as i" class="border border-dark">
-                  <td>{{i + 1}}</td>
-                  <td>{{approveRule.name}}</td>
-                  <td>{{approveRule.code}}</td>
-                  <td>{{approveRule.description}}</td>
-                  <td>{{approveRule.propRuleCondition.dataValue}}</td>
-                  <td *ngIf="approveRule.condition == 1 ">Áp dụng đồng thời các điều kiện</td>
-                  <td *ngIf="approveRule.condition == 2 ">Áp dụng theo thứ tự ưu tiên</td>
-                  <td>{{approveRule.createdDate | date:'dd/MM/yyyy'}}</td>
-                  <td>{{approveRule.status === 1 ? 'Đang hoạt đông' : 'Không hoạt động' }}</td>
+                <tr *ngFor="let primaryProduct of lstPrimaryProduct " class="border border-dark">
+                  <td>{{primaryProduct.name}}</td>
+                  <td>{{primaryProduct.code}}</td>
+                  <td>{{primaryProduct.listedCode}}</td>
+                  <td>{{getNameIssuer(primaryProduct.issuerId)}}</td>
+                  <td>{{primaryProduct.issueDate| date:'dd/MM/yyyy'}}</td>
+                  <td>{{primaryProduct.maturityDate| date:'dd/MM/yyyy'}}</td>
+                  <td>{{primaryProduct.listedCode}}</td>
+                  <td>{{primaryProduct.issueType}}</td>
+                  <td>{{primaryProduct.issueType}}</td>
+                  <td>{{primaryProduct.status}}</td>
                   <td>
-                    <a class="btn  btn-xs mr-1">
-                      <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                    <a  (click)="doSelectRecord(primaryProduct)" class="btn btn-primary btn-xs mr-1"
+                        data-toggle="modal"
+                        data-target="#modal-update">
+                      <i class="far fa-edit"></i>
                     </a>
-                    <a class="btn  btn-xs mr-1">
-                      <i class="fa fa-unlock" aria-hidden="true"></i>
+                    <a   (click)="doDelete(primaryProduct)" class="btn btn-info btn-xs  mr-1" data-toggle="modal"
+                         data-target="#modal-delete">
+                      <i class="fas fa-trash-alt"></i>
                     </a>
-                    <a (click)="doShowDetailProRule(approveRule.propRuleCondition)" class="btn btn-info btn-xs"
-                       data-toggle="modal"
-                       data-target="#modal-detail">
-                      <i class="fas fa-eye"></i>
+                    <a   (click)="doCreateApproval(primaryProduct)" class="btn btn-info btn-xs mr-1" data-toggle="modal">
+                      <i class="fa fa-check-square" aria-hidden="true"></i>
                     </a>
                   </td>
                 </tr>
                 </tbody>
               </table>
-              <ul *ngIf="approveRules.length > 0" class="pagination pagination-sm m-0 float-right">
+              <ul *ngIf="lstPrimaryProduct.length > 0" class="pagination pagination-sm m-0 float-right">
                 <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
-                                [collectionSize]="approveRules.length" [(page)]="page" aria-label="Custom pagination">
+                                [collectionSize]="lstPrimaryProduct.length" [(page)]="page" aria-label="Custom pagination">
                   <ng-template>Prev</ng-template>
                   <ng-template>Next</ng-template>
                   <ng-template></ng-template>
@@ -146,16 +148,17 @@
 <section *ngIf="isHidden" class="content">
   <div class="container-fluid">
     <div class="card card-primary card-outline">
-      <form>
+      <form [formGroup]="primaryProductUpdate">
         <div class="card-body">
           <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link active"
-                 href=""><i class="fas fa-list"></i> Danh sách đã duyệt</a>
+            <li class="nav-item">
+              <a class="nav-link active  "
+                 href="/primary-product"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
             </li>
-            <li class="nav-item active">
-              <a class="nav-link"
-                 href=""><i class="fas fa-list"></i> Danh sách chờ duyệt</a>
+            <li class="nav-item active ">
+              <a class="nav-link "
+                 href="/primary-product-approval-pending"><i class="fas fa-list"></i> Danh sách chờ duyệt</a>
             </li>
             <li class="nav-item">
               <a class="nav-link "
@@ -164,175 +167,178 @@
           </ul>
 
           <div class="row mt-3">
-            <div class="col-6">
-              <h3 class="card-title mb-2">Thông tin phát hành</h3>
+            <div class="col-md-6">
+              <div class="callout callout-info" style="height: 100%">
+                <div class="row mt-3">
+                  <div class="col-6">
+                    <h3 class="card-title mb-2">Thông tin phát hành</h3>
+                  </div>
+                  <div class="col-6"></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="input2" class="col-form-label">Tên trái phiếu</label>
+                      <input formControlName="name" type="text" class="form-control form-control-sm"
+                             name="code" placeholder="Nhập mã hợp đồng">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="input3" class="col-form-label">Tổ chức phát hành</label>
+                      <select formControlName="issuerId" class="form-control form-control-sm">
+                        <option [ngValue]="issuer.id" *ngFor="let issuer of lstIssuer">{{issuer.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="input4" class="col-form-label">Loại trái phiếu</label>
+                      <select formControlName="bondType" class="form-control form-control-sm">
+                        <option value="1">Trái phiếu của Chính phủ</option>
+                        <option value="0">Trái phiếu của doanh nghiệp</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="input2" class="col-form-label">Mã trái phiếu </label>
+                      <input formControlName="code" type="text" class="form-control form-control-sm"
+                             name="code" placeholder="Nhập mã trái phiếu">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="input3" class="col-form-label">Ngày phát hành</label>
+                      <input formControlName="issueDate" name="issueDate" type="date" class="form-control form-control-sm"
+                             placeholder="Nhập tên hợp đồng">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="input4" class="col-form-label">Hình thức phát hành</label>
+                      <select formControlName="issueType" class="form-control form-control-sm">
+                        <option value="1">Public Offering</option>
+                        <option value="0">Private Placement</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="input2" class="col-form-label">Mã niêm yết</label>
+                      <input formControlName="listedCode" type="text" class="form-control form-control-sm"
+                             placeholder="Nhập mã niêm yết">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Nhày đáo hạn</label>
+                      <input formControlName="maturityDate" name="issueDate" type="date"
+                             class="form-control form-control-sm"
+                             placeholder="Nhập tên hợp đồng">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Mục đích phát hành</label>
+                      <input formControlName="issuePurpose" type="text"
+                             class="form-control form-control-sm"
+                             placeholder="Nhập mục đích phát hành">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Mênh giá</label>
+                      <input formControlName="par" type="text" class="form-control form-control-sm"
+                             placeholder="Nhập mênh giá">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="input3" class="col-form-label">Mua trước hạn</label>
+                      <div>
+                        <mat-radio-group formControlName="callBack" aria-label="Select an option">
+                          <mat-radio-button value="1">YES </mat-radio-button>
+                          <mat-radio-button value="0">NO</mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col-6"></div>
+            <div class="col-md-6">
+              <div class="callout callout-info" style="height: 100%">
+                <div class="row mt-3">
+                  <div class="col-6">
+                    <h3 class="card-title mb-2">Bảo lãnh và Yài sản đảm bảo</h3>
+                  </div>
+                  <div class="col-6"></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="input2" class="col-form-label">Tài sản đảm bảo</label>
+                      <div>
+                        <mat-radio-group formControlName="collateral" aria-label="Select an option">
+                          <mat-radio-button value="1">YES</mat-radio-button>
+                          <mat-radio-button value="0">NO</mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Thông tin TSĐB</label>
+                      <input formControlName="collateralInfo" type="text" class="form-control form-control-sm"
+                             placeholder="Nhập thông tin TSĐB">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Tổng giá trị TSĐB</label>
+                      <input formControlName="collateralValue" type="text"
+                             class="form-control form-control-sm"
+                             placeholder="Nhập Tổng giá trị TSĐB">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Trạng thái bảo lãnh</label>
+                      <div>
+                        <mat-radio-group formControlName="guarantee" aria-label="Select an option">
+                          <mat-radio-button value="1">YES</mat-radio-button>
+                          <mat-radio-button value="0">NO</mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Đơn vị bảo lãnh</label>
+                      <input formControlName="guaranteeInfo" type="text" class="form-control form-control-sm"
+                             placeholder="Nhập đơn vị bảo lãnh">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Gía trị bảo lãnh</label>
+                      <input formControlName="guaranteeValue" type="text"
+                             class="form-control form-control-sm"
+                             placeholder="Nhập mô tả">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="row">
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input2" class="col-form-label">Tên trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                       name="code" id="input2" placeholder="Nhập mã hợp đồng">
-              </div>
-            </div>
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input3" class="col-form-label">Tổ chức phát hành</label>
-                <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
-                       name="name" id="input3" placeholder="Nhập tên hợp đồng">
-              </div>
-            </div>
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input4" class="col-form-label">Loại trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.description" type="text"
-                       class="form-control border border-dark"
-                       name="description" id="input4" placeholder="Nhập mô tả">
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input2" class="col-form-label">Tên trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                       name="code" id="input2" placeholder="Nhập mã hợp đồng">
-              </div>
-            </div>
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input3" class="col-form-label">Tổ chức phát hành</label>
-                <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
-                       name="name" id="input3" placeholder="Nhập tên hợp đồng">
-              </div>
-            </div>
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input4" class="col-form-label">Loại trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.description" type="text"
-                       class="form-control border border-dark"
-                       name="description" id="input4" placeholder="Nhập mô tả">
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input2" class="col-form-label">Tên trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                       name="code" id="input2" placeholder="Nhập mã hợp đồng">
-              </div>
-            </div>
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input3" class="col-form-label">Tổ chức phát hành</label>
-                <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
-                       name="name" id="input3" placeholder="Nhập tên hợp đồng">
-              </div>
-            </div>
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input4" class="col-form-label">Loại trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.description" type="text"
-                       class="form-control border border-dark"
-                       name="description" id="input4" placeholder="Nhập mô tả">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input2" class="col-form-label">Tên trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                       name="code" id="input2" placeholder="Nhập mã hợp đồng">
-              </div>
-            </div>
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input3" class="col-form-label">Tổ chức phát hành</label>
-                <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
-                       name="name" id="input3" placeholder="Nhập tên hợp đồng">
-              </div>
-            </div>
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input4" class="col-form-label">Loại trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.description" type="text"
-                       class="form-control border border-dark"
-                       name="description" id="input4" placeholder="Nhập mô tả">
-              </div>
-            </div>
-          </div>
-
-
-          <div class="row mt-3">
-            <div class="col-6">
-              <h3 class="card-title mb-2">Bảo lãnh và Yài sản đảm bảo</h3>
-            </div>
-            <div class="col-6"></div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input2" class="col-form-label">Tên trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                       name="code" id="input2" placeholder="Nhập mã hợp đồng">
-              </div>
-            </div>
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input3" class="col-form-label">Tổ chức phát hành</label>
-                <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
-                       name="name" id="input3" placeholder="Nhập tên hợp đồng">
-              </div>
-            </div>
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input4" class="col-form-label">Loại trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.description" type="text"
-                       class="form-control border border-dark"
-                       name="description" id="input4" placeholder="Nhập mô tả">
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input2" class="col-form-label">Tên trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                       name="code" id="input2" placeholder="Nhập mã hợp đồng">
-              </div>
-            </div>
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input3" class="col-form-label">Tổ chức phát hành</label>
-                <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
-                       name="name" id="input3" placeholder="Nhập tên hợp đồng">
-              </div>
-            </div>
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input4" class="col-form-label">Loại trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.description" type="text"
-                       class="form-control border border-dark"
-                       name="description" id="input4" placeholder="Nhập mô tả">
-              </div>
-            </div>
-          </div>
-
           <div class="row mt-3">
             <div class="col-6">
               <h3 class="card-title mb-2">Tính lãi và thanh toán</h3>
             </div>
             <div class="col-6">
-              <button   data-toggle="modal"
-                        data-target="#modal-automation">
+              <button class="btn btn-sm btn-info float-right mb-2" data-toggle="modal"
+                      data-target="#modal-automation">
                 Cập nhập tính tự động
               </button>
             </div>
@@ -351,8 +357,6 @@
                   <th>LS KỲ</th>
                   <th>LS TC</th>
                   <th>Biên độ</th>
-
-
                 </tr>
                 </thead>
                 <tbody>
@@ -382,22 +386,14 @@
                 </tr>
                 </tbody>
               </table>
-              <ul *ngIf="approveRules.length > 0" class="pagination pagination-sm m-0 float-right">
-                <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
-                                [collectionSize]="approveRules.length" [(page)]="page" aria-label="Custom pagination">
-                  <ng-template>Prev</ng-template>
-                  <ng-template>Next</ng-template>
-                  <ng-template></ng-template>
-                </ngb-pagination>
-              </ul>
             </div>
           </div>
 
         </div>
         <!-- /.card-body -->
         <div class="card-footer btn-center">
-          <button type="submit" class="btn btn-info btn-sm mr-1">Cập nhập</button>
-          <button (click)="doActionCreate()" type="submit" class="btn btn-default btn-sm ml-1">Hủy</button>
+          <button (click)="doCreate()" type="submit" class="btn btn-info btn-sm mr-1 float-right">THÊM MỚI</button>
+          <button (click)="doActionCreate()" type="submit" class="btn btn-default btn-sm mr-1 float-right">Hủy</button>
         </div>
         <!-- /.card-footer -->
       </form>
@@ -407,7 +403,7 @@
 
 
 <!--tính tự động-->
-<div class="modal fade" id="modal-automation"  aria-modal="true" role="dialog">
+<div class="modal fade" id="modal-automation" aria-modal="true" role="dialog">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
@@ -416,142 +412,143 @@
           <span aria-hidden="true">×</span>
         </button>
       </div>
-      <form>
-        <div class="form-group row">
-          <label for="frequency" class="col-sm-2 col-form-label">Tần suất </label>
-          <div class="col-sm-2">
-            <input type="text" readonly class="form-control" id="frequency">
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="frequency" class="col-form-label">Tần suất </label>
+                <input type="text" readonly class="form-control form-control-sm" id="frequency">
+              </div>
+              <div class="form-group">
+                <label for="amplitude" class="col-form-label">Biên độ</label>
+                <input type="text" class="form-control form-control-sm" id="amplitude">
+              </div>
+              <div class="form-group">
+                <label for="interest-rate-determination-date" class="col-form-label">Ngày xác định lãi suất</label>
+                <div class="row">
+                  <div class="col-md-6"><input type="text" class="form-control form-control-sm" id="interest-rate-determination-date"></div>
+                  <div class="col-md-6">
+                    <select class="form-control form-control-sm" id="working-day">
+                      <option>Ngày làm việc</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
+                </div>
+                <p>so với ngày đầu kỳ</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="fixed-interest-rate" class="col-form-label">Lãi suất cố định</label>
+                <select class="form-control form-control-sm" id="fixed-interest-rate">
+                  <option>SOB1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="end-date-of-the-first-period" class="col-form-label">Ngày kết thúc kỳ đầu</label>
+                <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
+                         name="datepicker" (ngModelChange)="myDate = $event" class="form-control form-control-sm"
+                         id="end-date-of-the-first-period">
+              </div>
+              <div class="form-group">
+                <label for="adjust-workdays" class="col-form-label">Điều chỉnh ngày làm việc</label>
+                <select class="form-control form-control-sm" id="adjust-workdays">
+                  <option>Lần trước</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="fixed-period-number" class="col-form-label">Số kỳ cố định</label>
+                <input type="text" class="form-control form-control-sm" id="fixed-period-number">
+              </div>
+              <div class="form-group">
+                <label for="start-date-of-the-first-period" class="col-form-label">Ngày bắt đầu kỳ cuối</label>
+                <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
+                         name="datepicker" (ngModelChange)="myDate = $event" class="form-control form-control-sm"
+                         id="start-date-of-the-first-period">
+              </div>
+            </div>
           </div>
-          <label for="fixed-interest-rate" class="col-sm-2 col-form-label">Lãi suất cố định</label>
-          <div class="col-sm-2">
-            <select class="form-control" id="fixed-interest-rate">
-              <option>SOB1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
+          <div class="row">
+            <label class="col-md-12 col-form-label font-weight-bold">Kỳ Thanh toán</label>
           </div>
-          <label for="fixed-period-number" class="col-sm-2 col-form-label">Số kỳ cố định</label>
-          <div class="col-sm-2">
-            <input type="text" class="form-control" id="fixed-period-number">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="buy-back-before-maturity" class="col-form-label">Tần suất</label>
+                <select class="form-control form-control-sm" id="buy-back-before-maturity">
+                  <option>1 tháng</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="interest-rate-determination-date-1" class="col-form-label">Ngày lập danh sách</label>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control form-control-sm" id="interest-rate-determination-date-1">
+                  </div>
+                  <div class="col-sm-6">
+                    <select class="form-control form-control-sm" id="working-day-1">
+                      <option>Ngày làm việc</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
+                </div>
+                <p>so với ngày đầu kỳ</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="end-date-of-the-first-period-1" class="col-form-label">Ngày kết thúc kỳ đầu</label>
+                <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
+                       name="datepicker" (ngModelChange)="myDate = $event" class="form-control form-control-sm"
+                       id="end-date-of-the-first-period-1">
+              </div>
+              <div class="form-group">
+                <label for="adjust-workdays-1" class="col-form-label">Điều chỉnh ngày làm việc</label>
+                <select class="form-control form-control-sm" id="adjust-workdays-1">
+                  <option>Lần trước</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="start-date-of-the-first-period-1" class="col-form-label">Ngày bắt đầu kỳ cuối</label>
+                <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
+                       name="datepicker" (ngModelChange)="myDate = $event" class="form-control form-control-sm"
+                       id="start-date-of-the-first-period-1">
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="amplitude" class="col-sm-2 col-form-label">Biên độ</label>
-          <div class="col-sm-2">
-            <input type="text" class="form-control" id="amplitude">
+          <div class="form-group text-center">
+            <button style="position: relative;left: -8px;" type="button" class="btn btn-primary btn-sm">TÍNH TỰ ĐỘNG</button>
+            <button type="button" class="btn btn-danger btn-sm">HỦY</button>
           </div>
-          <label for="end-date-of-the-first-period" class="col-sm-2 col-form-label">Ngày kết thúc kỳ đầu</label>
-          <div class="col-sm-2">
-            <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-                   name="datepicker" (ngModelChange)="myDate = $event" class="form-control"
-                   id="end-date-of-the-first-period">
-          </div>
-          <label for="start-date-of-the-first-period" class="col-sm-2 col-form-label">Ngày bắt đầu kỳ cuối</label>
-          <div class="col-sm-2">
-            <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-                   name="datepicker" (ngModelChange)="myDate = $event" class="form-control"
-                   id="start-date-of-the-first-period">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="interest-rate-determination-date" class="col-sm-2 col-form-label">Ngày xác định lãi suất</label>
-          <div class="col-sm-1">
-            <input type="text" class="form-control" id="interest-rate-determination-date">
-          </div>
-          <div class="col-sm-1">
-            <select class="form-control" id="working-day">
-              <option>Ngày làm việc</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-          </div>
-          <div class="col-sm-2">
-            <p>so với ngày đầu kỳ</p>
-          </div>
-          <div class="col-sm-2"></div>
-          <label for="adjust-workdays" class="col-sm-2 col-form-label">Điều chỉnh ngày làm việc</label>
-          <div class="col-sm-2">
-            <select class="form-control" id="adjust-workdays">
-              <option>Lần trước</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-form-label font-weight-bold">Kỳ Thanh toán</label>
-        </div>
-
-        <div class="form-group row">
-          <label for="buy-back-before-maturity" class="col-sm-2 col-form-label">Tần suất</label>
-          <div class="col-sm-2">
-            <select class="form-control" id="buy-back-before-maturity">
-              <option>1 tháng</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-          </div>
-
-          <label for="end-date-of-the-first-period-1" class="col-sm-2 col-form-label">Ngày kết thúc kỳ đầu</label>
-          <div class="col-sm-2">
-            <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-                   name="datepicker" (ngModelChange)="myDate = $event" class="form-control"
-                   id="end-date-of-the-first-period-1">
-          </div>
-          <label for="start-date-of-the-first-period-1" class="col-sm-2 col-form-label">Ngày bắt đầu kỳ cuối</label>
-          <div class="col-sm-2">
-            <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
-                   name="datepicker" (ngModelChange)="myDate = $event" class="form-control"
-                   id="start-date-of-the-first-period-1">
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label for="interest-rate-determination-date-1" class="col-sm-2 col-form-label">Ngày lập danh sách</label>
-          <div class="col-sm-1">
-            <input type="text" class="form-control" id="interest-rate-determination-date-1">
-          </div>
-          <div class="col-sm-1">
-            <select class="form-control" id="working-day-1">
-              <option>Ngày làm việc</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-          </div>
-          <div class="col-sm-2">
-            <p>so với ngày đầu kỳ</p>
-          </div>
-          <div class="col-sm-2"></div>
-          <label for="adjust-workdays-1" class="col-sm-2 col-form-label">Điều chỉnh ngày làm việc</label>
-          <div class="col-sm-2">
-            <select class="form-control" id="adjust-workdays-1">
-              <option>Lần trước</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <div class="col-sm-5"></div>
-          <div class="col-sm-5">
-            <button style="position: relative;left: -8px;" type="button" class="btn btn-primary">TÍNH TỰ ĐỘNG</button>
-            <button type="button" class="btn btn-danger">HỦY</button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
     <!-- /.modal-content -->
   </div>

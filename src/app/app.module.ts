@@ -63,6 +63,9 @@ import {CustomerComponent} from './modules/infomation/customer/customer.componen
 import { FinancialProductsComponent } from './modules/product/financial-products/financial-products.component';
 import { ApplyAttributesComponent } from './modules/product/apply-attributes/apply-attributes.component';
 import { PoliciesProductPendingApprovalComponent } from './modules/product/policies-product-pending-approval/policies-product-pending-approval.component';
+import { FinancialProductPendingApprovalComponent } from './modules/product/financial-product-pending-approval/financial-product-pending-approval.component';
+import { ProVariableApprovalComponent } from './modules/product/prop-variable/pro-variable-approval/pro-variable-approval.component';
+import {ListFormNotificaionComponent} from './modules/product/list-form-notificaion/list-form-notificaion.component';
 
 
 @NgModule({
@@ -103,6 +106,9 @@ import { PoliciesProductPendingApprovalComponent } from './modules/product/polic
     ContractParametersComponent,
     ApplyAttributesComponent,
     PoliciesProductPendingApprovalComponent,
+    FinancialProductPendingApprovalComponent,
+    ProVariableApprovalComponent,
+    ListFormNotificaionComponent
   ],
   imports: [
     BrowserModule,

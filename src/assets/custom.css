@@ -1,0 +1,7 @@
+.mat-radio-label .mat-radio-container{
+  display: none!important;
+}
+.card-title{
+  font-weight: bold;
+  font-size: 18px;
+}

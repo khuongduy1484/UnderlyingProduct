@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="col-3 btn-mt-33">
-                      <button  type="button" class="mr-1 btn btn-sm btn-info float-right"
+                      <button type="button" class="mr-1 btn btn-sm btn-info float-right"
                               data-toggle="modal"
                               data-target="#modal-add">Thêm mới
                       </button>
@@ -84,22 +84,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let issuer of lstIssuer ; index as i" class="border border-dark">
+                <tr *ngFor="let issuer of lstIssuer ; index as i" class="">
                   <td>{{i + 1}}</td>
                   <td><a href="">{{issuer.name}}</a></td>
-                  <td>{{issuer.businessSector}}</td>
-                  <td>{{issuer.groupName}}</td>
+                  <td>{{issuer.businessNumber}}</td>
+                  <td>{{getBusinessName(issuer.id)}}</td>
                   <td *ngIf="issuer.active == 1 ">Hoạt động</td>
                   <td *ngIf="!(issuer.active == 1)"> Không hoạt động</td>
-                  <td ><a href="">Danh sách</a></td>
+                  <td><a href="">Danh sách</a></td>
                   <td>
-                    <a  (click)="doSelectRecodeUpdate(issuer)" class="btn btn-primary btn-xs mr-1"
-                        data-toggle="modal"
-                        data-target="#modal-update">
+                    <a (click)="doSelectRecodeUpdate(issuer)" class="btn btn-primary btn-xs mr-1"
+                       data-toggle="modal"
+                       data-target="#modal-update">
                       <i class="far fa-edit"></i>
                     </a>
-                    <a   (click)="doDelete(issuer)" class="btn btn-info btn-xs  mr-1" data-toggle="modal"
-                         data-target="#modal-delete">
+                    <a (click)="doDelete(issuer)" class="btn btn-info btn-xs  mr-1" data-toggle="modal"
+                       data-target="#modal-delete">
                       <i class="fas fa-trash-alt"></i>
                     </a>
                   </td>
@@ -140,7 +140,7 @@
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label class="col-form-label">Mã TCPH*</label>
-                  <input  formControlName="code" type="text" class="form-control form-control-sm"
+                  <input formControlName="code" type="text" class="form-control form-control-sm"
                          name="name" placeholder="Mã TCPH*">
                 </div>
               </div>
@@ -153,7 +153,7 @@
               </div>
               <div class="col-md-6 col-12">
                 <div class="form-group">
-                  <label  class="col-form-label">Số đăng kí kinh doanh</label>
+                  <label class="col-form-label">Số đăng kí kinh doanh</label>
                   <input formControlName="businessNumber" type="text" class="form-control form-control-sm"
                          name="description" placeholder="Số đăng kí kinh doanh">
                 </div>
@@ -169,11 +169,8 @@
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label class="col-form-label">Ngành nghề</label>
-                  <select formControlName="businessSector" class="form-control form-control-sm" name="action" >
-                    <option value="Land">Land</option>
-                    <option  value="Bond">Bond</option>
-                    <option  value="Bond">Bond</option>
-                  </select>
+                  <input formControlName="businessSector" type="text" class="form-control form-control-sm"
+                         name="businessSector" placeholder="Ngành nghề">
                 </div>
               </div>
 
@@ -181,9 +178,7 @@
                 <div class="form-group">
                   <label class="col-form-label">Nhóm TCPH</label>
                   <select formControlName="businessGroupId" class="form-control form-control-sm">
-                    <option value="1">Land</option>
-                    <option  value="2">Bond</option>
-                    <option  value="2">Bond</option>
+                    <option [ngValue]="business.id" *ngFor="let  business of businessGroup">{{business.name}}</option>
                   </select>
                 </div>
               </div>
@@ -191,9 +186,9 @@
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label class="col-form-label">Trạng thái</label>
-                  <select formControlName="active" class="form-control form-control-sm"  >
+                  <select formControlName="active" class="form-control form-control-sm">
                     <option value="1">Đang hoạt động</option>
-                    <option  value="0">Tạm dừng hoạt động</option>
+                    <option value="0">Tạm dừng hoạt động</option>
                   </select>
                 </div>
               </div>
@@ -216,15 +211,14 @@
 </div>
 
 
-
 <div class="modal fade" id="modal-update" aria-modal="true" role="dialog">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Thông tin Tổ chức phát hành</h4>
-<!--        <button (click)="doLoadData()" type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--          <span aria-hidden="true">×</span>-->
-<!--        </button>-->
+        <!--        <button (click)="doLoadData()" type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+        <!--          <span aria-hidden="true">×</span>-->
+        <!--        </button>-->
       </div>
       <form [formGroup]="issuerUpdate">
         <div class="modal-body" formGroupName="issuer">
@@ -234,8 +228,8 @@
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label class="col-form-label">Mã TCPH*</label>
-                  <input  formControlName="code" type="text" class="form-control form-control-sm"
-                          name="name" placeholder="Mã TCPH*">
+                  <input formControlName="code" type="text" class="form-control form-control-sm"
+                         name="name" placeholder="Mã TCPH*">
                 </div>
               </div>
               <div class="col-md-6 col-12">
@@ -247,7 +241,7 @@
               </div>
               <div class="col-md-6 col-12">
                 <div class="form-group">
-                  <label  class="col-form-label">Số đăng kí kinh doanh</label>
+                  <label class="col-form-label">Số đăng kí kinh doanh</label>
                   <input formControlName="businessNumber" type="text" class="form-control form-control-sm"
                          name="description" placeholder="Số đăng kí kinh doanh">
                 </div>
@@ -263,11 +257,8 @@
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label class="col-form-label">Ngành nghề</label>
-                  <select formControlName="businessSector" class="form-control form-control-sm"  >
-                    <option value="Land">Land</option>
-                    <option  value="Bond">Bond</option>
-                    <option  value="Bond">Bond</option>
-                  </select>
+                  <input formControlName="businessSector" type="text" class="form-control form-control-sm"
+                         name="businessSector" placeholder="Ngành nghề">
                 </div>
               </div>
 
@@ -275,7 +266,7 @@
                 <div class="form-group">
                   <label class="col-form-label">Nhóm TCPH</label>
                   <select formControlName="businessGroupId" class="form-control form-control-sm">
-                    <option [ngValue]="group.id" *ngFor="let group of businessGroup">{{group.name}}</option>
+                    <option [value]="group.id" *ngFor="let group of businessGroup">{{group.name}}</option>
                   </select>
                 </div>
               </div>
@@ -283,9 +274,9 @@
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label class="col-form-label">Trạng thái</label>
-                  <select formControlName="active" class="form-control form-control-sm"  >
+                  <select formControlName="active" class="form-control form-control-sm">
                     <option value="1">Đang hoạt động</option>
-                    <option  value="0">Tạm dừng hoạt động</option>
+                    <option value="0">Tạm dừng hoạt động</option>
                   </select>
                 </div>
               </div>

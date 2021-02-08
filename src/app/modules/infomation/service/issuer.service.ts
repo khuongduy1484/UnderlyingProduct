@@ -28,4 +28,8 @@ export class IssuerService {
     return this.http.post(`${environment.apiUrl}/issuer`, body);
   }
 
+  findAll(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/issuer`);
+  }
+
 }

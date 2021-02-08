@@ -77,7 +77,7 @@
                 </tr>
                 </thead>
                 <tbody *ngIf="templateContracts.length > 0 ||templateContracts != null ">
-                <tr  *ngFor="let templateContract of templateContracts ; let i = index" class="border border-dark">
+                <tr  *ngFor="let templateContract of templateContracts ; let i = index" class="">
                   <td *ngIf="templateContract != null">
                     <label class="form-radio">
                       <input type="checkbox" name="id_number" id="record-{{i}}" name="record-{{i}}"
@@ -159,14 +159,14 @@
               <div class="col-md-4 col-12">
                 <div class="form-group">
                   <label for="input2" class="col-form-label">Mã hợp đồng</label>
-                  <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
+                  <input [(ngModel)]="templateContractNew.code" type="text" class="form-control form-control-sm"
                          name="code" id="input2" placeholder="Nhập mã hợp đồng">
                 </div>
               </div>
               <div class="col-md-4 col-12">
                 <div class="form-group">
                   <label for="input3" class="col-form-label">Tên hợp đồng</label>
-                  <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
+                  <input [(ngModel)]="templateContractNew.name" type="text" class="form-control form-control-sm"
                          name="name" id="input3" placeholder="Nhập tên hợp đồng">
                 </div>
               </div>
@@ -174,7 +174,7 @@
                 <div class="form-group">
                   <label for="input4" class="col-form-label">Mô tả</label>
                   <input [(ngModel)]="templateContractNew.description" type="text"
-                         class="form-control border border-dark"
+                         class="form-control form-control-sm"
                          name="description" id="input4" placeholder="Nhập mô tả">
                 </div>
               </div>
@@ -221,14 +221,14 @@
                 <div class="form-group">
                   <label for="input5" class="col-form-label">Mã hợp đồng</label>
                   <input [disabled]="true" [(ngModel)]="templateContractUpdate.code" type="text"
-                         class="form-control border border-dark"
+                         class="form-control form-control-sm"
                          name="code" id="input5" placeholder="Nhập mã hợp đồng">
                 </div>
               </div>
               <div class="col-md-4 col-12">
                 <div class="form-group">
                   <label for="input6" class="col-form-label">Tên hợp đồng</label>
-                  <input [(ngModel)]="templateContractUpdate.name" type="text" class="form-control border border-dark"
+                  <input [(ngModel)]="templateContractUpdate.name" type="text" class="form-control form-control-sm"
                          name="name" id="input6" placeholder="Nhập tên hợp đồng">
                 </div>
               </div>
@@ -236,7 +236,7 @@
                 <div class="form-group">
                   <label for="input7" class="col-form-label">Mô tả</label>
                   <input [(ngModel)]="templateContractUpdate.description" type="text"
-                         class="form-control border border-dark"
+                         class="form-control form-control-sm"
                          name="description" id="input7" placeholder="Nhập mô tả">
                 </div>
               </div>

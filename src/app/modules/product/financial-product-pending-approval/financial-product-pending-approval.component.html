@@ -3,12 +3,12 @@
     <div class="card card-primary card-outline">
       <div class="card-body">
         <ul class="nav nav-tabs">
-          <li class="nav-item">
-            <a class="nav-link  "
-               href="/info_issuer"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
-          </li>
           <li class="nav-item ">
             <a class="nav-link active  "
+               href="/financial-products"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link  "
                href="/financial-products-pending-approval"><i class="fas fa-list"></i> Danh sách chưa duyệt</a>
           </li>
         </ul>
@@ -79,7 +79,7 @@
                   <th>Ngày mở bán</th>
                   <th>Ngày kết thúc</th>
                   <th>Status</th>
-                  <th>Ngày tạo</th>
+                  <th>Thao tác</th>
                 </tr>
                 </thead>
                 <tbody *ngIf="lstIProdDerivative != null && lstIProdDerivative.length> 0">
@@ -90,10 +90,36 @@
                   <td>{{getProdAgreementName(prodDerivative.agreementId)}}</td>
                   <td>{{prodDerivative.startDate | date:'dd/MM/yyyy'}}</td>
                   <td>{{prodDerivative.endDate | date:'dd/MM/yyyy'}}</td>
-                  <td *ngIf="prodDerivative.status == 1 ">Hoat đông</td>
-                  <td *ngIf="prodDerivative.status == 0 ">Không hoat đông</td>
-                  <td>{{prodDerivative.createdDate | date:'dd/MM/yyyy'}}</td>
+                  <td *ngIf="prodDerivative.status == 2 && prodDerivative != null">Từ chối</td>
+                  <td *ngIf="prodDerivative.status == 3 && prodDerivative != null">Bản nháp</td>
+                  <td *ngIf="prodDerivative.status == 0 && prodDerivative != null">Chờ phê duyệt</td>
+                  <td *ngIf="prodDerivative.status == 4 && prodDerivative != null">Đã xóa</td>
+                  <td *ngIf="prodDerivative.status == null && prodDerivative != null">Đã phê duyệt</td>
+                  <td *ngIf="prodDerivative != null">
+                    <a (click)="doSelected(prodDerivative)" class="btn btn-primary btn-xs mr-1"
+                       data-toggle="modal"
+                       data-target="#modal-update">
+                      <i class="far fa-edit"></i>
+                    </a>
+                    <a (click)="doRemove(prodDerivative)" class="btn btn-info btn-xs  mr-1" data-toggle="modal"
+                       data-target="#modal-delete">
+                      <i class="fas fa-trash-alt"></i>
+                    </a>
+                    <a (click)="doActionUpdateStatusRecord(prodDerivative, '2')"
+                       class="btn btn-info btn-xs mr-1" data-toggle="modal">
+                      <i class="fa fa-window-close" aria-hidden="true"></i>
+                    </a>
 
+                    <a *ngIf="!(prodDerivative.status == '0' ) && !(prodDerivative.status == '1' )"
+                       (click)="doActionUpdateStatusRecord(prodDerivative, '0')"
+                       class="btn btn-info mr-1 btn-xs mr-1">
+                      <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                    </a>
+                    <a  (click)="doApprovalRecord(prodDerivative)" class="btn btn-info btn-xs mr-1"
+                       data-toggle="modal">
+                      <i class="fa fa-check-square" aria-hidden="true"></i>
+                    </a>
+                  </td>
                 </tr>
                 </tbody>
               </table>
@@ -129,6 +155,94 @@
         <div class="modal-body">
 
           <form [formGroup]="prodDerivativeNew">
+            <div class="modal-body">
+
+              <div>
+                <div class="row">
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Tên tài chính</label>
+                      <input type="text" class="form-control form-control-sm"
+                             formControlName="name" placeholder="Nhập tên tài chính">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Sản phẩm gốc</label>
+                      <select formControlName="agreementId" class="form-control form-control-sm" name="action">
+                        <option *ngFor="let primaryProduct of lstPoliciesProductS"
+                                [ngValue]="primaryProduct.id">{{primaryProduct.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Agreement</label>
+                      <select formControlName="vanillaId" class="form-control form-control-sm" name="action">
+                        <option *ngFor="let prodVanilla of lstProdVanilla"
+                                [ngValue]="prodVanilla.id">{{prodVanilla.name}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Ngày mở bán</label>
+                      <input formControlName="startDate" name="issueDate" type="date"
+                             class="form-control border border-dark"
+                             placeholder="Nhập tên hợp đồng">
+                    </div>
+                  </div>
+
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Ngày kết thức</label>
+                      <input formControlName="endDate" name="issueDate" type="date"
+                             class="form-control border border-dark"
+                             placeholder="Nhập tên hợp đồng">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label class="col-form-label">Mô tả</label>
+                      <textarea formControlName="description" class="form-control form-control-sm"
+                                name="description" placeholder="Mô tả"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button (click)="doLoadData()" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close
+          </button>
+          <button (click)="clear()" type="button" class="btn btn-secondary btn-sm float-right">Clear</button>
+          <button (click)="doCreate()" type="button" class="btn btn-primary btn-sm float-right">Thêm mới
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+<div class="modal fade" id="modal-update" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Update sản phẩm tài chính</h4>
+        <button (click)="doLoadData()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form>
+        <div class="modal-body">
+
+          <form [formGroup]="prodDerivativeUpdate">
             <div class="modal-body">
 
               <div>
@@ -192,7 +306,7 @@
           <button (click)="doLoadData()" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close
           </button>
           <button (click)="clear()" type="button" class="btn btn-secondary btn-sm float-right">Clear</button>
-          <button (click)="doCreate()" type="button" class="btn btn-primary btn-sm float-right">Thêm mới
+          <button (click)=" doUpdate()" type="button" class="btn btn-primary btn-sm float-right">Cập nhập
           </button>
         </div>
       </form>
@@ -201,8 +315,5 @@
   </div>
   <!-- /.modal-dialog -->
 </div>
-
-
-
 
 
