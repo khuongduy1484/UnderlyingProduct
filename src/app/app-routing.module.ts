@@ -30,7 +30,6 @@ import {ApplyAttributesComponent} from './modules/product/apply-attributes/apply
 import {PoliciesProductPendingApprovalComponent} from './modules/product/policies-product-pending-approval/policies-product-pending-approval.component';
 import {FinancialProductPendingApprovalComponent} from './modules/product/financial-product-pending-approval/financial-product-pending-approval.component';
 import {ProVariableApprovalComponent} from './modules/product/prop-variable/pro-variable-approval/pro-variable-approval.component';
-import { FinancialProductsComponent } from './modules/product/financial-products/financial-products.component';
 import {ListFormNotificaionComponent} from './modules/product/list-form-notificaion/list-form-notificaion.component';
 
 const routes: Routes = [

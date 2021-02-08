@@ -108,7 +108,6 @@ import {ListFormNotificaionComponent} from './modules/product/list-form-notifica
     PoliciesProductPendingApprovalComponent,
     FinancialProductPendingApprovalComponent,
     ProVariableApprovalComponent,
-    FinancialProductsComponent,
     ListFormNotificaionComponent
   ],
   imports: [
