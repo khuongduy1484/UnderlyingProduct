@@ -84,7 +84,15 @@ export class PrimaryProductAprrovalPendingComponent implements OnInit {
   }
 
   getNameIssuer(id) {
-    return this.lstIssuer.filter(x => x.id === id)[0].name;
+    if (id != null) {
+      console.log(id);
+      const issuer = this.lstIssuer.filter(x => x.id === id)[0];
+      if (issuer !== undefined) {
+        console.log(issuer);
+        return this.lstIssuer.filter(x => x.id === id)[0].name;
+      }
+    }
+    return '';
   }
 
   getPageSymbol(current: number) {
@@ -92,7 +100,7 @@ export class PrimaryProductAprrovalPendingComponent implements OnInit {
       current = 0;
     }
     this.page = current;
-    this.primaryProductService.getPrimaryProductApproval('', current > 0 ? current - 1 : 0, 10).subscribe(result => {
+    this.primaryProductService.getPrimaryProductApprovalPending('', '', current > 0 ? current - 1 : 0, 10).subscribe(result => {
       if (result) {
         this.lstPrimaryProduct = result.data;
       }

@@ -40,6 +40,19 @@ export class IssuersComponent implements OnInit {
     });
   }
 
+  getBusinessName(id) {
+    if (id != null) {
+      const businessGroup = this.businessGroup.filter(x => x.id === id)[0];
+      if (businessGroup !== undefined) {
+        return this.businessGroup.filter(x => x.id === id)[0].name;
+      } else {
+        return '';
+      }
+
+    }
+    return '';
+  }
+
   getPageSymbol(current: number) {
     if (current === null) {
       current = 0;
@@ -139,5 +152,19 @@ export class IssuersComponent implements OnInit {
   }
 
   doDelete(issuer) {
+  }
+
+  doCreate() {
+    this.issuerService.update(this.issuerAdd.value.issuer).subscribe(result => {
+      if (result.status === 200) {
+        this.doLoadData();
+        this.notificationService.showSuccess('Đã tạo bản ghi  thành công', 'Thông báo');
+      } else {
+        this.notificationService.showError('Thông báo', result.message);
+      }
+    }, error => {
+      console.log(error);
+      this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
+    });
   }
 }

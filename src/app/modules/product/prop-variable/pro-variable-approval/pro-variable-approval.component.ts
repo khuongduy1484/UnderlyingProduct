@@ -104,20 +104,20 @@ export class ProVariableApprovalComponent implements OnInit {
   }
 
   doCreate() {
-    const prodDerivative = [];
-    this.prodDerivativeNew.get('status').setValue('4');
-    prodDerivative.push(this.prodDerivativeNew.value);
-    this.prodDerivativeService.creatProdDerivativeApprovalPending(prodDerivative).subscribe(data => {
-      if (data.status === 200) {
-        this.loadData();
-        this.notificationService.showSuccess('Đã  tạo bản ghi thành công', 'Thông báo');
-      } else {
-        this.notificationService.showError(data.description, 'Thông báo');
-      }
-    }, error => {
-
-      this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
-    });
+    // const prodDerivative = [];
+    // this.prodDerivativeNew.get('status').setValue('4');
+    // prodDerivative.push(this.prodDerivativeNew.value);
+    // this.prodDerivativeService.creatProdDerivativeApprovalPending(prodDerivative).subscribe(data => {
+    //   if (data.status === 200) {
+    //     this.loadData();
+    //     this.notificationService.showSuccess('Đã  tạo bản ghi thành công', 'Thông báo');
+    //   } else {
+    //     this.notificationService.showError(data.description, 'Thông báo');
+    //   }
+    // }, error => {
+    //
+    //   this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
+    // });
   }
 
 
@@ -126,16 +126,16 @@ export class ProVariableApprovalComponent implements OnInit {
   }
 
   doSearch() {
-    this.prodDerivativeService.getProdDerivativeApproval(this.contentSearch.name.trim(), this.contentSearch.prodVanillaId, 0, 10).subscribe(result => {
-      if (result) {
-        this.lstIProdDerivative = result.data;
-      }
-    });
+    // this.prodDerivativeService.getProdDerivativeApproval(this.contentSearch.name.trim(), this.contentSearch.prodVanillaId, 0, 10).subscribe(result => {
+    //   if (result) {
+    //     this.lstIProdDerivative = result.data;
+    //   }
+    // });
   }
 
 
   clear() {
-    this.contentSearch.name = '';
-    this.contentSearch.prodVanillaId = '';
+    // this.contentSearch.name = '';
+    // this.contentSearch.prodVanillaId = '';
   }
 }

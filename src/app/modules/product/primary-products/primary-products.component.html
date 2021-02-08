@@ -29,15 +29,13 @@
                                placeholder="Nhập từ khóa" name="contentSearch">
                       </div>
                     </div>
+                    <div class="col-4"></div>
                     <div class="col-4 btn-mt-33">
                       <button (click)="doSearch()" type="button" class="mr-1 btn btn-sm btn-secondary float-right">Tìm
                         kiếm
                       </button>
                       <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right" (click)="clear()">
                         Clear
-                      </button>
-                      <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right" (click)="clear()">
-                        Tính tự động
                       </button>
                       <button data-toggle="modal"
                               data-target="#modal-automation" type="button"
@@ -95,7 +93,8 @@
                        class="btn  btn-xs mr-1" data-target="#modal-update-status" data-toggle="modal">
                       <i class="fa fa-unlock" aria-hidden="true"></i>
                     </a>
-                    <a (click)="doSelectRecordUpdate(primaryProduct)" class="btn btn-primary btn-xs mr-1" data-toggle="modal"
+                    <a (click)="doSelectRecordUpdate(primaryProduct)" class="btn btn-primary btn-xs mr-1"
+                       data-toggle="modal"
                        data-target="#modal-update">
                       <i class="far fa-edit"></i>
                     </a>
@@ -175,14 +174,14 @@
           <div class="row">
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input2" class="col-form-label">Tên trái phiếu</label>
+                <label class="col-form-label">Tên trái phiếu</label>
                 <input formControlName="name" type="text" class="form-control border border-dark"
                        name="code" placeholder="Nhập mã hợp đồng">
               </div>
             </div>
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input3" class="col-form-label">Tổ chức phát hành</label>
+                <label class="col-form-label">Tổ chức phát hành</label>
                 <select formControlName="issuerId" class="form-control form-control-sm">
                   <option [ngValue]="issuer.id" *ngFor="let issuer of lstIssuer">{{issuer.name}}</option>
                 </select>
@@ -190,7 +189,7 @@
             </div>
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input4" class="col-form-label">Loại trái phiếu</label>
+                <label class="col-form-label">Loại trái phiếu</label>
                 <select formControlName="bondType" class="form-control form-control-sm">
                   <option value="1">Trái phiếu của Chính phủ</option>
                   <option value="0">Trái phiếu của doanh nghiệp</option>
@@ -202,21 +201,21 @@
           <div class="row">
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input2" class="col-form-label">Mã trái phiếu </label>
+                <label class="col-form-label">Mã trái phiếu </label>
                 <input formControlName="code" type="text" class="form-control border border-dark"
                        name="code" placeholder="Nhập mã trái phiếu">
               </div>
             </div>
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input3" class="col-form-label">Ngày phát hành</label>
+                <label class="col-form-label">Ngày phát hành</label>
                 <input formControlName="issueDate" name="issueDate" type="date" class="form-control border border-dark"
                        placeholder="Nhập tên hợp đồng">
               </div>
             </div>
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input4" class="col-form-label">Hình thức phát hành</label>
+                <label class="col-form-label">Hình thức phát hành</label>
                 <select formControlName="issueType" class="form-control form-control-sm">
                   <option value="1">Public Offering</option>
                   <option value="0">Private Placement</option>
@@ -228,7 +227,7 @@
           <div class="row">
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input2" class="col-form-label">Mã niêm yết</label>
+                <label class="col-form-label">Mã niêm yết</label>
                 <input formControlName="listedCode" type="text" class="form-control border border-dark"
                        placeholder="Nhập mã niêm yết">
               </div>
@@ -260,7 +259,7 @@
             </div>
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input3" class="col-form-label">Mua trước hạn</label>
+                <label class="col-form-label">Mua trước hạn</label>
                 <mat-radio-group formControlName="callBack" aria-label="Select an option">
                   <mat-radio-button value="1">YES</mat-radio-button>
                   <mat-radio-button value="0">NO</mat-radio-button>
@@ -281,7 +280,7 @@
           <div class="row">
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input2" class="col-form-label">Tài sản đảm bảo</label>
+                <label class="col-form-label">Tài sản đảm bảo</label>
                 <mat-radio-group formControlName="collateral" aria-label="Select an option">
                   <mat-radio-button value="1">YES</mat-radio-button>
                   <mat-radio-button value="0">NO</mat-radio-button>

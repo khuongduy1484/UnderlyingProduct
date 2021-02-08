@@ -27,15 +27,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let sys of groupSystems ; index as i" class="border border-dark">
+                <tr *ngFor="let sys of groupSystems ; index as i" class="">
                   <td>{{i + 1}}</td>
                   <td>{{sys.name}}</td>
                   <td>{{sys.sysParamValue.value}}</td>
                 </tbody>
               </table>
-              <ul class="pagination pagination-sm m-0 float-right">
+              <ul *ngIf="groupSystems != null && groupSystems.length > 0" class="pagination pagination-sm m-0 float-right">
                 <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
-                                [collectionSize]="30" [(page)]="page" aria-label="Custom pagination">
+                                [collectionSize]="groupSystems.length" [(page)]="page" aria-label="Custom pagination">
                   <ng-template>Prev</ng-template>
                   <ng-template>Next</ng-template>
                   <ng-template></ng-template>

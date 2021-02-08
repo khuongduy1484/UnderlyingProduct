@@ -39,7 +39,7 @@ export class PrimaryProductsComponent implements OnInit {
       current = 0;
     }
     this.page = current;
-    this.primaryProductService.getPrimaryProductApproval('', current > 0 ? current - 1 : 0, 10).subscribe(result => {
+    this.primaryProductService.getPrimaryProductApproval('', '' ,current > 0 ? current - 1 : 0, 10).subscribe(result => {
       if (result) {
         this.lstPrimaryProduct = result.data;
       }
@@ -121,7 +121,7 @@ export class PrimaryProductsComponent implements OnInit {
   }
 
   doSearch() {
-    this.primaryProductService.getPrimaryProductApproval(this.codeSearch.trim(), 0, 10).subscribe(result => {
+    this.primaryProductService.getPrimaryProductApproval(this.codeSearch.trim(), '',0, 10).subscribe(result => {
       if (result) {
         this.lstPrimaryProduct = result.data;
       }

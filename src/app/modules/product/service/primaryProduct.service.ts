@@ -12,8 +12,8 @@ export class PrimaryProductService {
     private http: HttpClient) {
   }
 
-  getPrimaryProductApproval(code: string, offset: number, pageSize: number): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/prod-vanilla/search/approval?code=${code}&offset=${offset}&pageSize=${pageSize}`);
+  getPrimaryProductApproval(name: string, issuerId: string, offset: number, pageSize: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/prod-vanilla/search/approval?name=${name}&issuerId=${issuerId}&offset=${offset}&pageSize=${pageSize}`);
   }
 
   upDateStatus(body: any): Observable<any> {
@@ -24,8 +24,8 @@ export class PrimaryProductService {
     return this.http.post(`${environment.apiUrl}/prod-vanilla/approval`, body);
   }
 
-  getPrimaryProductApprovalPending(code: string, offset: number, pageSize: number): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/prod-vanilla/search/pending-approval?code=${code}&offset=${offset}&pageSize=${pageSize}`);
+  getPrimaryProductApprovalPending(name: string, issuerId: string, offset: number, pageSize: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/prod-vanilla/search/pending-approval?name=${name}&issuerId=${issuerId}&offset=${offset}&pageSize=${pageSize}`);
   }
 
   creatPrimaryProductApprovalPending(body: any): Observable<any> {

@@ -2,6 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {TemplateContractService} from '../service/templateContract.service';
 import {ITemplateContract} from '../../../model/models';
 import {NotificationService} from '../../../shared/notification.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
 @Component({
@@ -38,13 +39,30 @@ export class ListWaitingForApprovaComponent implements OnInit {
 
   constructor(
     private notificationService: NotificationService,
-    private templateContractService: TemplateContractService
+    private templateContractService: TemplateContractService,
+    private fb: FormBuilder,
   ) {
   }
 
   ngOnInit() {
     this.getPageSymbol(0);
+    // this.buildForm();
   }
+
+  // buildForm() {
+  //   this.templateContractNew = this.fb.group({
+  //     contractGroup: this.fb.group(
+  //       {
+  //         name: ['',  [Validators.required]],
+  //         code: ['', [Validators.required]],
+  //         description: ['', [Validators.required]],
+  //         content: ['', [Validators.required]],
+  //         status: ['', [Validators.required]],
+  //
+  //       }
+  //     )
+  //   });
+  // }
 
   getPageSymbol(current: number) {
     if (current === null) {
@@ -106,12 +124,12 @@ export class ListWaitingForApprovaComponent implements OnInit {
       }
       this.templateContractService.updateOrCreateTemplateContract(templateContract).subscribe(data => {
         if (data.status === 200) {
+          this.doLoadData();
           this.notificationService.showSuccess('Đã gửi phê duyệt thành công', 'Thông báo');
         } else {
           this.notificationService.showError(data.description, 'Thông báo');
         }
       }, error => {
-        console.log(error);
         this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
       });
     }
@@ -157,6 +175,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
     this.lstTemplate.push(template);
     this.templateContractService.deleteTemplateContract(this.lstTemplate).subscribe(data => {
       if (data.status === 200) {
+        this.doLoadData();
         this.notificationService.showSuccess('Đã xóa thành công', 'Thông báo');
       } else {
         this.notificationService.showError(data.description, 'Thông báo');
@@ -182,6 +201,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
     }
     this.templateContractService.createTemplateContractWaitingForApproval(this.templateContractUpdate).subscribe(data => {
       if (data.status === 200) {
+        this.doLoadData();
         this.notificationService.showSuccess('Đã cập nhập xong hợp đồng', 'Thông báo');
       } else {
         this.notificationService.showError(data.description, 'Thông báo');
@@ -196,6 +216,7 @@ export class ListWaitingForApprovaComponent implements OnInit {
     this.templateContractNew.status = '3';
     this.templateContractService.createTemplateContract(this.templateContractNew).subscribe(data => {
       if (data.status === 200) {
+      this.doLoadData();
         this.notificationService.showSuccess('Đã tạo  bản ghi  thành công', 'Thông báo');
       } else {
         this.notificationService.showError(data.description, 'Thông báo');

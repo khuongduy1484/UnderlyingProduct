@@ -156,7 +156,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let policesProduct of policiesProductS ; index as i" class="border border-dark">
+                <tr *ngFor="let policesProduct of policiesProductS ; index as i" class="">
                   <td>{{i + 1}}</td>
                   <td>{{policesProduct.name}}</td>
                   <td>{{policesProduct.repurchase}}</td>
@@ -232,14 +232,14 @@
           <div class="row">
             <div class="col-6">
               <label class="col-form-label">Tên chính sách sản phẩm</label>
-              <input formControlName="name" type="text" class="form-control border border-dark"
+              <input formControlName="name" type="text" class="form-control form-control-sm"
                      name="name" placeholder="Nhập tên hợp đồng">
             </div>
           </div>
           <div class="row">
             <div class="col-6">
               <label class="col-form-label">Mã chính sách sản phẩm</label>
-              <input  formControlName="code" type="text" class="form-control border border-dark"
+              <input  formControlName="code" type="text" class="form-control form-control-sm"
                       name="name" placeholder="Nhập chinh sách sản phẩm">
             </div>
           </div>
@@ -332,7 +332,7 @@
           <div class="form-group row">
             <label  class="col-sm-2 col-form-label"> Thời gian nắm giữ tối thiểu</label>
             <div class="col-sm-3">
-              <select formControlName="holdingPeriod" class="form-control border border-dark" id="organization-reissue">
+              <select formControlName="holdingPeriod" class="form-control form-control-sm" id="organization-reissue">
                 <option [value]="month" *ngFor="let month of month">{{month + 'tháng'}}</option>
               </select>
             </div>

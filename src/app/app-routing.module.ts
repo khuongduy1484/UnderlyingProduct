@@ -130,7 +130,7 @@ const routes: Routes = [
           breadcrumb: 'Chính sách và sản phẩm'
         },
         component: PoliciesProductsComponent
-      },      {
+      }, {
         path: 'policies-product-pending-approval',
         data: {
           breadcrumb: 'Chính sách và sản phẩm'
