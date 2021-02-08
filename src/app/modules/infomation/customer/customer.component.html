@@ -39,7 +39,7 @@
                   <div class="row">
                     <div class="col-4">
                       <div class="form-group">
-                        <input [(ngModel)]="nameSearch" type="text" class="form-control form-control-sm" id="input1" [pattern]= "unamePattern"
+                        <input [(ngModel)]="nameSearch" type="text" class="form-control form-control-sm" id="input1"
                                name="nameSearch">
                       </div>
                     </div>
@@ -202,12 +202,6 @@
                   <div class="row">
                     <div class="col-md-4 col-12">
                       <div class="form-group">
-                        <label class="col-form-label">ID</label>
-                        <input formControlName="code" name="code" type="text" class="form-control form-control-sm">
-                      </div>
-                    </div>
-                    <div class="col-md-4 col-12">
-                      <div class="form-group">
                         <label class="col-form-label">Tên KH</label>
                         <input formControlName="name" name="name" type="text" class="form-control form-control-sm">
                       </div>
@@ -219,11 +213,18 @@
                                formControlName="userName" name="userName">
                       </div>
                     </div>
+                    <div class="col-md-4 col-12">
+                      <div class="form-group">
+                        <label for="input25" class="col-form-label">CMT</label>
+                        <input type="text" class="form-control border border-dark"
+                               formControlName="idCard" name="idCard" id="input25">
+                      </div>
+                    </div>
                   </div>
                   <div class="row">
                     <div class="col-md-4 col-12">
                       <div class="form-group">
-                        <label for="input5" class="col-form-label">Ngày sinh</label>
+                        <label class="col-form-label">Ngày sinh</label>
                         <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
                                formControlName="dob" name="dob" (ngModelChange)="myDate = $event" class="form-control form-control-sm"
                                id="start-date-of-the-first-period">
@@ -301,13 +302,6 @@
                           <option value="0">Ngưng hoạt động</option>
                           <option value="2">Chờ kích hoạt</option>
                         </select>
-                      </div>
-                    </div>
-                    <div class="col-md-4 col-12">
-                      <div class="form-group">
-                        <label for="input25" class="col-form-label">CMT</label>
-                        <input type="text" class="form-control form-control-sm"
-                               formControlName="idCard" name="idCard" id="input25">
                       </div>
                     </div>
                   </div>
@@ -424,11 +418,6 @@
                 </div>
               </div>
             </div>
-
-
-
-
-
           </div>
         </div>
 
@@ -461,12 +450,6 @@
               <div class="row">
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label class="col-form-label">ID</label>
-                    <input formControlName="code" name="code" type="text" class="form-control border border-dark">
-                  </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
                     <label class="col-form-label">Tên KH</label>
                     <input formControlName="name" name="name" type="text" class="form-control border border-dark">
                   </div>
@@ -478,11 +461,18 @@
                            formControlName="userName" name="userName">
                   </div>
                 </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input25" class="col-form-label">CMT</label>
+                    <input type="text" class="form-control border border-dark"
+                           formControlName="idCard" name="idCard">
+                  </div>
+                </div>
               </div>
               <div class="row">
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label for="input5" class="col-form-label">Ngày sinh</label>
+                    <label class="col-form-label">Ngày sinh</label>
                     <input type="date" [ngModel]="myDate | date:'yyyy-MM-dd'"
                            formControlName="dob" name="dob" (ngModelChange)="myDate = $event" class="form-control border border-dark"
                     >
@@ -562,13 +552,6 @@
                       <option value="0">Ngưng hoạt động</option>
                       <option value="2">Chờ kích hoạt</option>
                     </select>
-                  </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label for="input25" class="col-form-label">CMT</label>
-                    <input type="text" class="form-control border border-dark"
-                           formControlName="idCard" name="idCard">
                   </div>
                 </div>
               </div>
@@ -678,7 +661,7 @@
 
         <div class="card-footer btn-center">
           <button (click)="closeUpdate()" type="button" class="btn btn-secondary btn-sm float-right">CLOSE</button>
-          <button (click)="clearAdd()" type="button" class="btn btn-secondary btn-sm float-right">CLEAR</button>
+          <button type="button" class="btn btn-secondary btn-sm float-right">CLEAR</button>
           <button (click)="doUpdateCus()" type="button" class="btn btn-default btn-sm ml-1">CẬP NHẬT KHÁCH HÀNG</button>
         </div>
 
@@ -704,12 +687,6 @@
               <div class="row">
                 <div class="col-md-4 col-12">
                   <div class="form-group">
-                    <label class="col-form-label">ID</label>
-                    <input formControlName="code" name="code" disabled="true" type="text" class="form-control border border-dark">
-                  </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
                     <label class="col-form-label">Tên KH</label>
                     <input formControlName="name" name="name" disabled="true" type="text" class="form-control border border-dark">
                   </div>
@@ -719,6 +696,13 @@
                     <label for="input4" class="col-form-label">Số tài khoản</label>
                     <input type="text" class="form-control border border-dark" disabled="true"
                            formControlName="account" name="account">
+                  </div>
+                </div>
+                <div class="col-md-4 col-12">
+                  <div class="form-group">
+                    <label for="input25" class="col-form-label">CMT</label>
+                    <input type="text" class="form-control border border-dark" disabled="true"
+                           formControlName="idCard" name="idCard">
                   </div>
                 </div>
               </div>
@@ -805,13 +789,6 @@
                       <option value="0">Ngưng hoạt động</option>
                       <option value="2">Chờ kích hoạt</option>
                     </select>
-                  </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="form-group">
-                    <label for="input25" class="col-form-label">CMT</label>
-                    <input type="text" disabled="true" class="form-control border border-dark"
-                           formControlName="idCard" name="idCard">
                   </div>
                 </div>
               </div>

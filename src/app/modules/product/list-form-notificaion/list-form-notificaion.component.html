@@ -21,7 +21,7 @@
               <div class="col-6 btn-mt-33">
                 <button (click)="doSearch()" type="button" class="mr-1 btn btn-sm btn-secondary float-right">Tìm kiếm
                 </button>
-                <button type="button" class="mr-1 btn btn-sm btn-outline-info float-right"><i class="fas fa-sync"></i>
+                <button (click)="getPageSymbol(0)"type="button" class="mr-1 btn btn-sm btn-outline-info float-right"><i class="fas fa-sync"></i>
                 </button>
               </div>
             </div>
@@ -229,7 +229,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button (click)="clear()" type="button" class="btn btn-secondary btn-sm float-right">CLEAR</button>
+          <button (click)="clearAdd()" type="button" class="btn btn-secondary btn-sm float-right">CLEAR</button>
           <button (click)="doAdd()" type="button" class="btn btn-primary btn-sm float-right">THÊM THÔNG BÁO
           </button>
         </div>

@@ -89,7 +89,6 @@ export interface IFormNotification {
 
 export interface ICustomer {
   id: string;
-  code: string;
   name: string;
   dob: Date;
   phone: string;

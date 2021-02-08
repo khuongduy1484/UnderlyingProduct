@@ -18,6 +18,14 @@ export class CustomerServicess {
     return this.customerService.findDetail(offset, pageSize, id);
   }
 
+  checkExistIdCard(idCard: number): Observable<any> {
+    return this.customerService.checkExistIdCard(idCard);
+  }
+
+  checkExistAccount(account: string): Observable<any> {
+    return this.customerService.checkExistAccount(account);
+  }
+
   insertCustomer(body): Observable<any> {
     return this.customerService.insertCustomer(body);
   }

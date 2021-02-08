@@ -163,4 +163,12 @@ export class ListFormNotificaionComponent implements OnInit {
     this.contentSearch = '';
   }
 
+  clearAdd() {
+    this.notificationGroupNew.notiType = '';
+    this.notificationGroupNew.transType = '';
+    this.notificationGroupNew.name = '';
+    this.notificationGroupNew.description = '';
+    this.notificationGroupNew.content = '';
+  }
+
 }

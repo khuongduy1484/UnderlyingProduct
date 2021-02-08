@@ -29,7 +29,6 @@ export class CustomerComponent implements OnInit {
   customer: FormGroup;
   customerDetail: FormGroup;
   customerSelected: FormGroup;
-  unamePattern = "^[a-z0-9_-]{8,15}$";
 
   constructor(
     private customerService: CustomerServicess,
@@ -48,7 +47,6 @@ export class CustomerComponent implements OnInit {
       customerNew: this.fb.group(
         {
           id: [,  [Validators.required]],
-          code: ['',  [Validators.required]],
           name: ['', [Validators.required]],
           dob: [ Date, [Validators.required]],
           phone: [, [Validators.required]],
@@ -80,7 +78,6 @@ export class CustomerComponent implements OnInit {
       customerDe: this.fb.group(
         {
           id: [,  [Validators.required]],
-          code: ['',  [Validators.required]],
           name: ['', [Validators.required]],
           dob: [ Date, [Validators.required]],
           phone: [, [Validators.required]],
@@ -112,7 +109,6 @@ export class CustomerComponent implements OnInit {
       customerSe: this.fb.group(
         {
           id: [,  [Validators.required]],
-          code: ['',  [Validators.required]],
           name: ['', [Validators.required]],
           dob: [ Date, [Validators.required]],
           phone: [, [Validators.required]],
@@ -180,7 +176,6 @@ export class CustomerComponent implements OnInit {
       if (data) {
         console.log(data.data[0]);
         this.customerDetail.get('customerDe').get('id').setValue(data.data[0].id);
-        this.customerDetail.get('customerDe').get('code').setValue(data.data[0].code);
         this.customerDetail.get('customerDe').get('name').setValue(data.data[0].name);
         this.customerDetail.get('customerDe').get('dob').setValue(data.data[0].dob);
         this.customerDetail.get('customerDe').get('phone').setValue(data.data[0].phone);
@@ -218,7 +213,6 @@ export class CustomerComponent implements OnInit {
       if (data) {
         console.log(data.data[0]);
         this.customerSelected.get('customerSe').get('id').setValue(data.data[0].id);
-        this.customerSelected.get('customerSe').get('code').setValue(data.data[0].code);
         this.customerSelected.get('customerSe').get('name').setValue(data.data[0].name);
         this.customerSelected.get('customerSe').get('dob').setValue(data.data[0].dob);
         this.customerSelected.get('customerSe').get('phone').setValue(data.data[0].phone);
@@ -248,7 +242,28 @@ export class CustomerComponent implements OnInit {
   }
 
   doCreate() {
-    console.log(this.customer.value.customerNew);
+    // this.customerService.checkExistIdCard(this.customer.value.customerNew.idCard).subscribe( data => {
+    //     if (data.data) {
+    //       this.notificationService.showSuccess('Đã tồn tại khách hàng với số CMND trên', 'Thông báo');
+    //     } else {
+    //       this.notificationService.showError('Thông báo', data.description);
+    //     }
+    //   }, error => {
+    //     console.log(error);
+    //     this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
+    //   });
+    //
+    // this.customerService.checkExistAccount(this.customer.value.customerNew.userName).subscribe( data => {
+    //   if (data.data) {
+    //     this.notificationService.showSuccess('Đã tồn tại khách hàng với số tài khoản trên', 'Thông báo');
+    //   } else {
+    //     this.notificationService.showError('Thông báo', data.description);
+    //   }
+    // }, error => {
+    //   console.log(error);
+    //   this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
+    // });
+
     this.customerService.insertCustomer(this.customer.value.customerNew).subscribe(data => {
       if (data.status === 200) {
         this.notificationService.showSuccess('Đã thêm mới thành công', 'Thông báo');
@@ -319,11 +334,13 @@ export class CustomerComponent implements OnInit {
   }
 
   clearAdd() {
+    this.buildForm();
   }
 
   closeAdd() {
     this.isHidden = false;
     this.isShowAdd = false;
+    this.getPageSymbol(0);
   }
 
   closeUpdate() {
@@ -336,6 +353,5 @@ export class CustomerComponent implements OnInit {
     this.isHidden = false;
     this.isShowDetail = false;
   }
-
 
 }

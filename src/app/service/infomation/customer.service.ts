@@ -19,6 +19,14 @@ export class CustomerService {
     return this.http.get(`${environment.apiUrl}/customer/find-detail?id=${id}&offset=${offset}&pageSize=${pageSize}`);
   }
 
+  checkExistIdCard(idCard: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/customer/check-id-card?idCard=${idCard}`);
+  }
+
+  checkExistAccount(account: string): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/customer/check-account?account=${account}`);
+  }
+
   insertCustomer(body: any): Observable<any> {
     return this.http.post(`${environment.apiUrl}/customer`, body);
   }
