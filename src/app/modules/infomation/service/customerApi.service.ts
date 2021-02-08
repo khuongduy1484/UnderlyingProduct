@@ -25,4 +25,8 @@ export class CustomerServicess {
   updateCustomer(body): Observable<any> {
     return this.customerService.updateCustomer(body);
   }
+
+  managerCustomer(body): Observable<any> {
+    return this.customerService.managerCustomer(body);
+  }
 }

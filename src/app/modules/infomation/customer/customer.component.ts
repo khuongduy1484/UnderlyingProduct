@@ -29,6 +29,7 @@ export class CustomerComponent implements OnInit {
   customer: FormGroup;
   customerDetail: FormGroup;
   customerSelected: FormGroup;
+  unamePattern = "^[a-z0-9_-]{8,15}$";
 
   constructor(
     private customerService: CustomerServicess,
@@ -213,7 +214,6 @@ export class CustomerComponent implements OnInit {
     this.isShowAdd = false;
     this.isShowDetail = false;
     this.isShowUpdate = true;
-    this.customerSelected.get('customerSe').setValue(customer);
     this.customerService.getDetail(0, 10, customer.id).subscribe(data => {
       if (data) {
         console.log(data.data[0]);
@@ -274,10 +274,15 @@ export class CustomerComponent implements OnInit {
     });
   }
 
+  doShowLock(customer) {
+      this.doSelected(customer);
+      this.isShowUpdate = false;
+      this.isHidden = false;
+  }
 
   doLock() {
-      this.customerSelected.value.customerSe.get('status').setValue(0);
-      this.customerService.updateCustomer(this.customerSelected.value.customerSe).subscribe(data => {
+      this.customerSelected.value.customerSe.status = 0;
+      this.customerService.managerCustomer(this.customerSelected.value.customerSe).subscribe(data => {
         if (data.status === 200) {
           this.notificationService.showSuccess('Đã cập nhập khách hàng thành công', 'Thông báo');
         } else {
@@ -287,11 +292,12 @@ export class CustomerComponent implements OnInit {
         console.log(error);
         this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
       });
+      this.getPageSymbol(0);
   }
 
   doUnLock() {
-    this.customerSelected.value.customerSe.get('status').setValue(1);
-    this.customerService.updateCustomer(this.customerSelected.value.customerSe).subscribe(data => {
+    this.customerSelected.value.customerSe.status = 1;
+    this.customerService.managerCustomer(this.customerSelected.value.customerSe).subscribe(data => {
       if (data.status === 200) {
         this.notificationService.showSuccess('Đã cập nhập khách hàng thành công', 'Thông báo');
       } else {
@@ -301,6 +307,7 @@ export class CustomerComponent implements OnInit {
       console.log(error);
       this.notificationService.showError('Có lỗi xảy ra vui lòng thử lại', 'Thông báo');
     });
+    this.getPageSymbol(0);
   }
 
   clear() {

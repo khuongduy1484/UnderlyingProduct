@@ -39,7 +39,7 @@
                   <div class="row">
                     <div class="col-4">
                       <div class="form-group">
-                        <input [(ngModel)]="nameSearch" type="text" class="form-control form-control-sm" id="input1"
+                        <input [(ngModel)]="nameSearch" type="text" class="form-control form-control-sm" id="input1" [pattern]= "unamePattern"
                                name="nameSearch">
                       </div>
                     </div>
@@ -82,8 +82,10 @@
                     </div>
                     <div class="col-4">
                       <div class="form-group">
-                        <input [(ngModel)]="branchNameSearch" type="text" class="form-control form-control-sm" id="input5"
-                               name="branchNameSearch">
+                        <select class="form-control form-control-sm" [(ngModel)]="branchNameSearch" type="text" name="branchNameSearch">
+                          <option value="Chi nhánh Hà Nội">Chi nhánh Hà Nội</option>
+                          <option value="Chi nhánh TP HCM">Chi nhánh TP HCM</option>
+                        </select>
                       </div>
                     </div>
                     <div class="col-4">
@@ -136,12 +138,14 @@
                   <td *ngIf="customer.status == 1 ">Hoạt động</td>
                   <td *ngIf="customer.status == 2 ">Chờ xác nhận</td>
                   <td>
-                    <a data-toggle="modal"
-                       data-target="#modal-lock" class="btn  btn-xs mr-1">
+                    <a *ngIf="customer.status != 0" data-toggle="modal"
+                       data-target="#modal-lock" class="btn  btn-xs mr-1"
+                       (click)="doShowLock(customer)">
                       <i class="fa fa-lock" aria-hidden="true"></i>
                     </a>
-                    <a data-toggle="modal"
-                       data-target="#modal-unlock" class="btn  btn-xs mr-1" >
+                    <a *ngIf="customer.status == 0" data-toggle="modal"
+                       data-target="#modal-unlock" class="btn  btn-xs mr-1"
+                       (click)="doShowLock(customer)">
                       <i class="fa fa-unlock" aria-hidden="true"></i>
                     </a>
                     <a (click)="doShowDetail(customer)" class="btn btn-info btn-xs"
@@ -416,13 +420,14 @@
     </div>
   </div>
 </section>
+
 <!--update-->
 <section *ngIf="isShowUpdate" class="content">
   <div class="container-fluid">
     <div class="card card-primary card-outline">
       <form name="form" [formGroup]="customerSelected">
         <div class="modal-body">
-          <div formGroupName="customerNew">
+          <div formGroupName="customerSe">
             <ul class="nav nav-tabs">
               <li class="nav-item">
                 <a class="nav-link  "
@@ -448,7 +453,7 @@
                   <div class="form-group">
                     <label for="input4" class="col-form-label">Số tài khoản</label>
                     <input type="text" class="form-control border border-dark"
-                           formControlName="account" name="account">
+                           formControlName="userName" name="userName">
                   </div>
                 </div>
               </div>

@@ -26,4 +26,8 @@ export class CustomerService {
   updateCustomer(body: any): Observable<any> {
     return this.http.put(`${environment.apiUrl}/customer`, body);
   }
+
+  managerCustomer(body: any): Observable<any> {
+    return this.http.put(`${environment.apiUrl}/customer/lock-or-unlock`, body);
+  }
 }
