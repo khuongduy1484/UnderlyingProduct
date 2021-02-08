@@ -28,14 +28,19 @@ export class PoliciesProductService {
   createPoliciesProductApprovalPending(body: any): Observable<any> {
     return this.http.post(`${environment.apiUrl}/prod-agreement/pending-approval`, body);
   }
+
   createPoliciesProductApproval(body: any): Observable<any> {
     return this.http.post(`${environment.apiUrl}/prod-agreement/pending-approval`, body);
   }
 
 
-
   remove(body: any): Observable<any> {
     return this.http.delete(`${environment.apiUrl}/prod-agreement/pending-approval`, body);
+  }
+
+  findAll(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/prod-agreement/search/all`);
+
   }
 
 }

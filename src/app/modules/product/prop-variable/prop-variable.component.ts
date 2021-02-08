@@ -26,7 +26,7 @@ export class PropVariableComponent implements OnInit {
       current = 0;
     }
     this.page = current;
-    this.proVariableService.findPropVariableByCode('', current > 0 ? current - 1 : 0, 10).subscribe(data => {
+    this.proVariableService.findPropVariableApproval('', '', '', current > 0 ? current - 1 : 0, 10).subscribe(data => {
       if (data) {
         this.lstPropVariable = data.data;
       }
@@ -34,7 +34,7 @@ export class PropVariableComponent implements OnInit {
   }
 
   doSearch() {
-    this.proVariableService.findPropVariableByCode(this.contentSearch.trim(), 0, 10).subscribe(data => {
+    this.proVariableService.findPropVariableApproval(this.contentSearch.trim(), '', '', 0, 10).subscribe(data => {
       if (data) {
         this.lstPropVariable = data.data;
       }

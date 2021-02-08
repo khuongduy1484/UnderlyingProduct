@@ -1,32 +1,31 @@
 import {Component, OnInit} from '@angular/core';
-import {PoliciesProductService} from '../service/policies.service';
-import {PrimaryProductService} from '../service/primaryProduct.service';
-import {IPolicesProduct, IPrimaryProduct, IProdDerivative} from '../../../model/models';
-import {ProdDerivativeService} from '../service/prodDerivative.service';
+import {IPolicesProduct, IPrimaryProduct, IProdDerivative, IProdVariable} from '../../../../model/models';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {NotificationService} from '../../../shared/notification.service';
+import {PoliciesProductService} from '../../service/policies.service';
+import {PrimaryProductService} from '../../service/primaryProduct.service';
+import {NotificationService} from '../../../../shared/notification.service';
+import {ProVariableService} from '../../../../service/product/proVariable.service';
 
 @Component({
-  selector: 'app-financial-products',
-  templateUrl: './financial-products.component.html',
-  styleUrls: ['./financial-products.component.scss']
+  selector: 'app-pro-variable-approval',
+  templateUrl: './pro-variable-approval.component.html',
+  styleUrls: ['./pro-variable-approval.component.scss']
 })
-export class FinancialProductsComponent implements OnInit {
+export class ProVariableApprovalComponent implements OnInit {
+  lstProVariable: IProdVariable [] = [];
   lstPoliciesProductS: IPolicesProduct [] = [];
   lstProdVanilla: IPrimaryProduct [] = [];
   lstIProdDerivative: IProdDerivative [] = [];
   prodDerivativeNew: FormGroup;
   page: number;
-  contentSearch = {
-    name: '',
-    prodVanillaId: ''
-  };
+  contentSearch: FormGroup;
+
 
 
   constructor(
     private  policiesProductService: PoliciesProductService,
     private primaryProductService: PrimaryProductService,
-    private  prodDerivativeService: ProdDerivativeService,
+    private  proVariableService: ProVariableService,
     private fb: FormBuilder,
     private notificationService: NotificationService,
   ) {
@@ -51,6 +50,13 @@ export class FinancialProductsComponent implements OnInit {
         status: ['', [Validators.required]],
       }
     );
+    this.contentSearch =  this.fb.group(
+      {
+        name: ['', [Validators.required]],
+        startDate: ['', [Validators.required]],
+        endDate: ['', [Validators.required]],
+      }
+    );
   }
 
   getPageSymbol(current: number) {
@@ -58,9 +64,10 @@ export class FinancialProductsComponent implements OnInit {
       current = 0;
     }
     this.page = current;
-    this.prodDerivativeService.getProdDerivativeApproval('', '', current > 0 ? current - 1 : 0, 10).subscribe(result => {
+    this.proVariableService.findPropVariableApproval('', '', '', current > 0 ? current - 1 : 0, 10).subscribe(result => {
       if (result) {
-        this.lstIProdDerivative = result.data;
+        this.lstProVariable = result.data;
+        console.log(this.lstProVariable);
       }
     });
   }
@@ -81,6 +88,7 @@ export class FinancialProductsComponent implements OnInit {
       }
     });
   }
+
   getProdAgreementName(id) {
     if (id != null) {
       return this.lstPoliciesProductS.filter(x => x.id === id)[0].name;
@@ -113,7 +121,6 @@ export class FinancialProductsComponent implements OnInit {
   }
 
 
-
   loadData() {
     this.getPageSymbol(0);
   }
@@ -125,7 +132,6 @@ export class FinancialProductsComponent implements OnInit {
       }
     });
   }
-
 
 
   clear() {

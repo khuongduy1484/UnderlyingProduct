@@ -112,4 +112,61 @@ export interface IPolicesProduct {
 }
 
 
+export interface IPrimaryProduct {
+  code: string;
+  name: string;
+  issueDate: string;
+  createDate: Date;
+  maturityDate: Date;
+  par: number;
+  listedCode: number;
+  issueType: string;
+  id: string;
+  issuePurpose: string;
+  status: number;
+  issuerId: number;
+  bondType: string;
+  collateral: string;
+  guarantee: string;
+  guaranteeInfo: number;
+  collateralValue: number;
+  guaranteeValue: string;
+  callBack: string;
+}
+
+export interface IProdVanillaBond {
+  id: string;
+  callBack: string;
+  collateral: string;
+  bondType: string;
+  guarantee: string;
+  guaranteeInfo: number;
+  collateralValue: number;
+  guaranteeValue: string;
+}
+
+export interface IProdDerivative {
+  id: number;
+  name: string;
+  agreementId: number;
+  vanillaId: number;
+  startDate: Date;
+  endDate: Date;
+  status: number;
+  createdDate: Date;
+}
+
+
+export interface IProdVariable {
+  id: number;
+  name: string;
+  propVariableValue: {
+    appliedDate: Date;
+    value: '';
+    createdDate: Date;
+    status: number;
+    description: string;
+  };
+}
+
 

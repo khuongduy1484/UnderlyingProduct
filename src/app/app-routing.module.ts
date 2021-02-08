@@ -28,6 +28,8 @@ import {CustomerComponent} from './modules/infomation/customer/customer.componen
 import {FinancialProductsComponent} from './modules/product/financial-products/financial-products.component';
 import {ApplyAttributesComponent} from './modules/product/apply-attributes/apply-attributes.component';
 import {PoliciesProductPendingApprovalComponent} from './modules/product/policies-product-pending-approval/policies-product-pending-approval.component';
+import {FinancialProductPendingApprovalComponent} from './modules/product/financial-product-pending-approval/financial-product-pending-approval.component';
+import {ProVariableApprovalComponent} from './modules/product/prop-variable/pro-variable-approval/pro-variable-approval.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -116,6 +118,13 @@ const routes: Routes = [
         component: PendingRulesComponent
       },
       {
+        path: 'prop-variable-approval',
+        data: {
+          breadcrumb: 'Thuộc tính Sản phẩm / Quy tắc áp dụng'
+        },
+        component: ProVariableApprovalComponent
+      },
+      {
         path: 'policies-product',
         data: {
           breadcrumb: 'Chính sách và sản phẩm'
@@ -134,6 +143,13 @@ const routes: Routes = [
           breadcrumb: 'Sản phảm tài chính'
         },
         component: FinancialProductsComponent
+      },
+      {
+        path: 'financial-products-pending-approval',
+        data: {
+          breadcrumb: 'Sản phảm tài chính'
+        },
+        component: FinancialProductPendingApprovalComponent
       },
       {
         path: 'apply-attributes',

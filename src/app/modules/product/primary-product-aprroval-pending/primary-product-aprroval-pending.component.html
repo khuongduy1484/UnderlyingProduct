@@ -101,35 +101,37 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let approveRule of approveRules ; index as i" class="border border-dark">
-                  <td>{{i + 1}}</td>
-                  <td>{{approveRule.name}}</td>
-                  <td>{{approveRule.code}}</td>
-                  <td>{{approveRule.description}}</td>
-                  <td>{{approveRule.propRuleCondition.dataValue}}</td>
-                  <td *ngIf="approveRule.condition == 1 ">Áp dụng đồng thời các điều kiện</td>
-                  <td *ngIf="approveRule.condition == 2 ">Áp dụng theo thứ tự ưu tiên</td>
-                  <td>{{approveRule.createdDate | date:'dd/MM/yyyy'}}</td>
-                  <td>{{approveRule.status === 1 ? 'Đang hoạt đông' : 'Không hoạt động' }}</td>
+                <tr *ngFor="let primaryProduct of lstPrimaryProduct " class="border border-dark">
+                  <td>{{primaryProduct.name}}</td>
+                  <td>{{primaryProduct.code}}</td>
+                  <td>{{primaryProduct.listedCode}}</td>
+                  <td>{{getNameIssuer(primaryProduct.issuerId)}}</td>
+                  <td>{{primaryProduct.issueDate| date:'dd/MM/yyyy'}}</td>
+                  <td>{{primaryProduct.maturityDate| date:'dd/MM/yyyy'}}</td>
+                  <td>{{primaryProduct.listedCode}}</td>
+                  <td>{{primaryProduct.issueType}}</td>
+                  <td>{{primaryProduct.issueType}}</td>
+                  <td>{{primaryProduct.status}}</td>
                   <td>
-                    <a class="btn  btn-xs mr-1">
-                      <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                    <a  (click)="doSelectRecord(primaryProduct)" class="btn btn-primary btn-xs mr-1"
+                        data-toggle="modal"
+                        data-target="#modal-update">
+                      <i class="far fa-edit"></i>
                     </a>
-                    <a class="btn  btn-xs mr-1">
-                      <i class="fa fa-unlock" aria-hidden="true"></i>
+                    <a   (click)="doDelete(primaryProduct)" class="btn btn-info btn-xs  mr-1" data-toggle="modal"
+                         data-target="#modal-delete">
+                      <i class="fas fa-trash-alt"></i>
                     </a>
-                    <a (click)="doShowDetailProRule(approveRule.propRuleCondition)" class="btn btn-info btn-xs"
-                       data-toggle="modal"
-                       data-target="#modal-detail">
-                      <i class="fas fa-eye"></i>
+                    <a   (click)="doCreateApproval(primaryProduct)" class="btn btn-info btn-xs mr-1" data-toggle="modal">
+                      <i class="fa fa-check-square" aria-hidden="true"></i>
                     </a>
                   </td>
                 </tr>
                 </tbody>
               </table>
-              <ul *ngIf="approveRules.length > 0" class="pagination pagination-sm m-0 float-right">
+              <ul *ngIf="lstPrimaryProduct.length > 0" class="pagination pagination-sm m-0 float-right">
                 <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
-                                [collectionSize]="approveRules.length" [(page)]="page" aria-label="Custom pagination">
+                                [collectionSize]="lstPrimaryProduct.length" [(page)]="page" aria-label="Custom pagination">
                   <ng-template>Prev</ng-template>
                   <ng-template>Next</ng-template>
                   <ng-template></ng-template>
@@ -146,16 +148,17 @@
 <section *ngIf="isHidden" class="content">
   <div class="container-fluid">
     <div class="card card-primary card-outline">
-      <form>
+      <form [formGroup]="primaryProductUpdate">
         <div class="card-body">
           <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link active"
-                 href=""><i class="fas fa-list"></i> Danh sách đã duyệt</a>
+            <li class="nav-item">
+              <a class="nav-link active  "
+                 href="/primary-product"><i class="fas fa-list"></i> Danh sách đã duyệt</a>
             </li>
-            <li class="nav-item active">
-              <a class="nav-link"
-                 href=""><i class="fas fa-list"></i> Danh sách chờ duyệt</a>
+            <li class="nav-item active ">
+              <a class="nav-link "
+                 href="/primary-product-approval-pending"><i class="fas fa-list"></i> Danh sách chờ duyệt</a>
             </li>
             <li class="nav-item">
               <a class="nav-link "
@@ -173,23 +176,25 @@
             <div class="col-md-4 col-12">
               <div class="form-group">
                 <label for="input2" class="col-form-label">Tên trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                       name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                <input formControlName="name" type="text" class="form-control border border-dark"
+                       name="code" placeholder="Nhập mã hợp đồng">
               </div>
             </div>
             <div class="col-md-4 col-12">
               <div class="form-group">
                 <label for="input3" class="col-form-label">Tổ chức phát hành</label>
-                <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
-                       name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                <select formControlName="issuerId" class="form-control form-control-sm">
+                  <option [ngValue]="issuer.id" *ngFor="let issuer of lstIssuer">{{issuer.name}}</option>
+                </select>
               </div>
             </div>
             <div class="col-md-4 col-12">
               <div class="form-group">
                 <label for="input4" class="col-form-label">Loại trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.description" type="text"
-                       class="form-control border border-dark"
-                       name="description" id="input4" placeholder="Nhập mô tả">
+                <select formControlName="bondType" class="form-control form-control-sm">
+                  <option value="1">Trái phiếu của Chính phủ</option>
+                  <option value="0">Trái phiếu của doanh nghiệp</option>
+                </select>
               </div>
             </div>
           </div>
@@ -197,24 +202,25 @@
           <div class="row">
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input2" class="col-form-label">Tên trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                       name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                <label for="input2" class="col-form-label">Mã trái phiếu </label>
+                <input formControlName="code" type="text" class="form-control border border-dark"
+                       name="code" placeholder="Nhập mã trái phiếu">
               </div>
             </div>
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input3" class="col-form-label">Tổ chức phát hành</label>
-                <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
-                       name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                <label for="input3" class="col-form-label">Ngày phát hành</label>
+                <input formControlName="issueDate" name="issueDate" type="date" class="form-control border border-dark"
+                       placeholder="Nhập tên hợp đồng">
               </div>
             </div>
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input4" class="col-form-label">Loại trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.description" type="text"
-                       class="form-control border border-dark"
-                       name="description" id="input4" placeholder="Nhập mô tả">
+                <label for="input4" class="col-form-label">Hình thức phát hành</label>
+                <select formControlName="issueType" class="form-control form-control-sm">
+                  <option value="1">Public Offering</option>
+                  <option value="0">Private Placement</option>
+                </select>
               </div>
             </div>
           </div>
@@ -222,50 +228,46 @@
           <div class="row">
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input2" class="col-form-label">Tên trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                       name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                <label for="input2" class="col-form-label">Mã niêm yết</label>
+                <input formControlName="listedCode" type="text" class="form-control border border-dark"
+                       placeholder="Nhập mã niêm yết">
               </div>
             </div>
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input3" class="col-form-label">Tổ chức phát hành</label>
-                <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
-                       name="name" id="input3" placeholder="Nhập tên hợp đồng">
-              </div>
-            </div>
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input4" class="col-form-label">Loại trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.description" type="text"
+                <label class="col-form-label">Nhày đáo hạn</label>
+                <input formControlName="maturityDate" name="issueDate" type="date"
                        class="form-control border border-dark"
-                       name="description" id="input4" placeholder="Nhập mô tả">
+                       placeholder="Nhập tên hợp đồng">
+              </div>
+            </div>
+            <div class="col-md-4 col-12">
+              <div class="form-group">
+                <label class="col-form-label">Mục đích phát hành</label>
+                <input formControlName="issuePurpose" type="text"
+                       class="form-control border border-dark"
+                       placeholder="Nhập mục đích phát hành">
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input2" class="col-form-label">Tên trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                       name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                <label class="col-form-label">Mênh giá</label>
+                <input formControlName="par" type="text" class="form-control border border-dark"
+                       placeholder="Nhập mênh giá">
               </div>
             </div>
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input3" class="col-form-label">Tổ chức phát hành</label>
-                <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
-                       name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                <label for="input3" class="col-form-label">Mua trước hạn</label>
+                <mat-radio-group formControlName="callBack" aria-label="Select an option">
+                  <mat-radio-button value="1">YES</mat-radio-button>
+                  <mat-radio-button value="0">NO</mat-radio-button>
+                </mat-radio-group>
               </div>
             </div>
-            <div class="col-md-4 col-12">
-              <div class="form-group">
-                <label for="input4" class="col-form-label">Loại trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.description" type="text"
-                       class="form-control border border-dark"
-                       name="description" id="input4" placeholder="Nhập mô tả">
-              </div>
-            </div>
+
           </div>
 
 
@@ -279,24 +281,26 @@
           <div class="row">
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input2" class="col-form-label">Tên trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                       name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                <label for="input2" class="col-form-label">Tài sản đảm bảo</label>
+                <mat-radio-group formControlName="collateral" aria-label="Select an option">
+                  <mat-radio-button value="1">YES</mat-radio-button>
+                  <mat-radio-button value="0">NO</mat-radio-button>
+                </mat-radio-group>
               </div>
             </div>
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input3" class="col-form-label">Tổ chức phát hành</label>
-                <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
-                       name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                <label class="col-form-label">Thông tin TSĐB</label>
+                <input formControlName="collateralInfo" type="text" class="form-control border border-dark"
+                       placeholder="Nhập thông tin TSĐB">
               </div>
             </div>
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input4" class="col-form-label">Loại trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.description" type="text"
+                <label class="col-form-label">Tổng giá trị TSĐB</label>
+                <input formControlName="collateralValue" type="text"
                        class="form-control border border-dark"
-                       name="description" id="input4" placeholder="Nhập mô tả">
+                       placeholder="Nhập Tổng giá trị TSĐB">
               </div>
             </div>
           </div>
@@ -304,24 +308,26 @@
           <div class="row">
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input2" class="col-form-label">Tên trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.code" type="text" class="form-control border border-dark"
-                       name="code" id="input2" placeholder="Nhập mã hợp đồng">
+                <label class="col-form-label">Trạng thái bảo lãnh</label>
+                <mat-radio-group formControlName="guarantee" aria-label="Select an option">
+                  <mat-radio-button value="1">YES</mat-radio-button>
+                  <mat-radio-button value="0">NO</mat-radio-button>
+                </mat-radio-group>
               </div>
             </div>
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input3" class="col-form-label">Tổ chức phát hành</label>
-                <input [(ngModel)]="templateContractNew.name" type="text" class="form-control border border-dark"
-                       name="name" id="input3" placeholder="Nhập tên hợp đồng">
+                <label class="col-form-label">Đơn vị bảo lãnh</label>
+                <input formControlName="guaranteeInfo" type="text" class="form-control border border-dark"
+                       placeholder="Nhập đơn vị bảo lãnh">
               </div>
             </div>
             <div class="col-md-4 col-12">
               <div class="form-group">
-                <label for="input4" class="col-form-label">Loại trái phiếu</label>
-                <input [(ngModel)]="templateContractNew.description" type="text"
+                <label class="col-form-label">Gía trị bảo lãnh</label>
+                <input formControlName="guaranteeValue" type="text"
                        class="form-control border border-dark"
-                       name="description" id="input4" placeholder="Nhập mô tả">
+                       placeholder="Nhập mô tả">
               </div>
             </div>
           </div>
@@ -331,8 +337,8 @@
               <h3 class="card-title mb-2">Tính lãi và thanh toán</h3>
             </div>
             <div class="col-6">
-              <button   data-toggle="modal"
-                        data-target="#modal-automation">
+              <button data-toggle="modal"
+                      data-target="#modal-automation">
                 Cập nhập tính tự động
               </button>
             </div>
@@ -351,8 +357,6 @@
                   <th>LS KỲ</th>
                   <th>LS TC</th>
                   <th>Biên độ</th>
-
-
                 </tr>
                 </thead>
                 <tbody>
@@ -382,21 +386,13 @@
                 </tr>
                 </tbody>
               </table>
-              <ul *ngIf="approveRules.length > 0" class="pagination pagination-sm m-0 float-right">
-                <ngb-pagination [ellipses]="false" [boundaryLinks]="true" (pageChange)="getPageSymbol($event)"
-                                [collectionSize]="approveRules.length" [(page)]="page" aria-label="Custom pagination">
-                  <ng-template>Prev</ng-template>
-                  <ng-template>Next</ng-template>
-                  <ng-template></ng-template>
-                </ngb-pagination>
-              </ul>
             </div>
           </div>
 
         </div>
         <!-- /.card-body -->
         <div class="card-footer btn-center">
-          <button type="submit" class="btn btn-info btn-sm mr-1">Cập nhập</button>
+          <button (click)="doCreate()" type="submit" class="btn btn-info btn-sm mr-1">THÊM MỚI</button>
           <button (click)="doActionCreate()" type="submit" class="btn btn-default btn-sm ml-1">Hủy</button>
         </div>
         <!-- /.card-footer -->
@@ -407,7 +403,7 @@
 
 
 <!--tính tự động-->
-<div class="modal fade" id="modal-automation"  aria-modal="true" role="dialog">
+<div class="modal fade" id="modal-automation" aria-modal="true" role="dialog">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
